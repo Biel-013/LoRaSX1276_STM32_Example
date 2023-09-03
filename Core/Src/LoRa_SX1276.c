@@ -41,45 +41,55 @@ extern UART_HandleTypeDef huart3; /* Variável externa de configuração do UART
 /* USER CODE BEGIN PV */
 
 char LORA_UART_BUFFER[100];
-LoRa_StatusTypeDef LORA_STATUS_RECEIVE = LORA_FAILED;
+LoRa_StatusTypeDef LORA_STATUS_RECEIVE = LORA_CLEAR;
+unsigned char AT_RXcommand[25];
+unsigned char AT_TXcommand[30];
+
 /* USER CODE END PV */
 
 /* Private functions ------------------------------------------------------------*/
 /* USER CODE BEGIN PF */
 void LORA_ReceivedCallback(uint8_t buffer[50]) {
-	int posição = 0;
+	int posicao = 0;
 	for (int i = 0; i < 50; i++) {
 		if (!memcmp(buffer + i, "<OK>", 4)) {
-			posição = i + 4;
+			posicao = i + 4;
 			break;
 		}
 	}
-	if (posição != 0) {
+	if (posicao != 0) {
+		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_1);
 		for (int i = 0; i < 100; i++) {
-			if (i <= posição + 1)
+			if (i <= posicao + 1)
 				LORA_UART_BUFFER[i] = buffer[i];
 			else
 				LORA_UART_BUFFER[i] = '\000';
 		}
 		LORA_STATUS_RECEIVE = LORA_OK;
+		return;
 	}
 	LORA_STATUS_RECEIVE = LORA_FAILED;
 }
 
-LoRa_StatusTypeDef LORA_WaitReceive(uint16_t _TimerWait) {
-	uint32_t Timer_start = HAL_GetTick();
-	while (LORA_STATUS_RECEIVE != LORA_OK)
-		if (HAL_GetTick() - Timer_start > _TimerWait)
-			return LORA_TIMEOUT;
-	return LORA_OK;
-}
-
-LoRa_StatusTypeDef LORA_TransmitCommand(char *_Command, uint8_t _Size) {
-	if (HAL_UART_Transmit(LORA_HANDLER_UART, (uint8_t*) _Command, _Size, 100)
+LoRa_StatusTypeDef LORA_TransmitCommand(void) {
+	if (HAL_UART_Transmit(LORA_HANDLER_UART, AT_TXcommand, strlen((char *)AT_TXcommand), 100)
 			!= HAL_OK)
 		return LORA_FAILED;
 	return LORA_OK;
 }
+
+LoRa_StatusTypeDef LORA_ReceiveCommand(uint16_t _TimerWait) {
+	uint32_t Timer_start = HAL_GetTick();
+	while (LORA_STATUS_RECEIVE != LORA_OK) {
+		if (((Timer_start = HAL_GetTick()) % 20) == 0)
+			if (HAL_UART_Transmit(LORA_HANDLER_UART, AT_RXcommand, strlen((char *)AT_RXcommand), 100) != HAL_OK)
+				return LORA_FAILED;
+		if (HAL_GetTick() - Timer_start > _TimerWait)
+			return LORA_TIMEOUT;
+	}
+	return LORA_OK;
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /*---- IDENTIDICADOR DO DISPOSITIVO FINAL --------------------------------------------------------------*/
@@ -93,23 +103,23 @@ LoRa_StatusTypeDef LORA_TransmitCommand(char *_Command, uint8_t _Size) {
 
 LoRa_StatusTypeDef AT_EndDeviceIdentifier(LoRa_OperationTypeDef _Operacao,
 		LoRa_Id *_Identifier) {
-	char AT_command[50];
 
 	switch (_Operacao) {
 	case AT_OPERATION_READ:
-		sprintf(AT_command, "AT+DEVEUI\r\n");
-		LORA_TransmitCommand(AT_command, strlen(AT_command));
-		if (LORA_WaitReceive(100) == LORA_TIMEOUT)
+		sprintf((char *)AT_RXcommand, "AT+DEVEUI\r\n");
+		LORA_STATUS_RECEIVE = LORA_CLEAR;
+		if (LORA_ReceiveCommand(1000) != LORA_OK)
 			return LORA_FAILED;
-		sscanf(LORA_UART_BUFFER, "%s\r%8lx%8lx\r", AT_command,
+		sscanf(LORA_UART_BUFFER, "%s\r%8lx%8lx\r\n", AT_RXcommand,
 				&(((uint32_t*) _Identifier)[1]),
 				&(((uint32_t*) _Identifier)[0]));
 		break;
 	case AT_OPERATION_WRITE:
-		sprintf(AT_command, "AT+DEVEUI %04X%04X%04X%04X\r\n",
+		sprintf((char *)AT_TXcommand, "AT+DEVEUI %04X%04X%04X%04X\r\n",
 				((uint16_t*) _Identifier)[3], ((uint16_t*) _Identifier)[2],
 				((uint16_t*) _Identifier)[1], ((uint16_t*) _Identifier)[0]);
-		LORA_TransmitCommand(AT_command, strlen(AT_command));
+		if (LORA_TransmitCommand() != LORA_OK)
+			return LORA_FAILED;
 		break;
 	default:
 		break;
@@ -131,7 +141,30 @@ LoRa_StatusTypeDef AT_EndDeviceIdentifier(LoRa_OperationTypeDef _Operacao,
  */
 
 LoRa_StatusTypeDef AT_AppEUIAdress(LoRa_OperationTypeDef _Operacao,
-		LoRa_Id *_Identifier);
+		LoRa_Id *_Identifier) {
+//	char AT_command[50];
+	switch (_Operacao) {
+	case AT_OPERATION_READ:
+		sprintf((char *)AT_RXcommand, "AT+APPEUI\r\n");
+		LORA_STATUS_RECEIVE = LORA_CLEAR;
+		if (LORA_ReceiveCommand(100) != LORA_OK)
+			return LORA_FAILED;
+		sscanf(LORA_UART_BUFFER, "%s\r%8lx%8lx\r", AT_RXcommand,
+				&(((uint32_t*) _Identifier)[1]),
+				&(((uint32_t*) _Identifier)[0]));
+		break;
+	case AT_OPERATION_WRITE:
+		sprintf((char *)AT_TXcommand, "AT+APPEUI %04X%04X%04X%04X\r\n",
+				((uint16_t*) _Identifier)[3], ((uint16_t*) _Identifier)[2],
+				((uint16_t*) _Identifier)[1], ((uint16_t*) _Identifier)[0]);
+		if (LORA_TransmitCommand() != LORA_OK)
+			return LORA_FAILED;
+		break;
+	default:
+		break;
+	}
+	return LORA_OK;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -147,7 +180,40 @@ LoRa_StatusTypeDef AT_AppEUIAdress(LoRa_OperationTypeDef _Operacao,
  */
 
 LoRa_StatusTypeDef AT_ApplicationKey(LoRa_OperationTypeDef _Operacao,
-		LoRa_KeyTypeDef *_Keyword);
+		LoRa_KeyTypeDef _Keyword) {
+//	char AT_command[50];
+//
+//	switch (_Operacao) {
+//	case AT_OPERATION_READ:
+//		sprintf(AT_command, "AT+APPEUI\r\n");
+//		if (LORA_TransmitCommand(AT_command, strlen(AT_command)) == LORA_FAILED)
+//			return LORA_FAILED;
+//		if (LORA_WaitReceive(100) == LORA_TIMEOUT)
+//			return LORA_FAILED;
+//		sscanf(LORA_UART_BUFFER, "%s\r%8lx%8lx%8lx%8lx\r", AT_command,
+//				&(((uint32_t*) _Keyword.LoRa_HighKey)[1]),
+//				&(((uint32_t*) _Keyword.LoRa_HighKey)[0]),
+//				&(((uint32_t*) _Keyword.LoRa_LowKey)[1]),
+//				&(((uint32_t*) _Keyword.LoRa_LowKey)[0]));
+//		break;
+//	case AT_OPERATION_WRITE:
+//		sprintf(AT_command, "AT+APPEUI %04X%04X%04X%04X%04X%04X%04X%04X\r\n",
+//				((uint16_t*) _Keyword.LoRa_HighKey)[3],
+//				((uint16_t*) _Keyword.LoRa_HighKey)[2],
+//				((uint16_t*) _Keyword.LoRa_HighKey)[1],
+//				((uint16_t*) _Keyword.LoRa_HighKey)[0],
+//				((uint16_t*) _Keyword.LoRa_LowKey)[3],
+//				((uint16_t*) _Keyword.LoRa_LowKey)[2],
+//				((uint16_t*) _Keyword.LoRa_LowKey)[1],
+//				((uint16_t*) _Keyword.LoRa_LowKey)[0]);
+//		if (LORA_TransmitCommand(AT_command, strlen(AT_command)) == LORA_FAILED)
+//			return LORA_FAILED;
+//		break;
+//	default:
+//		break;
+//	}
+//	return LORA_OK;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
