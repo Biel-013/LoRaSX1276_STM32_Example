@@ -59,8 +59,9 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size) {
 		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_4);
 		if (!memcmp(DMA_RX_Buffer_3, fistTERM, strlen(fistTERM))) {
 
-			HAL_UART_Abort(&huart3);
+			HAL_UART_DMAPause(&huart3);
 			LORA_ReceivedCallback(DMA_RX_Buffer_3);
+			HAL_UART_DMAResume(&huart3);
 		}
 	}
 	HAL_UARTEx_ReceiveToIdle_DMA(&huart3, DMA_RX_Buffer_3,

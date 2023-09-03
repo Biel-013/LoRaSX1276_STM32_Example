@@ -1,2 +1,2 @@
 ../Core/Src/DMA_USART.c:55:6:HAL_UARTEx_RxEventCallback	24	static
-../Core/Src/DMA_USART.c:79:6:USART_Init	8	static
+../Core/Src/DMA_USART.c:80:6:USART_Init	8	static

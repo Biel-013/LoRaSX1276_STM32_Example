@@ -111,8 +111,8 @@ HAL_UART_Transmit(&huart3, "AT+ECHO 1\r\n\0", 12, 100);
 //HAL_Delay(100);
 	while (1) {
 		if (Read != id)
-			AT_EndDeviceIdentifier(AT_OPERATION_WRITE, &id);
-		if (AT_EndDeviceIdentifier(AT_OPERATION_READ, &Read) == LORA_OK)
+			AT_AppEUIAdress(AT_OPERATION_WRITE, &id);
+		if (AT_AppEUIAdress(AT_OPERATION_READ, &Read) == LORA_OK)
 			HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_0);
     /* USER CODE END WHILE */
 
