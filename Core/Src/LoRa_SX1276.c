@@ -50,18 +50,25 @@ unsigned char AT_TXcommand[30];
 /* Private functions ------------------------------------------------------------*/
 /* USER CODE BEGIN PF */
 void LORA_ReceivedCallback(uint8_t buffer[50]) {
-	int posicao = 0;
-	for (int i = 0; i < 50; i++) {
+	int posicao_inicial = 0;
+	int posicao_final = 0;
+	for (int i = 0; i < 70; i++) {
+			if (!memcmp(buffer + i, "AT+", 3)) {
+				posicao_inicial = i;
+				break;
+			}
+		}
+	for (int i = posicao_inicial; i < 70; i++) {
 		if (!memcmp(buffer + i, "<OK>", 4)) {
-			posicao = i + 4;
+			posicao_final = i + 4;
 			break;
 		}
 	}
-	if (posicao != 0) {
+	if (posicao_inicial != 0 && posicao_final != 0) {
 		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_1);
-		for (int i = 0; i < 100; i++) {
-			if (i <= posicao + 1)
-				LORA_UART_BUFFER[i] = buffer[i];
+		for (int i = posicao_inicial; i < 100; i++) {
+			if (i <= posicao_final + 1)
+				LORA_UART_BUFFER[i - posicao_inicial] = buffer[i];
 			else
 				LORA_UART_BUFFER[i] = '\000';
 		}
@@ -109,8 +116,13 @@ LoRa_StatusTypeDef AT_EndDeviceIdentifier(LoRa_OperationTypeDef _Operacao,
 	case AT_OPERATION_READ:
 		sprintf((char*) AT_RXcommand, "AT+DEVEUI\r\n");
 		LORA_STATUS_RECEIVE = LORA_CLEAR;
-		if (LORA_ReceiveCommand(100) != LORA_OK)
+		if (LORA_ReceiveCommand(500) != LORA_OK)
 			return LORA_FAILED;
+//		HAL_UART_Transmit(LORA_HANDLER_UART, AT_RXcommand,
+//				strlen((char*) AT_RXcommand), 100);
+//		HAL_Delay(20);
+//		HAL_UART_Receive(&huart3, LORA_UART_BUFFER, 70,
+//				2000);
 		sscanf(LORA_UART_BUFFER, "%s\r%8lx%8lx\r\n", AT_RXcommand,
 				&(((uint32_t*) _Identifier)[1]),
 				&(((uint32_t*) _Identifier)[0]));
