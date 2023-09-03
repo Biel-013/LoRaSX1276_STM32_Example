@@ -35,8 +35,7 @@ typedef uint32_t LoRa_Rate;
 typedef uint32_t LoRa_Adress;
 
 typedef struct {
-	uint64_t LoRa_HighKey[1];
-	uint64_t LoRa_LowKey[1];
+	uint64_t LoRa_Key[2];
 } LoRa_KeyTypeDef;
 
 typedef enum {
@@ -282,7 +281,7 @@ LoRa_StatusTypeDef AT_AppEUIAdress (LoRa_OperationTypeDef _Operacao, LoRa_Id *_I
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_ApplicationKey (LoRa_OperationTypeDef _Operacao, LoRa_KeyTypeDef _Keyword);
+LoRa_StatusTypeDef AT_ApplicationKey (LoRa_OperationTypeDef _Operacao, LoRa_KeyTypeDef *_Keyword);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

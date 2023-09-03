@@ -101,8 +101,8 @@ int main(void)
   MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
 	USART_Init();
-	keyword.LoRa_HighKey[0] = id;
-	keyword.LoRa_LowKey[0] = id;
+	keyword.LoRa_Key[0] = id;
+	keyword.LoRa_Key[1] = id;
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -111,8 +111,8 @@ HAL_UART_Transmit(&huart3, "AT+ECHO 1\r\n\0", 12, 100);
 //HAL_Delay(100);
 	while (1) {
 		if (Read != id)
-			AT_EndDeviceIdentifier(AT_OPERATION_WRITE, &id);
-		if (AT_EndDeviceIdentifier(AT_OPERATION_READ, &Read) == LORA_OK)
+			AT_ApplicationKey(AT_OPERATION_WRITE, &keyword);
+		if (AT_ApplicationKey(AT_OPERATION_READ, &keywordRead) == LORA_OK)
 			HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_0);
     /* USER CODE END WHILE */
 

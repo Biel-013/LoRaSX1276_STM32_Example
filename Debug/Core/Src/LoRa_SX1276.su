@@ -1,6 +1,6 @@
 ../Core/Src/LoRa_SX1276.c:53:6:LORA_ReceivedCallback	40	static
-../Core/Src/LoRa_SX1276.c:82:20:LORA_TransmitCommand	8	static
+../Core/Src/LoRa_SX1276.c:82:20:LORA_TransmitCommand	16	static
 ../Core/Src/LoRa_SX1276.c:91:20:LORA_ReceiveCommand	24	static
 ../Core/Src/LoRa_SX1276.c:120:20:AT_EndDeviceIdentifier	24	static
 ../Core/Src/LoRa_SX1276.c:157:20:AT_AppEUIAdress	24	static
-../Core/Src/LoRa_SX1276.c:194:20:AT_ApplicationKey	16	static
+../Core/Src/LoRa_SX1276.c:194:20:AT_ApplicationKey	32	static
