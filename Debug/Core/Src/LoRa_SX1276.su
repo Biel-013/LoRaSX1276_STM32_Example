@@ -9,3 +9,5 @@
 ../Core/Src/LoRa_SX1276.c:300:20:AT_LoRaMacClass	16	static
 ../Core/Src/LoRa_SX1276.c:333:20:AT_JoinRequestNetworkServer	8	static
 ../Core/Src/LoRa_SX1276.c:352:20:AT_JoinNetworkServerStatus	16	static
+../Core/Src/LoRa_SX1276.c:374:20:AT_AutoJoinNetworkServer	16	static
+../Core/Src/LoRa_SX1276.c:409:20:AT_NetworkSessionKey	32	static

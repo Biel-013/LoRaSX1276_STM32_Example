@@ -50,9 +50,10 @@ char AT_comand[15] = "";
 extern uint8_t DMA_RX_Buffer_3[DMA_RX_BUFFER_SIZE];
 uint64_t id = 0x018fdea136;
 uint64_t Read;
-LoRa_NetworkJoinTypeDef status = 2;
-LoRa_MacClassTypeDef read_class = LORA_MAC_CLASS_B;
+LoRa_AutoNetworkJoinTypeDef status = LORA_AUTO_NETWORK_JOIN_ON;
+LoRa_AutoNetworkJoinTypeDef read_status = LORA_AUTO_NETWORK_JOIN_OFF;
 LoRa_KeyTypeDef keywordRead;
+LoRa_KeyTypeDef keyword;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -105,14 +106,21 @@ int main(void) {
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
+	keyword.LoRa_HighKey[1] = 31361616;
+	keyword.LoRa_HighKey[0] = 13535;
+	keyword.LoRa_LowKey[1] = 246;
+	keyword.LoRa_LowKey[0] = 35738;
 //	if (AT_JoinRequestNetworkServer() == LORA_OK)
 //						HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_0);
 	while (1) {
-//		if (class != read_class)
-//			AT_LoRaMacClass(AT_OPERATION_WRITE, &class);
+		if (keyword.LoRa_HighKey[1] != keywordRead.LoRa_HighKey[1]
+				|| keyword.LoRa_HighKey[0] != keywordRead.LoRa_HighKey[0]
+				|| keyword.LoRa_LowKey[1] != keywordRead.LoRa_LowKey[1]
+				|| keyword.LoRa_LowKey[0] != keywordRead.LoRa_LowKey[0])
+			AT_NetworkSessionKey(AT_OPERATION_WRITE, &keyword);
 //		if (status != LORA_NETWORK_JOINED)
-//			AT_JoinRequestNetworkServer();
-		if (AT_JoinNetworkServerStatus(&status) == LORA_OK)
+//			AT_AutoJoinNetworkServer();
+		if (AT_NetworkSessionKey(AT_OPERATION_READ, &keywordRead) == LORA_OK)
 			HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_0);
 		/* USER CODE END WHILE */
 
