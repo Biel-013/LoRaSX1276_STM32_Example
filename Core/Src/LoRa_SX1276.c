@@ -112,11 +112,11 @@ LoRa_StatusTypeDef LORA_ReceiveCommand(uint16_t _TimerWait) {
 
 /**
  * @brief Identificador de dispositivo final no espaço de endereço IEEE EUI64
+ * @tparam AT+DEVEUI <devEUI> <ENTER>
  * @param _Operacao: Modo de operação do comando
  * @param _Identifier: Identificador de dispositivo final
  * @retval Status de execução do comando
  */
-
 LoRa_StatusTypeDef AT_EndDeviceIdentifier(LoRa_OperationTypeDef _Operacao,
 		LoRa_Id *_Identifier) {
 	switch (_Operacao) {
@@ -149,11 +149,11 @@ LoRa_StatusTypeDef AT_EndDeviceIdentifier(LoRa_OperationTypeDef _Operacao,
 
 /**
  * @brief ID de aplicativo global no espaço de endereço IEEE EUI64
+ * @tparam AT+APPEUI <AppEUI> <ENTER>
  * @param _Operacao: Modo de operação do comando
  * @param _Identifier: ID de aplicativo global
  * @retval Status de execução do comando
  */
-
 LoRa_StatusTypeDef AT_AppEUIAdress(LoRa_OperationTypeDef _Operacao,
 		LoRa_Id *_Identifier) {
 	switch (_Operacao) {
@@ -186,6 +186,7 @@ LoRa_StatusTypeDef AT_AppEUIAdress(LoRa_OperationTypeDef _Operacao,
 
 /**
  * @brief Chave de raiz AES-128 específica para o dispositivo final
+ * @brief Chave de raiz AES-128 específica para o dispositivo final
  * @param _Operacao: Modo de operação do comando
  * @param _Keyword: Chave do dispositivo final
  * @retval Status de execução do comando
@@ -193,26 +194,26 @@ LoRa_StatusTypeDef AT_AppEUIAdress(LoRa_OperationTypeDef _Operacao,
 
 LoRa_StatusTypeDef AT_ApplicationKey(LoRa_OperationTypeDef _Operacao,
 		LoRa_KeyTypeDef _Keyword) {
-//	switch (_Operacao) {
-//	case AT_OPERATION_READ:
-//		sprintf((char*) AT_RXcommand, "AT+DEVEUI\r\n");
-//		LORA_STATUS_RECEIVE = LORA_CLEAR;
-//		if (LORA_ReceiveCommand(500) != LORA_OK)
-//			return LORA_FAILED;
-//		sscanf(LORA_UART_BUFFER, "%s\r%8lx%8lx\r\n", AT_RXcommand,
-//				&(((uint32_t*) _Identifier)[1]),
-//				&(((uint32_t*) _Identifier)[0]));
-//		break;
-//	case AT_OPERATION_WRITE:
-//		sprintf((char*) AT_TXcommand, "AT+DEVEUI %08lX%08lX\r\n",
-//				((uint32_t*) _Identifier)[1], ((uint32_t*) _Identifier)[0]);
-//		if (LORA_TransmitCommand() != LORA_OK)
-//			return LORA_FAILED;
-//		break;
-//	default:
-//		break;
-//	}
-//	return LORA_OK;
+	switch (_Operacao) {
+	case AT_OPERATION_READ:
+		sprintf((char*) AT_RXcommand, "AT+DEVEUI\r\n");
+		LORA_STATUS_RECEIVE = LORA_CLEAR;
+		if (LORA_ReceiveCommand(500) != LORA_OK)
+			return LORA_FAILED;
+		sscanf(LORA_UART_BUFFER, "%s\r%8lx%8lx\r\n", AT_RXcommand,
+				&(((uint32_t*) _Identifier)[1]),
+				&(((uint32_t*) _Identifier)[0]));
+		break;
+	case AT_OPERATION_WRITE:
+		sprintf((char*) AT_TXcommand, "AT+DEVEUI %08lX%08lX\r\n",
+				((uint32_t*) _Identifier)[1], ((uint32_t*) _Identifier)[0]);
+		if (LORA_TransmitCommand() != LORA_OK)
+			return LORA_FAILED;
+		break;
+	default:
+		break;
+	}
+	return LORA_OK;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
