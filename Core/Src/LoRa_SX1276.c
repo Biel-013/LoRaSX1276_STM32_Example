@@ -482,7 +482,6 @@ LoRa_StatusTypeDef AT_ApplicationSessionKey(LoRa_OperationTypeDef _Operacao,
  * @param _Adress: Endereço
  * @retval Status de execução do comando
  */
-
 LoRa_StatusTypeDef AT_DeviceAddress(LoRa_OperationTypeDef _Operacao,
 		LoRa_Adress *_Adress) {
 	switch (_Operacao) {
@@ -491,10 +490,12 @@ LoRa_StatusTypeDef AT_DeviceAddress(LoRa_OperationTypeDef _Operacao,
 		LORA_STATUS_RECEIVE = LORA_CLEAR;
 		if (LORA_ReceiveCommand(1000, 10) != LORA_OK)
 			return LORA_FAILED;
-		sscanf(LORA_UART_BUFFER, "%s\r%8lx\r\n", AT_RXcommand, (uint32_t*) _Adress);
+		sscanf(LORA_UART_BUFFER, "%s\r%8lx\r\n", AT_RXcommand,
+				(uint32_t*) _Adress);
 		break;
 	case AT_OPERATION_WRITE:
-		sprintf((char*) AT_TXcommand, "AT+DADDR %08lX\r\n", ((uint32_t*) _Adress)[0]);
+		sprintf((char*) AT_TXcommand, "AT+DADDR %08lX\r\n",
+				((uint32_t*) _Adress)[0]);
 		if (LORA_TransmitCommand(100) != LORA_OK)
 			return LORA_FAILED;
 		break;
@@ -512,13 +513,33 @@ LoRa_StatusTypeDef AT_DeviceAddress(LoRa_OperationTypeDef _Operacao,
 
 /**
  * @brief Valor de exibição do identificador da rede
+ * @tparam AT+NWKID <Network Address> <ENTER>
  * @param _Operacao: Modo de operação do comando
  * @param _Identifier: Identificador da rede
  * @retval Status de execução do comando
  */
-
 LoRa_StatusTypeDef AT_NetworkIdentifier(LoRa_OperationTypeDef _Operacao,
-		LoRa_Id *_Identifier);
+		LoRa_Adress *_Identifier) {
+	switch (_Operacao) {
+	case AT_OPERATION_READ:
+		sprintf((char*) AT_RXcommand, "AT+NWKID\r\n");
+		LORA_STATUS_RECEIVE = LORA_CLEAR;
+		if (LORA_ReceiveCommand(1000, 10) != LORA_OK)
+			return LORA_FAILED;
+		sscanf(LORA_UART_BUFFER, "%s\r%8lx\r\n", AT_RXcommand,
+				(uint32_t*) _Identifier);
+		break;
+	case AT_OPERATION_WRITE:
+		sprintf((char*) AT_TXcommand, "AT+NWKID %06lX\r\n",
+				((uint32_t*) _Identifier)[0]);
+		if (LORA_TransmitCommand(100) != LORA_OK)
+			return LORA_FAILED;
+		break;
+	default:
+		break;
+	}
+	return LORA_OK;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -528,12 +549,15 @@ LoRa_StatusTypeDef AT_NetworkIdentifier(LoRa_OperationTypeDef _Operacao,
 
 /**
  * @brief Retorna as configurações ativas
+ * @tparam AT+AINF <ENTER>
+ * @attention Essa função não foi continuada, por haver outras funções que realizam o mesmo trabalho
  * @param _hSettings: Configurações ativas
  * @retval Status de execução do comando
  */
-
 LoRa_StatusTypeDef AT_ActivationSettingValue(
-		LoRa_ActivationSettingTypeDef _hSettings);
+		LoRa_ActivationSettingTypeDef *_hSettings) {
+	return LORA_OK;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

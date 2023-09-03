@@ -48,12 +48,12 @@ DMA_HandleTypeDef hdma_usart3_rx;
 uint8_t Send_STATUS = 1;
 char AT_comand[15] = "";
 extern uint8_t DMA_RX_Buffer_3[DMA_RX_BUFFER_SIZE];
-uint64_t id = 0x018fdea136;
+uint64_t id = 0x018fdea1;
 uint64_t Read;
 LoRa_AutoNetworkJoinTypeDef status = LORA_AUTO_NETWORK_JOIN_ON;
 LoRa_AutoNetworkJoinTypeDef read_status = LORA_AUTO_NETWORK_JOIN_OFF;
-LoRa_Adress adress = 0x3ad3ad12;
-LoRa_Adress read_adress;
+LoRa_Adress adress = 0xd3ad12;
+LoRa_ActivationSettingTypeDef hSetting;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -109,11 +109,11 @@ int main(void) {
 //	if (AT_JoinRequestNetworkServer() == LORA_OK)
 //						HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_0);
 	while (1) {
-		if (adress != read_adress)
-			AT_DeviceAddress(AT_OPERATION_WRITE, &adress);
+//		if (adress != read_adress)
+//			AT_NetworkIdentifier(AT_OPERATION_WRITE, &adress);
 //		if (status != LORA_NETWORK_JOINED)
 //			AT_AutoJoinNetworkServer();
-		if (AT_DeviceAddress(AT_OPERATION_READ, &read_adress) == LORA_OK)
+		if (AT_ActivationSettingValue(&hSetting) == LORA_OK)
 			HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_0);
 		/* USER CODE END WHILE */
 

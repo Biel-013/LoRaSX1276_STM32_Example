@@ -12,4 +12,6 @@
 ../Core/Src/LoRa_SX1276.c:374:20:AT_AutoJoinNetworkServer	16	static
 ../Core/Src/LoRa_SX1276.c:409:20:AT_NetworkSessionKey	32	static
 ../Core/Src/LoRa_SX1276.c:447:20:AT_ApplicationSessionKey	32	static
-../Core/Src/LoRa_SX1276.c:486:20:AT_DeviceAddress	16	static
+../Core/Src/LoRa_SX1276.c:485:20:AT_DeviceAddress	16	static
+../Core/Src/LoRa_SX1276.c:521:20:AT_NetworkIdentifier	16	static
+../Core/Src/LoRa_SX1276.c:556:20:AT_ActivationSettingValue	16	static

@@ -431,7 +431,7 @@ LoRa_StatusTypeDef AT_DeviceAddress (LoRa_OperationTypeDef _Operacao, LoRa_Adres
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_NetworkIdentifier (LoRa_OperationTypeDef _Operacao, LoRa_Id *_Identifier);
+LoRa_StatusTypeDef AT_NetworkIdentifier (LoRa_OperationTypeDef _Operacao, LoRa_Adress *_Identifier);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -445,7 +445,7 @@ LoRa_StatusTypeDef AT_NetworkIdentifier (LoRa_OperationTypeDef _Operacao, LoRa_I
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_ActivationSettingValue (LoRa_ActivationSettingTypeDef _hSettings);
+LoRa_StatusTypeDef AT_ActivationSettingValue (LoRa_ActivationSettingTypeDef *_hSettings);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
