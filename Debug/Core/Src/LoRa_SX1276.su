@@ -1,0 +1,4 @@
+../Core/Src/LoRa_SX1276.c:51:6:LORA_Receive	32	static
+../Core/Src/LoRa_SX1276.c:71:6:LORA_WaitReceive	24	static
+../Core/Src/LoRa_SX1276.c:78:6:LORA_TransmitCommand	16	static
+../Core/Src/LoRa_SX1276.c:92:20:AT_EndDeviceIdentifier	24	static
