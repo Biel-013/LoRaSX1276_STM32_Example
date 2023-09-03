@@ -379,7 +379,8 @@ LoRa_StatusTypeDef AT_AutoJoinNetworkServer(LoRa_OperationTypeDef _Operacao,
 		LORA_STATUS_RECEIVE = LORA_CLEAR;
 		if (LORA_ReceiveCommand(500, 10) != LORA_OK)
 			return LORA_FAILED;
-		sscanf(LORA_UART_BUFFER, "%s\r%hu\r\n", AT_RXcommand, (uint16_t*) _Status);
+		sscanf(LORA_UART_BUFFER, "%s\r%hu\r\n", AT_RXcommand,
+				(uint16_t*) _Status);
 		break;
 	case AT_OPERATION_WRITE:
 		sprintf((char*) AT_TXcommand, "AT+AJOIN %d\r\n", (*_Status));
@@ -405,30 +406,29 @@ LoRa_StatusTypeDef AT_AutoJoinNetworkServer(LoRa_OperationTypeDef _Operacao,
  * @param _Keyword: Chave da sessão
  * @retval Status de execução do comando
  */
-
 LoRa_StatusTypeDef AT_NetworkSessionKey(LoRa_OperationTypeDef _Operacao,
-		LoRa_KeyTypeDef *_Keyword){
+		LoRa_KeyTypeDef *_Keyword) {
 	switch (_Operacao) {
-		case AT_OPERATION_READ:
-			sprintf((char*) AT_RXcommand, "AT+NWKSKEY\r\n");
-			LORA_STATUS_RECEIVE = LORA_CLEAR;
-			if (LORA_ReceiveCommand(1000, 10) != LORA_OK)
-				return LORA_FAILED;
-			sscanf(LORA_UART_BUFFER, "%s\r%8lx%8lx%8lx%8lx\r\n", AT_RXcommand,
-					&(_Keyword->LoRa_HighKey[1]), &(_Keyword->LoRa_HighKey[0]),
-					&(_Keyword->LoRa_LowKey[1]), &(_Keyword->LoRa_LowKey[0]));
-			break;
-		case AT_OPERATION_WRITE:
-			sprintf((char*) AT_TXcommand, "AT+NWKSKEY %08lX%08lX%08lX%08lX\r\n",
-					(_Keyword->LoRa_HighKey[1]), (_Keyword->LoRa_HighKey[0]),
-					(_Keyword->LoRa_LowKey[1]), (_Keyword->LoRa_LowKey[0]));
-			if (LORA_TransmitCommand(500) != LORA_OK)
-				return LORA_FAILED;
-			break;
-		default:
-			break;
-		}
-		return LORA_OK;
+	case AT_OPERATION_READ:
+		sprintf((char*) AT_RXcommand, "AT+NWKSKEY\r\n");
+		LORA_STATUS_RECEIVE = LORA_CLEAR;
+		if (LORA_ReceiveCommand(1000, 10) != LORA_OK)
+			return LORA_FAILED;
+		sscanf(LORA_UART_BUFFER, "%s\r%8lx%8lx%8lx%8lx\r\n", AT_RXcommand,
+				&(_Keyword->LoRa_HighKey[1]), &(_Keyword->LoRa_HighKey[0]),
+				&(_Keyword->LoRa_LowKey[1]), &(_Keyword->LoRa_LowKey[0]));
+		break;
+	case AT_OPERATION_WRITE:
+		sprintf((char*) AT_TXcommand, "AT+NWKSKEY %08lX%08lX%08lX%08lX\r\n",
+				(_Keyword->LoRa_HighKey[1]), (_Keyword->LoRa_HighKey[0]),
+				(_Keyword->LoRa_LowKey[1]), (_Keyword->LoRa_LowKey[0]));
+		if (LORA_TransmitCommand(500) != LORA_OK)
+			return LORA_FAILED;
+		break;
+	default:
+		break;
+	}
+	return LORA_OK;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -439,13 +439,35 @@ LoRa_StatusTypeDef AT_NetworkSessionKey(LoRa_OperationTypeDef _Operacao,
 
 /**
  * @brief Chave de sessão do aplicativo
+ * @tparam AT+APPSKEY <APPSKEY> <ENTER>
  * @param _Operacao: Modo de operação do comando
  * @param _Keyword: Chave da sessão
  * @retval Status de execução do comando
  */
-
 LoRa_StatusTypeDef AT_ApplicationSessionKey(LoRa_OperationTypeDef _Operacao,
-		LoRa_KeyTypeDef *_Keyword);
+		LoRa_KeyTypeDef *_Keyword) {
+	switch (_Operacao) {
+	case AT_OPERATION_READ:
+		sprintf((char*) AT_RXcommand, "AT+APPSKEY\r\n");
+		LORA_STATUS_RECEIVE = LORA_CLEAR;
+		if (LORA_ReceiveCommand(1000, 10) != LORA_OK)
+			return LORA_FAILED;
+		sscanf(LORA_UART_BUFFER, "%s\r%8lx%8lx%8lx%8lx\r\n", AT_RXcommand,
+				&(_Keyword->LoRa_HighKey[1]), &(_Keyword->LoRa_HighKey[0]),
+				&(_Keyword->LoRa_LowKey[1]), &(_Keyword->LoRa_LowKey[0]));
+		break;
+	case AT_OPERATION_WRITE:
+		sprintf((char*) AT_TXcommand, "AT+APPSKEY %08lX%08lX%08lX%08lX\r\n",
+				(_Keyword->LoRa_HighKey[1]), (_Keyword->LoRa_HighKey[0]),
+				(_Keyword->LoRa_LowKey[1]), (_Keyword->LoRa_LowKey[0]));
+		if (LORA_TransmitCommand(500) != LORA_OK)
+			return LORA_FAILED;
+		break;
+	default:
+		break;
+	}
+	return LORA_OK;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -455,13 +477,32 @@ LoRa_StatusTypeDef AT_ApplicationSessionKey(LoRa_OperationTypeDef _Operacao,
 
 /**
  * @brief Endereço do dispositivo
+ * @tparam AT+DADDR <Device Address> <ENTER>
  * @param _Operacao: Modo de operação do comando
- * @param  _Adress: Endereço
+ * @param _Adress: Endereço
  * @retval Status de execução do comando
  */
 
 LoRa_StatusTypeDef AT_DeviceAddress(LoRa_OperationTypeDef _Operacao,
-		LoRa_Adress *_Adress);
+		LoRa_Adress *_Adress) {
+	switch (_Operacao) {
+	case AT_OPERATION_READ:
+		sprintf((char*) AT_RXcommand, "AT+DADDR\r\n");
+		LORA_STATUS_RECEIVE = LORA_CLEAR;
+		if (LORA_ReceiveCommand(1000, 10) != LORA_OK)
+			return LORA_FAILED;
+		sscanf(LORA_UART_BUFFER, "%s\r%8lx\r\n", AT_RXcommand, (uint32_t*) _Adress);
+		break;
+	case AT_OPERATION_WRITE:
+		sprintf((char*) AT_TXcommand, "AT+DADDR %08lX\r\n", ((uint32_t*) _Adress)[0]);
+		if (LORA_TransmitCommand(100) != LORA_OK)
+			return LORA_FAILED;
+		break;
+	default:
+		break;
+	}
+	return LORA_OK;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
