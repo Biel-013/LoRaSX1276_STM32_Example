@@ -5,3 +5,4 @@
 ../Core/Src/LoRa_SX1276.c:157:20:AT_AppEUIAdress	24	static
 ../Core/Src/LoRa_SX1276.c:194:20:AT_ApplicationKey	32	static
 ../Core/Src/LoRa_SX1276.c:236:20:AT_PublicNetworkModeStatus	16	static
+../Core/Src/LoRa_SX1276.c:271:20:AT_NetworkJoinMode	16	static

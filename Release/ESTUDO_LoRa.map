@@ -112,6 +112,10 @@ Discarded input sections
                 0x0000000000000000       0x43 ./Core/Src/LoRa_SX1276.o
  .text.AT_ApplicationKey
                 0x0000000000000000       0x8c ./Core/Src/LoRa_SX1276.o
+ .rodata.AT_NetworkJoinMode.str1.1
+                0x0000000000000000       0x15 ./Core/Src/LoRa_SX1276.o
+ .text.AT_NetworkJoinMode
+                0x0000000000000000       0x70 ./Core/Src/LoRa_SX1276.o
  .text          0x0000000000000000        0x0 ./Core/Src/main.o
  .data          0x0000000000000000        0x0 ./Core/Src/main.o
  .bss           0x0000000000000000        0x0 ./Core/Src/main.o

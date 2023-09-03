@@ -50,8 +50,8 @@ char AT_comand[15] = "";
 extern uint8_t DMA_RX_Buffer_3[DMA_RX_BUFFER_SIZE];
 uint64_t id = 0x018fdea136;
 uint64_t Read;
-LoRa_PublicNetworkTypeDef status = LORA_PUBLIC_NETWORK_OFF;
-LoRa_PublicNetworkTypeDef read_status = LORA_PUBLIC_NETWORK_ON;
+LoRa_NetworkJoinModeTypeDef mode = LORA_NETWORK_JOIN_MODE_ABP;
+LoRa_NetworkJoinModeTypeDef read_mode = LORA_NETWORK_JOIN_MODE_OTAA;
 LoRa_KeyTypeDef keywordRead;
 /* USER CODE END PV */
 
@@ -106,12 +106,12 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-HAL_UART_Transmit(&huart3, "AT+ECHO 1\r\n\0", 12, 100);
+//HAL_UART_Transmit(&huart3, "AT+ECHO 1\r\n\0", 12, 100);
 //HAL_Delay(100);
 	while (1) {
-		if (status != read_status)
-			AT_PublicNetworkModeStatus(AT_OPERATION_WRITE, &status);
-		if (AT_PublicNetworkModeStatus(AT_OPERATION_READ, &read_status) == LORA_OK)
+		if (mode != read_mode)
+			AT_NetworkJoinMode(AT_OPERATION_WRITE, &mode);
+		if (AT_NetworkJoinMode(AT_OPERATION_READ, &read_mode) == LORA_OK)
 			HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_0);
     /* USER CODE END WHILE */
 

@@ -186,7 +186,7 @@ LoRa_StatusTypeDef AT_AppEUIAdress(LoRa_OperationTypeDef _Operacao,
 
 /**
  * @brief Chave de raiz AES-128 específica para o dispositivo final
- * @tparam  AT+APPKEY <AppKey> <ENTER>
+ * @tparam AT+APPKEY <AppKey> <ENTER>
  * @param _Operacao: Modo de operação do comando
  * @param _Keyword: Chave do dispositivo final
  * @retval Status de execução do comando
@@ -200,17 +200,17 @@ LoRa_StatusTypeDef AT_ApplicationKey(LoRa_OperationTypeDef _Operacao,
 		if (LORA_ReceiveCommand(1500) != LORA_OK)
 			return LORA_FAILED;
 		sscanf(LORA_UART_BUFFER, "%s\r%8lx%8lx%8lx%8lx\r\n", AT_RXcommand,
-				&(((uint32_t*) _Keyword->LoRa_Key)[3]),
-				&(((uint32_t*) _Keyword->LoRa_Key)[2]),
-				&(((uint32_t*) _Keyword->LoRa_Key)[1]),
-				&(((uint32_t*) _Keyword->LoRa_Key)[0]));
+				&(_Keyword->LoRa_HighKey[1]),
+				&(_Keyword->LoRa_HighKey[0]),
+				&(_Keyword->LoRa_LowKey[1]),
+				&(_Keyword->LoRa_LowKey[0]));
 		break;
 	case AT_OPERATION_WRITE:
 		sprintf((char*) AT_TXcommand, "AT+APPKEY %08lX%08lX%08lX%08lX\r\n",
-				((uint32_t*) _Keyword->LoRa_Key)[3],
-				((uint32_t*) _Keyword->LoRa_Key)[2],
-				((uint32_t*) _Keyword->LoRa_Key)[1],
-				((uint32_t*) _Keyword->LoRa_Key)[0]);
+				(_Keyword->LoRa_HighKey[1]),
+				(_Keyword->LoRa_HighKey[0]),
+				(_Keyword->LoRa_LowKey[1]),
+				(_Keyword->LoRa_LowKey[0]));
 		if (LORA_TransmitCommand(500) != LORA_OK)
 			return LORA_FAILED;
 		break;
@@ -228,7 +228,7 @@ LoRa_StatusTypeDef AT_ApplicationKey(LoRa_OperationTypeDef _Operacao,
 
 /**
  * @brief Status do modo de rede pública
- * @tparam  AT+PNM <0 | 1> <ENTER>
+ * @tparam AT+PNM <0 | 1> <ENTER>
  * @param _Operacao: Modo de operação do comando
  * @param _Status: Status da rede pública
  * @retval Status de execução do comando
@@ -241,7 +241,8 @@ LoRa_StatusTypeDef AT_PublicNetworkModeStatus(LoRa_OperationTypeDef _Operacao,
 		LORA_STATUS_RECEIVE = LORA_CLEAR;
 		if (LORA_ReceiveCommand(500) != LORA_OK)
 			return LORA_FAILED;
-		sscanf(LORA_UART_BUFFER, "%s\r%hu\r\n", AT_RXcommand, (uint16_t *) _Status);
+		sscanf(LORA_UART_BUFFER, "%s\r%hu\r\n", AT_RXcommand,
+				(uint16_t*) _Status);
 		break;
 	case AT_OPERATION_WRITE:
 		sprintf((char*) AT_TXcommand, "AT+PNM %d\r\n", (*_Status));
@@ -262,13 +263,32 @@ LoRa_StatusTypeDef AT_PublicNetworkModeStatus(LoRa_OperationTypeDef _Operacao,
 
 /**
  * @brief Comando para configuração do modo de ingresso na rede, reinicie após a configuração ser atualizada
+ * @tparam AT+NJM <0 | 1> <ENTER>
  * @param _Operacao: Modo de operação do comando
  * @param _Mode: Modo de ingresso na rede
  * @retval Status de execução do comando
  */
-
 LoRa_StatusTypeDef AT_NetworkJoinMode(LoRa_OperationTypeDef _Operacao,
-		LoRa_NetworkJoinTypeDef *_Mode);
+		LoRa_NetworkJoinModeTypeDef *_Mode) {
+	switch (_Operacao) {
+	case AT_OPERATION_READ:
+		sprintf((char*) AT_RXcommand, "AT+NJM\r\n");
+		LORA_STATUS_RECEIVE = LORA_CLEAR;
+		if (LORA_ReceiveCommand(500) != LORA_OK)
+			return LORA_FAILED;
+		sscanf(LORA_UART_BUFFER, "%s\r%hu\r\n", AT_RXcommand,
+				(uint16_t*) _Mode);
+		break;
+	case AT_OPERATION_WRITE:
+		sprintf((char*) AT_TXcommand, "AT+NJM %d\r\n", (*_Mode));
+		if (LORA_TransmitCommand(100) != LORA_OK)
+			return LORA_FAILED;
+		break;
+	default:
+		break;
+	}
+	return LORA_OK;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
