@@ -23,7 +23,6 @@
 /* USER CODE BEGIN EV */
 
 extern UART_HandleTypeDef huart3; /* Variável externa de configuração do UART */
-
 /* USER CODE END EV */
 
 /* Private define ------------------------------------------------------------*/
@@ -88,15 +87,14 @@ LoRa_StatusTypeDef LORA_TransmitCommand(uint16_t _Timeout) {
 	return LORA_OK;
 }
 
-LoRa_StatusTypeDef LORA_ReceiveCommand(uint16_t _TimerWait) {
-	uint32_t Timer_start = HAL_GetTick();
-
+LoRa_StatusTypeDef LORA_ReceiveCommand(uint16_t _TimerWait, uint16_t _Periodo) {
 	HAL_UART_Transmit(LORA_HANDLER_UART, AT_RXcommand,
 			strlen((char*) AT_RXcommand), 100);
 	HAL_Delay(20);
 
+	uint32_t Timer_start = HAL_GetTick();
 	while (LORA_STATUS_RECEIVE != LORA_OK) {
-		if (((HAL_GetTick() - Timer_start) % 20) == 0)
+		if (((HAL_GetTick() - Timer_start) % _Periodo) == 0)
 			if (HAL_UART_Transmit(LORA_HANDLER_UART, AT_RXcommand,
 					strlen((char*) AT_RXcommand), 100) != HAL_OK)
 				return LORA_FAILED;
@@ -123,7 +121,7 @@ LoRa_StatusTypeDef AT_EndDeviceIdentifier(LoRa_OperationTypeDef _Operacao,
 	case AT_OPERATION_READ:
 		sprintf((char*) AT_RXcommand, "AT+DEVEUI\r\n");
 		LORA_STATUS_RECEIVE = LORA_CLEAR;
-		if (LORA_ReceiveCommand(500) != LORA_OK)
+		if (LORA_ReceiveCommand(500, 20) != LORA_OK)
 			return LORA_FAILED;
 		sscanf(LORA_UART_BUFFER, "%s\r%8lx%8lx\r\n", AT_RXcommand,
 				&(((uint32_t*) _Identifier)[1]),
@@ -160,7 +158,7 @@ LoRa_StatusTypeDef AT_AppEUIAdress(LoRa_OperationTypeDef _Operacao,
 	case AT_OPERATION_READ:
 		sprintf((char*) AT_RXcommand, "AT+APPEUI\r\n");
 		LORA_STATUS_RECEIVE = LORA_CLEAR;
-		if (LORA_ReceiveCommand(500) != LORA_OK)
+		if (LORA_ReceiveCommand(500, 20) != LORA_OK)
 			return LORA_FAILED;
 		sscanf(LORA_UART_BUFFER, "%s\r%8lx%8lx\r\n", AT_RXcommand,
 				&(((uint32_t*) _Identifier)[1]),
@@ -197,20 +195,16 @@ LoRa_StatusTypeDef AT_ApplicationKey(LoRa_OperationTypeDef _Operacao,
 	case AT_OPERATION_READ:
 		sprintf((char*) AT_RXcommand, "AT+APPKEY\r\n");
 		LORA_STATUS_RECEIVE = LORA_CLEAR;
-		if (LORA_ReceiveCommand(1500) != LORA_OK)
+		if (LORA_ReceiveCommand(1500, 20) != LORA_OK)
 			return LORA_FAILED;
 		sscanf(LORA_UART_BUFFER, "%s\r%8lx%8lx%8lx%8lx\r\n", AT_RXcommand,
-				&(_Keyword->LoRa_HighKey[1]),
-				&(_Keyword->LoRa_HighKey[0]),
-				&(_Keyword->LoRa_LowKey[1]),
-				&(_Keyword->LoRa_LowKey[0]));
+				&(_Keyword->LoRa_HighKey[1]), &(_Keyword->LoRa_HighKey[0]),
+				&(_Keyword->LoRa_LowKey[1]), &(_Keyword->LoRa_LowKey[0]));
 		break;
 	case AT_OPERATION_WRITE:
 		sprintf((char*) AT_TXcommand, "AT+APPKEY %08lX%08lX%08lX%08lX\r\n",
-				(_Keyword->LoRa_HighKey[1]),
-				(_Keyword->LoRa_HighKey[0]),
-				(_Keyword->LoRa_LowKey[1]),
-				(_Keyword->LoRa_LowKey[0]));
+				(_Keyword->LoRa_HighKey[1]), (_Keyword->LoRa_HighKey[0]),
+				(_Keyword->LoRa_LowKey[1]), (_Keyword->LoRa_LowKey[0]));
 		if (LORA_TransmitCommand(500) != LORA_OK)
 			return LORA_FAILED;
 		break;
@@ -239,7 +233,7 @@ LoRa_StatusTypeDef AT_PublicNetworkModeStatus(LoRa_OperationTypeDef _Operacao,
 	case AT_OPERATION_READ:
 		sprintf((char*) AT_RXcommand, "AT+PNM\r\n");
 		LORA_STATUS_RECEIVE = LORA_CLEAR;
-		if (LORA_ReceiveCommand(500) != LORA_OK)
+		if (LORA_ReceiveCommand(500, 10) != LORA_OK)
 			return LORA_FAILED;
 		sscanf(LORA_UART_BUFFER, "%s\r%hu\r\n", AT_RXcommand,
 				(uint16_t*) _Status);
@@ -274,7 +268,7 @@ LoRa_StatusTypeDef AT_NetworkJoinMode(LoRa_OperationTypeDef _Operacao,
 	case AT_OPERATION_READ:
 		sprintf((char*) AT_RXcommand, "AT+NJM\r\n");
 		LORA_STATUS_RECEIVE = LORA_CLEAR;
-		if (LORA_ReceiveCommand(500) != LORA_OK)
+		if (LORA_ReceiveCommand(500, 10) != LORA_OK)
 			return LORA_FAILED;
 		sscanf(LORA_UART_BUFFER, "%s\r%hu\r\n", AT_RXcommand,
 				(uint16_t*) _Mode);
@@ -298,13 +292,31 @@ LoRa_StatusTypeDef AT_NetworkJoinMode(LoRa_OperationTypeDef _Operacao,
 
 /**
  * @brief Comando para definir a classe LoRa MAC
+ * @tparam AT+CLASS <LoRa MAC Class> <ENTER>
  * @param _Operacao: Modo de operação do comando
  * @param _Class: Classe de MAC
  * @retval Status de execução do comando
  */
-
 LoRa_StatusTypeDef AT_LoRaMacClass(LoRa_OperationTypeDef _Operacao,
-		LoRa_MacClassTypeDef *_Class);
+		LoRa_MacClassTypeDef *_Class) {
+	switch (_Operacao) {
+	case AT_OPERATION_READ:
+		sprintf((char*) AT_RXcommand, "AT+CLASS\r\n");
+		LORA_STATUS_RECEIVE = LORA_CLEAR;
+		if (LORA_ReceiveCommand(500, 10) != LORA_OK)
+			return LORA_FAILED;
+		sscanf(LORA_UART_BUFFER, "%s\r%c\r\n", AT_RXcommand, (char*) _Class);
+		break;
+	case AT_OPERATION_WRITE:
+		sprintf((char*) AT_TXcommand, "AT+CLASS %c\r\n", (*_Class));
+		if (LORA_TransmitCommand(100) != LORA_OK)
+			return LORA_FAILED;
+		break;
+	default:
+		break;
+	}
+	return LORA_OK;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
