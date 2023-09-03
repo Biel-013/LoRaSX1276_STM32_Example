@@ -7,3 +7,5 @@
 ../Core/Src/LoRa_SX1276.c:230:20:AT_PublicNetworkModeStatus	16	static
 ../Core/Src/LoRa_SX1276.c:265:20:AT_NetworkJoinMode	16	static
 ../Core/Src/LoRa_SX1276.c:300:20:AT_LoRaMacClass	16	static
+../Core/Src/LoRa_SX1276.c:333:20:AT_JoinRequestNetworkServer	8	static
+../Core/Src/LoRa_SX1276.c:352:20:AT_JoinNetworkServerStatus	16	static

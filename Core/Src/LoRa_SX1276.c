@@ -326,11 +326,16 @@ LoRa_StatusTypeDef AT_LoRaMacClass(LoRa_OperationTypeDef _Operacao,
 
 /**
  * @brief Comando para ingressar no servidor de rede LoRa
+ * @tparam AT+JOIN <ENTER>
  * @param ***NONE***
  * @retval Status de execução do comando
  */
-
-LoRa_StatusTypeDef AT_JoinRequestNetworkServer(void);
+LoRa_StatusTypeDef AT_JoinRequestNetworkServer(void) {
+	sprintf((char*) AT_TXcommand, "AT+JOIN\r\n");
+	if (LORA_TransmitCommand(100) != LORA_OK)
+		return LORA_FAILED;
+	return LORA_OK;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -340,11 +345,18 @@ LoRa_StatusTypeDef AT_JoinRequestNetworkServer(void);
 
 /**
  * @brief Comando para verificar o status de ingresso na rede LoRa
+ * @tparam AT+NJS <ENTER>
  * @param _Status: Status de ingresso
  * @retval Status de execução do comando
  */
-
-LoRa_StatusTypeDef AT_JoinNetworkServerStatus(LoRa_NetworkJoinTypeDef *_Status);
+LoRa_StatusTypeDef AT_JoinNetworkServerStatus(LoRa_NetworkJoinTypeDef *_Status) {
+	sprintf((char*) AT_RXcommand, "AT+NJS\r\n");
+	LORA_STATUS_RECEIVE = LORA_CLEAR;
+	if (LORA_ReceiveCommand(500, 10) != LORA_OK)
+		return LORA_FAILED;
+	sscanf(LORA_UART_BUFFER, "%s\r%hu\r\n", AT_RXcommand, (uint16_t*) _Status);
+	return LORA_OK;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
