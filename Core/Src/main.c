@@ -50,7 +50,8 @@ char AT_comand[15] = "";
 extern uint8_t DMA_RX_Buffer_3[DMA_RX_BUFFER_SIZE];
 uint64_t id = 0x018fdea136;
 uint64_t Read;
-LoRa_KeyTypeDef keyword;
+LoRa_PublicNetworkTypeDef status = LORA_PUBLIC_NETWORK_OFF;
+LoRa_PublicNetworkTypeDef read_status = LORA_PUBLIC_NETWORK_ON;
 LoRa_KeyTypeDef keywordRead;
 /* USER CODE END PV */
 
@@ -101,8 +102,6 @@ int main(void)
   MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
 	USART_Init();
-	keyword.LoRa_Key[0] = id;
-	keyword.LoRa_Key[1] = id;
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -110,9 +109,9 @@ int main(void)
 HAL_UART_Transmit(&huart3, "AT+ECHO 1\r\n\0", 12, 100);
 //HAL_Delay(100);
 	while (1) {
-		if (Read != id)
-			AT_ApplicationKey(AT_OPERATION_WRITE, &keyword);
-		if (AT_ApplicationKey(AT_OPERATION_READ, &keywordRead) == LORA_OK)
+		if (status != read_status)
+			AT_PublicNetworkModeStatus(AT_OPERATION_WRITE, &status);
+		if (AT_PublicNetworkModeStatus(AT_OPERATION_READ, &read_status) == LORA_OK)
 			HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_0);
     /* USER CODE END WHILE */
 

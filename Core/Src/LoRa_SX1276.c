@@ -228,13 +228,31 @@ LoRa_StatusTypeDef AT_ApplicationKey(LoRa_OperationTypeDef _Operacao,
 
 /**
  * @brief Status do modo de rede pública
+ * @tparam  AT+PNM <0 | 1> <ENTER>
  * @param _Operacao: Modo de operação do comando
  * @param _Status: Status da rede pública
  * @retval Status de execução do comando
  */
-
 LoRa_StatusTypeDef AT_PublicNetworkModeStatus(LoRa_OperationTypeDef _Operacao,
-		LoRa_PublicNetworkTypeDef *_Status);
+		LoRa_PublicNetworkTypeDef *_Status) {
+	switch (_Operacao) {
+	case AT_OPERATION_READ:
+		sprintf((char*) AT_RXcommand, "AT+PNM\r\n");
+		LORA_STATUS_RECEIVE = LORA_CLEAR;
+		if (LORA_ReceiveCommand(500) != LORA_OK)
+			return LORA_FAILED;
+		sscanf(LORA_UART_BUFFER, "%s\r%hu\r\n", AT_RXcommand, (uint16_t *) _Status);
+		break;
+	case AT_OPERATION_WRITE:
+		sprintf((char*) AT_TXcommand, "AT+PNM %d\r\n", (*_Status));
+		if (LORA_TransmitCommand(100) != LORA_OK)
+			return LORA_FAILED;
+		break;
+	default:
+		break;
+	}
+	return LORA_OK;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
