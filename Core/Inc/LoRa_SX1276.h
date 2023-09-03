@@ -35,8 +35,8 @@ typedef uint32_t LoRa_Rate;
 typedef uint32_t LoRa_Adress;
 
 typedef struct {
-	uint64_t *LoRa_HighKey;
-	uint64_t *LoRa_LowKey;
+	uint32_t LoRa_HighKey[2];
+	uint32_t LoRa_LowKey[2];
 } LoRa_KeyTypeDef;
 
 typedef enum {
@@ -45,7 +45,8 @@ typedef enum {
 	LORA_FAILED_CHARACTER   = 0x02U,
 	LORA_FAILED_COMMAND     = 0x03U,
 	LORA_BUSY               = 0x04U,
-	LORA_TIMEOUT            = 0x05U
+	LORA_TIMEOUT            = 0x05U,
+	LORA_CLEAR              = 0x06U
 } LoRa_StatusTypeDef;
 
 typedef enum {
@@ -312,7 +313,7 @@ LoRa_StatusTypeDef AT_PublicNetworkModeStatus (LoRa_OperationTypeDef _Operacao,
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_NetworkJoinMode (LoRa_OperationTypeDef _Operacao, LoRa_NetworkJoinTypeDef *_Mode);
+LoRa_StatusTypeDef AT_NetworkJoinMode (LoRa_OperationTypeDef _Operacao, LoRa_NetworkJoinModeTypeDef *_Mode);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -430,7 +431,7 @@ LoRa_StatusTypeDef AT_DeviceAddress (LoRa_OperationTypeDef _Operacao, LoRa_Adres
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_NetworkIdentifier (LoRa_OperationTypeDef _Operacao, LoRa_Id *_Identifier);
+LoRa_StatusTypeDef AT_NetworkIdentifier (LoRa_OperationTypeDef _Operacao, LoRa_Adress *_Identifier);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -444,7 +445,7 @@ LoRa_StatusTypeDef AT_NetworkIdentifier (LoRa_OperationTypeDef _Operacao, LoRa_I
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_ActivationSettingValue (LoRa_ActivationSettingTypeDef _hSettings);
+LoRa_StatusTypeDef AT_ActivationSettingValue (LoRa_ActivationSettingTypeDef *_hSettings);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

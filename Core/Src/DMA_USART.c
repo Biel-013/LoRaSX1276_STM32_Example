@@ -31,6 +31,7 @@ extern DMA_HandleTypeDef hdma_usart3_rx;
 extern void Error_Handler(); /* */
 extern void LORA_ReceivedCallback();
 extern uint8_t LORA_UART_BUFFER[100];
+char *fistTERM = "\r\n<OK>\r\n\nAT+";
 /* USER CODE END EF */
 
 /* Private variables --------------------------------------------------------*/
@@ -53,18 +54,19 @@ uint8_t POSICAO_INICIAL = 0;
 
 void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size) {
 	/* Prevent unused argument(s) compilation warning */
-	HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_4);
-	if (huart->Instance == USART3) {
-		if (!memcmp(DMA_RX_Buffer_3, "AT+", 3))
-			LORA_ReceivedCallback(DMA_RX_Buffer_3);
-		for (int i = 0; i < DMA_RX_BUFFER_SIZE; i++)
-		{
-			DMA_RX_Buffer_3[i] = '\000';
-		}
-		HAL_UARTEx_ReceiveToIdle_DMA(&huart3, &DMA_RX_Buffer_3[0], DMA_RX_BUFFER_SIZE);
-		huart3.pRxBuffPtr=&DMA_RX_Buffer_3[0];
-		__HAL_DMA_DISABLE_IT(&hdma_usart3_rx, DMA_IT_HT);
 
+	if (huart->Instance == USART3) {
+		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_4);
+		HAL_UART_DMAPause(&huart3);
+		for (int i = 0; i < 10; i++)
+			if (!memcmp(DMA_RX_Buffer_3 + i, fistTERM, strlen(fistTERM))) {
+				LORA_ReceivedCallback(DMA_RX_Buffer_3);
+
+			}
+		HAL_UART_DMAResume(&huart3);
+		HAL_UARTEx_ReceiveToIdle_DMA(&huart3, DMA_RX_Buffer_3,
+		DMA_RX_BUFFER_SIZE);
+		__HAL_DMA_DISABLE_IT(&hdma_usart3_rx, DMA_IT_HT);
 	}
 }
 
@@ -75,7 +77,8 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size) {
  * @retval ***NONE***
  */
 void USART_Init(void) {
-	HAL_UARTEx_ReceiveToIdle_DMA(&huart3, DMA_RX_Buffer_3, DMA_RX_BUFFER_SIZE);
+	HAL_UARTEx_ReceiveToIdle_DMA(&huart3, DMA_RX_Buffer_3,
+	DMA_RX_BUFFER_SIZE);
 	__HAL_DMA_DISABLE_IT(&hdma_usart3_rx, DMA_IT_HT);
 //	HAL_UARTEx_ReceiveToIdle_DMA(&huart2, DMA_RX_Buffer_2, DMA_RX_BUFFER_SIZE);
 }

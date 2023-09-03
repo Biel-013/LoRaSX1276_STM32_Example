@@ -12,7 +12,7 @@
 #include "stm32f1xx_hal.h"
 #include <string.h>
 
-#define DMA_RX_BUFFER_SIZE 50
+#define DMA_RX_BUFFER_SIZE 70
 #define DMA_RX_BUFFER_SIZE_NEXTION 32
 #define DMA_RX_BUFFER_SIZE_XBEE 64
 
