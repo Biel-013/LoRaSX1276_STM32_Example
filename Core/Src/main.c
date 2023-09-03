@@ -101,14 +101,14 @@ int main(void)
   MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
 	USART_Init();
-
 	keyword.LoRa_HighKey[0] = id;
 	keyword.LoRa_LowKey[0] = id;
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-
+HAL_UART_Transmit(&huart3, "AT+ECHO 1\r\n\0", 12, 100);
+//HAL_Delay(100);
 	while (1) {
 		if (Read != id)
 			AT_EndDeviceIdentifier(AT_OPERATION_WRITE, &id);

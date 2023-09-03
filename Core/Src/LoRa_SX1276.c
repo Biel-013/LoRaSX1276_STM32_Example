@@ -72,8 +72,8 @@ void LORA_ReceivedCallback(uint8_t buffer[50]) {
 }
 
 LoRa_StatusTypeDef LORA_TransmitCommand(void) {
-	if (HAL_UART_Transmit(LORA_HANDLER_UART, AT_TXcommand, strlen((char *)AT_TXcommand), 100)
-			!= HAL_OK)
+	if (HAL_UART_Transmit(LORA_HANDLER_UART, AT_TXcommand,
+			strlen((char*) AT_TXcommand), 100) != HAL_OK)
 		return LORA_FAILED;
 	return LORA_OK;
 }
@@ -81,10 +81,11 @@ LoRa_StatusTypeDef LORA_TransmitCommand(void) {
 LoRa_StatusTypeDef LORA_ReceiveCommand(uint16_t _TimerWait) {
 	uint32_t Timer_start = HAL_GetTick();
 	while (LORA_STATUS_RECEIVE != LORA_OK) {
-		if (((Timer_start = HAL_GetTick()) % 20) == 0)
-			if (HAL_UART_Transmit(LORA_HANDLER_UART, AT_RXcommand, strlen((char *)AT_RXcommand), 100) != HAL_OK)
+		if (((HAL_GetTick() - Timer_start) % 20) == 0)
+			if (HAL_UART_Transmit(LORA_HANDLER_UART, AT_RXcommand,
+					strlen((char*) AT_RXcommand), 100) != HAL_OK)
 				return LORA_FAILED;
-		if (HAL_GetTick() - Timer_start > _TimerWait)
+		if ((HAL_GetTick() - Timer_start) > _TimerWait)
 			return LORA_TIMEOUT;
 	}
 	return LORA_OK;
@@ -106,16 +107,16 @@ LoRa_StatusTypeDef AT_EndDeviceIdentifier(LoRa_OperationTypeDef _Operacao,
 
 	switch (_Operacao) {
 	case AT_OPERATION_READ:
-		sprintf((char *)AT_RXcommand, "AT+DEVEUI\r\n");
+		sprintf((char*) AT_RXcommand, "AT+DEVEUI\r\n");
 		LORA_STATUS_RECEIVE = LORA_CLEAR;
-		if (LORA_ReceiveCommand(1000) != LORA_OK)
+		if (LORA_ReceiveCommand(100) != LORA_OK)
 			return LORA_FAILED;
 		sscanf(LORA_UART_BUFFER, "%s\r%8lx%8lx\r\n", AT_RXcommand,
 				&(((uint32_t*) _Identifier)[1]),
 				&(((uint32_t*) _Identifier)[0]));
 		break;
 	case AT_OPERATION_WRITE:
-		sprintf((char *)AT_TXcommand, "AT+DEVEUI %04X%04X%04X%04X\r\n",
+		sprintf((char*) AT_TXcommand, "AT+DEVEUI %04X%04X%04X%04X\r\n",
 				((uint16_t*) _Identifier)[3], ((uint16_t*) _Identifier)[2],
 				((uint16_t*) _Identifier)[1], ((uint16_t*) _Identifier)[0]);
 		if (LORA_TransmitCommand() != LORA_OK)
@@ -145,7 +146,7 @@ LoRa_StatusTypeDef AT_AppEUIAdress(LoRa_OperationTypeDef _Operacao,
 //	char AT_command[50];
 	switch (_Operacao) {
 	case AT_OPERATION_READ:
-		sprintf((char *)AT_RXcommand, "AT+APPEUI\r\n");
+		sprintf((char*) AT_RXcommand, "AT+APPEUI\r\n");
 		LORA_STATUS_RECEIVE = LORA_CLEAR;
 		if (LORA_ReceiveCommand(100) != LORA_OK)
 			return LORA_FAILED;
@@ -154,7 +155,7 @@ LoRa_StatusTypeDef AT_AppEUIAdress(LoRa_OperationTypeDef _Operacao,
 				&(((uint32_t*) _Identifier)[0]));
 		break;
 	case AT_OPERATION_WRITE:
-		sprintf((char *)AT_TXcommand, "AT+APPEUI %04X%04X%04X%04X\r\n",
+		sprintf((char*) AT_TXcommand, "AT+APPEUI %04X%04X%04X%04X\r\n",
 				((uint16_t*) _Identifier)[3], ((uint16_t*) _Identifier)[2],
 				((uint16_t*) _Identifier)[1], ((uint16_t*) _Identifier)[0]);
 		if (LORA_TransmitCommand() != LORA_OK)

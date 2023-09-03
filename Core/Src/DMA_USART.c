@@ -57,14 +57,14 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size) {
 	HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_4);
 	if (huart->Instance == USART3) {
 		if (DMA_RX_Buffer_3[0] == 'A') {
-			HAL_UART_Abort(&huart3);
 			if (DMA_RX_Buffer_3[1] == 'T')
 				if (DMA_RX_Buffer_3[2] == '+')
+					HAL_UART_Abort(&huart3);
 				LORA_ReceivedCallback(DMA_RX_Buffer_3);
 		}
-		HAL_UARTEx_ReceiveToIdle_DMA(&huart3, &DMA_RX_Buffer_3[0],
+		HAL_UARTEx_ReceiveToIdle_DMA(&huart3, DMA_RX_Buffer_3,
 		DMA_RX_BUFFER_SIZE);
-		huart3.pRxBuffPtr = &DMA_RX_Buffer_3[0];
+//		huart3.pRxBuffPtr = &DMA_RX_Buffer_3[0];
 		__HAL_DMA_DISABLE_IT(&hdma_usart3_rx, DMA_IT_HT);
 
 	}
