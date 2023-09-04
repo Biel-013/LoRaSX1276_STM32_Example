@@ -18,3 +18,5 @@
 ../Core/Src/LoRa_SX1276.c:575:20:AT_DataUplinkText	16	static
 ../Core/Src/LoRa_SX1276.c:595:20:AT_DataUplinkHexadecimal	40	static
 ../Core/Src/LoRa_SX1276.c:617:20:AT_ConfirmDownlinkDataText	24	static
+../Core/Src/LoRa_SX1276.c:641:20:AT_ConfirmDownlinkDataHexadecimal	24	static
+../Core/Src/LoRa_SX1276.c:664:20:AT_ReturnRSSI	16	static

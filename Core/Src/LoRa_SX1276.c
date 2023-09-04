@@ -620,7 +620,8 @@ LoRa_StatusTypeDef AT_ConfirmDownlinkDataText(LoRa_Value *_Port,
 	LORA_STATUS_RECEIVE = LORA_CLEAR;
 	if (LORA_ReceiveCommand(1000, 10) != LORA_OK)
 		return LORA_FAILED;
-	sscanf(LORA_UART_BUFFER, "%s\r%hu:%s\r\n", AT_RXcommand, (uint16_t *) _Port, _Data);
+	sscanf(LORA_UART_BUFFER, "%s\r%hu:%s\r\n", AT_RXcommand, (uint16_t*) _Port,
+			_Data);
 	return LORA_OK;
 }
 
@@ -632,14 +633,21 @@ LoRa_StatusTypeDef AT_ConfirmDownlinkDataText(LoRa_Value *_Port,
 
 /**
  * @brief Comando para leitura de dados de recebidos
- * @tparam
+ * @tparam AT+RECVB <ENTER>
  * @param _Port: Porta dos dados recebidos
  * @param _Data: Dados recebidos
  * @retval Status de execução do comando
  */
-
 LoRa_StatusTypeDef AT_ConfirmDownlinkDataHexadecimal(LoRa_Value *_Port,
-		LoRa_Data _Data[5]);
+		LoRa_Data _Data[5]) {
+	sprintf((char*) AT_RXcommand, "AT+RECVB\r\n");
+	LORA_STATUS_RECEIVE = LORA_CLEAR;
+	if (LORA_ReceiveCommand(1000, 10) != LORA_OK)
+		return LORA_FAILED;
+	sscanf(LORA_UART_BUFFER, "%s\r%hu:%s\r\n", AT_RXcommand, (uint16_t*) _Port,
+			_Data);
+	return LORA_OK;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -649,12 +657,18 @@ LoRa_StatusTypeDef AT_ConfirmDownlinkDataHexadecimal(LoRa_Value *_Port,
 
 /**
  * @brief Valor RSSI de leitura dos últimos dados recebidos
- * @tparam
+ * @tparam AT+RSSI <ENTER>
  * @param  _Value: Valor do RSSI
  * @retval Status de execução do comando
  */
-
-LoRa_StatusTypeDef AT_ReturnRSSI(LoRa_RSSI *_Value);
+LoRa_StatusTypeDef AT_ReturnRSSI(LoRa_RSSI *_Value) {
+	sprintf((char*) AT_RXcommand, "AT+RSSI\r\n");
+	LORA_STATUS_RECEIVE = LORA_CLEAR;
+	if (LORA_ReceiveCommand(1000, 10) != LORA_OK)
+		return LORA_FAILED;
+	sscanf(LORA_UART_BUFFER, "%s\r%hd\r\n", AT_RXcommand, (int16_t *) _Value);
+	return LORA_OK;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
