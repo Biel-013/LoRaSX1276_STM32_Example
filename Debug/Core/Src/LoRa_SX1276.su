@@ -16,4 +16,5 @@
 ../Core/Src/LoRa_SX1276.c:521:20:AT_NetworkIdentifier	16	static
 ../Core/Src/LoRa_SX1276.c:557:20:AT_ActivationSettingValue	16	static
 ../Core/Src/LoRa_SX1276.c:575:20:AT_DataUplinkText	16	static
-../Core/Src/LoRa_SX1276.c:596:20:AT_DataUplinkHexadecimal	40	static
+../Core/Src/LoRa_SX1276.c:595:20:AT_DataUplinkHexadecimal	40	static
+../Core/Src/LoRa_SX1276.c:617:20:AT_ConfirmDownlinkDataText	24	static

@@ -592,11 +592,10 @@ LoRa_StatusTypeDef AT_DataUplinkText(LoRa_Value _Port, LoRa_Data _Data[5]) {
  * @param _Data: Dados para envio
  * @retval Status de execução do comando
  */
-
 LoRa_StatusTypeDef AT_DataUplinkHexadecimal(LoRa_Value _Port,
 		LoRa_Data _Data[5]) {
-	sprintf((char*) AT_TXcommand, "AT+SENDB %hu:%02hx%02hx%02hx%02hx%02hx\r\n", _Port,
-			_Data[4], _Data[3], _Data[2], _Data[1], _Data[0]);
+	sprintf((char*) AT_TXcommand, "AT+SENDB %hu:%02hx%02hx%02hx%02hx%02hx\r\n",
+			_Port, _Data[4], _Data[3], _Data[2], _Data[1], _Data[0]);
 	if (LORA_TransmitCommand(100) != LORA_OK)
 		return LORA_FAILED;
 	return LORA_OK;
@@ -610,12 +609,20 @@ LoRa_StatusTypeDef AT_DataUplinkHexadecimal(LoRa_Value _Port,
 
 /**
  * @brief Comando para leitura de dados de recebidos
- * @tparam
+ * @tparam AT+RECV <ENTER>
+ * @param _Port: Porta dos dados recebidos
  * @param _Data: Dados recebidos
  * @retval Status de execução do comando
  */
-
-LoRa_StatusTypeDef AT_ConfirmDownlinkDataText(LoRa_Data _Data[5]);
+LoRa_StatusTypeDef AT_ConfirmDownlinkDataText(LoRa_Value *_Port,
+		LoRa_Data _Data[5]) {
+	sprintf((char*) AT_RXcommand, "AT+RECV\r\n");
+	LORA_STATUS_RECEIVE = LORA_CLEAR;
+	if (LORA_ReceiveCommand(1000, 10) != LORA_OK)
+		return LORA_FAILED;
+	sscanf(LORA_UART_BUFFER, "%s\r%hu:%s\r\n", AT_RXcommand, (uint16_t *) _Port, _Data);
+	return LORA_OK;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -626,11 +633,13 @@ LoRa_StatusTypeDef AT_ConfirmDownlinkDataText(LoRa_Data _Data[5]);
 /**
  * @brief Comando para leitura de dados de recebidos
  * @tparam
+ * @param _Port: Porta dos dados recebidos
  * @param _Data: Dados recebidos
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_ConfirmDownlinkDataHexadecimal(LoRa_Data _Data[5]);
+LoRa_StatusTypeDef AT_ConfirmDownlinkDataHexadecimal(LoRa_Value *_Port,
+		LoRa_Data _Data[5]);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

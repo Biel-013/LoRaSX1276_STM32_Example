@@ -485,11 +485,12 @@ LoRa_StatusTypeDef AT_DataUplinkHexadecimal (LoRa_Value _Port, LoRa_Data _Data[5
 
 /**
  * @brief Comando para leitura de dados de recebidos
+ * @param _Port: Porta dos dados recebidos
  * @param _Data: Dados recebidos
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_ConfirmDownlinkDataText (LoRa_Data _Data[5]);
+LoRa_StatusTypeDef AT_ConfirmDownlinkDataText (LoRa_Value *_Port, LoRa_Data _Data[5]);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -499,11 +500,12 @@ LoRa_StatusTypeDef AT_ConfirmDownlinkDataText (LoRa_Data _Data[5]);
 
 /**
  * @brief Comando para leitura de dados de recebidos
+ * @param _Port: Porta dos dados recebidos
  * @param _Data: Dados recebidos
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_ConfirmDownlinkDataHexadecimal(LoRa_Data _Data[5]);
+LoRa_StatusTypeDef AT_ConfirmDownlinkDataHexadecimal(LoRa_Value *_Port, LoRa_Data _Data[5]);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
