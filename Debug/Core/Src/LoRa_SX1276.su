@@ -23,3 +23,4 @@
 ../Core/Src/LoRa_SX1276.c:685:20:AT_ReturnsSNR	16	static
 ../Core/Src/LoRa_SX1276.c:707:20:AT_LoRaMacRegion	16	static
 ../Core/Src/LoRa_SX1276.c:742:20:AT_AutoDateRate	16	static
+../Core/Src/LoRa_SX1276.c:778:20:AT_DataRateCommand	16	static
