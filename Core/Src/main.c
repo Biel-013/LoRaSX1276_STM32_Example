@@ -53,7 +53,7 @@ uint64_t Read;
 LoRa_AutoNetworkJoinTypeDef status = LORA_AUTO_NETWORK_JOIN_ON;
 LoRa_AutoNetworkJoinTypeDef read_status = LORA_AUTO_NETWORK_JOIN_OFF;
 LoRa_Adress adress = 0xd3ad12;
-LoRa_ActivationSettingTypeDef hSetting;
+LoRa_Data data[5];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -108,13 +108,16 @@ int main(void) {
 	/* USER CODE BEGIN WHILE */
 //	if (AT_JoinRequestNetworkServer() == LORA_OK)
 //						HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_0);
+	data[4] = 0x01;
+	data[2] = 0xa4;
+	data[0] = 0xf0;
+	AT_DataUplinkHexadecimal(2, data);
 	while (1) {
 //		if (adress != read_adress)
 //			AT_NetworkIdentifier(AT_OPERATION_WRITE, &adress);
 //		if (status != LORA_NETWORK_JOINED)
 //			AT_AutoJoinNetworkServer();
-		if (AT_ActivationSettingValue(&hSetting) == LORA_OK)
-			HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_0);
+
 		/* USER CODE END WHILE */
 
 		/* USER CODE BEGIN 3 */

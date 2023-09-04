@@ -14,4 +14,6 @@
 ../Core/Src/LoRa_SX1276.c:447:20:AT_ApplicationSessionKey	32	static
 ../Core/Src/LoRa_SX1276.c:485:20:AT_DeviceAddress	16	static
 ../Core/Src/LoRa_SX1276.c:521:20:AT_NetworkIdentifier	16	static
-../Core/Src/LoRa_SX1276.c:556:20:AT_ActivationSettingValue	16	static
+../Core/Src/LoRa_SX1276.c:557:20:AT_ActivationSettingValue	16	static
+../Core/Src/LoRa_SX1276.c:575:20:AT_DataUplinkText	16	static
+../Core/Src/LoRa_SX1276.c:596:20:AT_DataUplinkHexadecimal	40	static

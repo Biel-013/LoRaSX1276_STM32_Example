@@ -455,11 +455,12 @@ LoRa_StatusTypeDef AT_ActivationSettingValue (LoRa_ActivationSettingTypeDef *_hS
 
 /**
  * @brief Comando LoRa para envio de dados do tipo string
+ * @param _Port: Porta para envio de dados
  * @param _Data: Dados para envio
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_DataUplinkText (LoRa_Data _Data[5]);
+LoRa_StatusTypeDef AT_DataUplinkText (LoRa_Value _Port, LoRa_Data _Data[5]);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -469,11 +470,12 @@ LoRa_StatusTypeDef AT_DataUplinkText (LoRa_Data _Data[5]);
 
 /**
  * @brief Comando LoRa para envio de dados do tipo hexacimal
+ * @param _Port: Porta para envio de dados
  * @param _Data: Dados para envio
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_DataUplinkHexadecimal (LoRa_Data _Data[5]);
+LoRa_StatusTypeDef AT_DataUplinkHexadecimal (LoRa_Value _Port, LoRa_Data _Data[5]);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

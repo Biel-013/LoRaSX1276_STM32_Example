@@ -567,11 +567,17 @@ LoRa_StatusTypeDef AT_ActivationSettingValue(
 
 /**
  * @brief Comando LoRa para envio de dados do tipo string
+ * @tparam AT+SEND <application port>:<data> <ENTER>
+ * @param _Port: Porta para envio de dados
  * @param _Data: Dados para envio
  * @retval Status de execução do comando
  */
-
-LoRa_StatusTypeDef AT_DataUplinkText(LoRa_Data _Data[5]);
+LoRa_StatusTypeDef AT_DataUplinkText(LoRa_Value _Port, LoRa_Data _Data[5]) {
+	sprintf((char*) AT_TXcommand, "AT+SEND %hu:%5s\r\n", _Port, _Data);
+	if (LORA_TransmitCommand(100) != LORA_OK)
+		return LORA_FAILED;
+	return LORA_OK;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -581,11 +587,20 @@ LoRa_StatusTypeDef AT_DataUplinkText(LoRa_Data _Data[5]);
 
 /**
  * @brief Comando LoRa para envio de dados do tipo hexacimal
+ * @tparam  AT+SENDB <application port>:<data> <ENTER>
+ * @param _Port: Porta para envio de dados
  * @param _Data: Dados para envio
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_DataUplinkHexadecimal(LoRa_Data _Data[5]);
+LoRa_StatusTypeDef AT_DataUplinkHexadecimal(LoRa_Value _Port,
+		LoRa_Data _Data[5]) {
+	sprintf((char*) AT_TXcommand, "AT+SENDB %hu:%02hx%02hx%02hx%02hx%02hx\r\n", _Port,
+			_Data[4], _Data[3], _Data[2], _Data[1], _Data[0]);
+	if (LORA_TransmitCommand(100) != LORA_OK)
+		return LORA_FAILED;
+	return LORA_OK;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -595,6 +610,7 @@ LoRa_StatusTypeDef AT_DataUplinkHexadecimal(LoRa_Data _Data[5]);
 
 /**
  * @brief Comando para leitura de dados de recebidos
+ * @tparam
  * @param _Data: Dados recebidos
  * @retval Status de execução do comando
  */
@@ -609,6 +625,7 @@ LoRa_StatusTypeDef AT_ConfirmDownlinkDataText(LoRa_Data _Data[5]);
 
 /**
  * @brief Comando para leitura de dados de recebidos
+ * @tparam
  * @param _Data: Dados recebidos
  * @retval Status de execução do comando
  */
@@ -623,6 +640,7 @@ LoRa_StatusTypeDef AT_ConfirmDownlinkDataHexadecimal(LoRa_Data _Data[5]);
 
 /**
  * @brief Valor RSSI de leitura dos últimos dados recebidos
+ * @tparam
  * @param  _Value: Valor do RSSI
  * @retval Status de execução do comando
  */
@@ -637,6 +655,7 @@ LoRa_StatusTypeDef AT_ReturnRSSI(LoRa_RSSI *_Value);
 
 /**
  * @brief Leitura do valor SNR (relação sinal-ruído) dos últimos dados recebidos
+ * @tparam
  * @param _Value: Valor do SNR
  * @retval Status de execução do comando
  */
@@ -651,6 +670,7 @@ LoRa_StatusTypeDef AT_ReturnsSNR(LoRa_Value *_Value);
 
 /**
  * @brief Retorna a configuração da região LoRaMAC. Reinicie após a atualização da configuração
+ * @tparam
  * @param _Operacao: Modo de operação do comando
  * @param _Region: Região de LoRaMAC
  * @retval Status de execução do comando
@@ -667,6 +687,7 @@ LoRa_StatusTypeDef AT_LoRaMacRegion(LoRa_OperationTypeDef _Operacao,
 
 /**
  * @brief Configuração de Auto Data Rate (ADR)
+ * @tparam
  * @param _Operacao: Modo de operação do comando
  * @param _Status: Status do ADR
  * @retval Status de execução do comando
@@ -683,6 +704,7 @@ LoRa_StatusTypeDef AT_AutoDateRate(LoRa_OperationTypeDef _Operacao,
 
 /**
  * @brief Status da configuração da taxa de dados. O fator de espalhamento (SF) pode variar de acordo com a região
+ * @tparam
  * @param _Operacao: Modo de operação do comando
  * @param _DateRate: Taxa de dados
  * @retval Status de execução do comando
@@ -699,6 +721,7 @@ LoRa_StatusTypeDef AT_DataRateCommand(LoRa_OperationTypeDef _Operacao,
 
 /**
  * @brief Comando da frequência Rx da janela 2
+ * @tparam
  * @param _Operacao: Modo de operação do comando
  * @param _Rate: Frequência
  * @retval Status de execução do comando
@@ -715,6 +738,7 @@ LoRa_StatusTypeDef AT_RxWindow2Frequency(LoRa_OperationTypeDef _Operacao,
 
 /**
  * @brief Comando da taxa de dados da janela Rx 2 (0-7 correspondente a DR_X)
+ * @tparam
  * @param _Operacao: Modo de operação do comando
  * @param _Value: Taxa de dados
  * @retval Status de execução do comando
@@ -731,6 +755,7 @@ LoRa_StatusTypeDef AT_RxWindow2DataRate(LoRa_OperationTypeDef _Operacao,
 
 /**
  * @brief Define o atraso entre o final da janela TX e a janela Rx 1 em ms
+ * @tparam
  * @param _Operacao: Modo de operação do comando
  * @param _Value: Delay em ms
  * @retval Status de execução do comando
@@ -747,6 +772,7 @@ LoRa_StatusTypeDef AT_TxRxWindow1Delay(LoRa_OperationTypeDef _Operacao,
 
 /**
  * @brief Define o atraso entre o final do TX e a janela Rx 2 em ms
+ * @tparam
  * @param _Operacao: Modo de operação do comando
  * @param _Value: Delay em ms
  * @retval Status de execução do comando
@@ -763,6 +789,7 @@ LoRa_StatusTypeDef AT_TxRxWindow2Delay(LoRa_OperationTypeDef _Operacao,
 
 /**
  * @brief Comando para acessar o atraso de junção na janela RX 1 em ms
+ * @tparam
  * @param _Operacao: Modo de operação do comando
  * @param _Value: Delay em ms
  * @retval Status de execução do comando
@@ -779,6 +806,7 @@ LoRa_StatusTypeDef AT_TxRxWindow1JoinDelay(LoRa_OperationTypeDef _Operacao,
 
 /**
  * @brief Defina o atraso de aceitação de junção entre o final do TX e a junção da janela Rx 2 em ms
+ * @tparam
  * @param _Operacao: Modo de operação do comando
  * @param _Value: Delay em ms
  * @retval Status de execução do comando
@@ -795,6 +823,7 @@ LoRa_StatusTypeDef AT_TxRxWindow2JoinDelay(LoRa_OperationTypeDef _Operacao,
 
 /**
  * @brief Comando para repetir o uplink não confirmado sem aguardar o reconhecimento do servidor (1 - 15)
+ * @tparam
  * @param _Operacao: Modo de operação do comando
  * @param _Value: Número de repetiçoes
  * @retval Status de execução do comando
@@ -811,6 +840,7 @@ LoRa_StatusTypeDef AT_RepeatUnconfirmedUplink(LoRa_OperationTypeDef _Operacao,
 
 /**
  * @brief Comando para reenvio de uplink confirmado. O envio se repete até que uma confirmação servidor chegue (1 - 8)
+ * @tparam
  * @param _Operacao: Modo de operação do comando
  * @param _Value: Número de repetiçoes
  * @retval Status de execução do comando
@@ -827,6 +857,7 @@ LoRa_StatusTypeDef AT_ResendConfirmedUplink(LoRa_OperationTypeDef _Operacao,
 
 /**
  * @brief Comando de Índice de Potência Tx
+ * @tparam
  * @param _Operacao: Modo de operação do comando
  * @param _Value: Índice de Potência
  * @retval Status de execução do comando
@@ -843,6 +874,7 @@ LoRa_StatusTypeDef AT_TxPowerIndex(LoRa_OperationTypeDef _Operacao,
 
 /**
  * @brief Comando para acesso ao contador de uplinks (0 - 65535)
+ * @tparam
  * @param _Operacao: Modo de operação do comando
  * @param _Value: Número de uplinks
  * @retval Status de execução do comando
@@ -859,6 +891,7 @@ LoRa_StatusTypeDef AT_UplinkCounter(LoRa_OperationTypeDef _Operacao,
 
 /**
  * @brief Comando para acesso ao contador de downlinks (0 - 65535)
+ * @tparam
  * @param _Operacao: Modo de operação do comando
  * @param _Value: Número de downlinks
  * @retval Status de execução do comando
@@ -875,6 +908,7 @@ LoRa_StatusTypeDef AT_DownlinkCounter(LoRa_OperationTypeDef _Operacao,
 
 /**
  * @brief Este comando permite ao usuário acessar o nível da bateria do dispositivo final
+ * @tparam
  * @param _Operacao: Modo de operação do comando
  * @param _Level: Nível de bateria
  * @retval Status de execução do comando
@@ -891,6 +925,7 @@ LoRa_StatusTypeDef AT_BatteryLevel(LoRa_OperationTypeDef _Operacao,
 
 /**
  * @brief Comando usado para verificar se o link está funcionando corretamente
+ * @tparam
  * @retval Status de execução do comando
  */
 
@@ -904,6 +939,7 @@ LoRa_StatusTypeDef AT_MacLineCheckRequest(void);
 
 /**
  * @brief Configuração de criptografia de leitura
+ * @tparam
  * @param _Operacao: Modo de operação do comando
  * @param _Encryption: Modo de encriptação
  * @retval Status de execução do comando
@@ -920,6 +956,7 @@ LoRa_StatusTypeDef AT_EncryptionConfiguration(LoRa_OperationTypeDef _Operacao,
 
 /**
  * @brief Comando para ler as configurações atuais do canal, e atualizar-las
+ * @tparam
  * @param _Operacao: Modo de operação do comando
  * @param _ChOperation: Configuração a ser lida ou modificada
  * @param _hConfiguration: Handler de configurações do canal
@@ -938,6 +975,7 @@ LoRa_StatusTypeDef AT_ChannelConfiguration(LoRa_OperationTypeDef _Operacao,
 
 /**
  * @brief Comando de reinicialização do canal ou do sistema
+ * @tparam
  * @param _Mode: Modo de reinicialização
  * @param _Channel: Canal de reinicialização
  * @retval Status de execução do comando
@@ -954,6 +992,7 @@ LoRa_StatusTypeDef AT_SystemReboot(LoRa_SystemRebootModeTypeDef _Mode,
 
 /**
  * @brief Comando para ler informações do sistema
+ * @tparam
  * @param _hInfo: Handler de informações do sistema
  * @retval Status de execução do comando
  */
@@ -968,6 +1007,7 @@ LoRa_StatusTypeDef AT_SystemInformation(LoRa_SystemInfoTypeDef *_hInfo);
 
 /**
  * @brief Informações sobre a versão do firmware
+ * @tparam
  * @param _Version: Versão do firmaware
  * @retval Status de execução do comando
  */
@@ -982,6 +1022,7 @@ LoRa_StatusTypeDef AT_FirmwareVersion(LoRa_Float *_Version);
 
 /**
  * @brief O comando para acesso ao ganho da antena (-4 e 6)
+ * @tparam
  * @param _Gain: Ganho de antena
  * @retval Status de execução do comando
  */
@@ -996,6 +1037,7 @@ LoRa_StatusTypeDef AT_AntennaGain(LoRa_Float *_Gain);
 
 /**
  * @brief Comando de leitura e definição de tipo de pacote uplink (0 ou 1)
+ * @tparam
  * @param _Operacao: Modo de operação do comando
  * @param _Type: Tipo de pacote
  * @retval Status de execução do comando
@@ -1012,6 +1054,7 @@ LoRa_StatusTypeDef AT_UplinkPacketType(LoRa_OperationTypeDef _Operacao,
 
 /**
  * @brief Comando para entrar no modo de baixo consumo (usar reset para voltar ao normal)
+ * @tparam
  * @retval Status de execução do comando
  */
 
@@ -1025,6 +1068,7 @@ LoRa_StatusTypeDef AT_EntersLowPowerMode(void);
 
 /**
  * @brief Hora de despertar do "real time clock" (RTC)
+ * @tparam
  * @param _Operacao: Modo de operação do comando
  * @param _Time: Tempo para despertar (em segundos)
  * @retval Status de execução do comando
@@ -1041,6 +1085,7 @@ LoRa_StatusTypeDef AT_RTCWakeupTime(LoRa_OperationTypeDef _Operacao,
 
 /**
  * @brief Comando de acessor ao relógio do "real time clock" (RTC)
+ * @tparam
  * @param _Operacao: Modo de operação do comando
  * @param _Time: Tempo do RTC
  * @retval Status de execução do comando
@@ -1057,6 +1102,7 @@ LoRa_StatusTypeDef AT_RTCTime(LoRa_OperationTypeDef _Operacao,
 
 /**
  * @brief Comando de acessor a data do "real time clock" (RTC)
+ * @tparam
  * @param _Operacao: Modo de operação do comando
  * @param _Date: Data do RTC
  * @retval Status de execução do comando
@@ -1073,6 +1119,7 @@ LoRa_StatusTypeDef AT_RTCDate(LoRa_OperationTypeDef _Operacao,
 
 /**
  * @brief Comando de retorno de eco
+ * @tparam
  * @param _Operacao: Modo de operação do comando
  * @param _Echo: Retorno do eco
  * @retval Status de execução do comando
@@ -1089,6 +1136,7 @@ LoRa_StatusTypeDef AT_ECHO(LoRa_OperationTypeDef _Operacao,
 
 /**
  * @brief Comando para redefinir as configuração
+ * @tparam
  * @retval Status de execução do comando
  */
 
@@ -1102,6 +1150,7 @@ LoRa_StatusTypeDef AT_ResetConfiguration(void);
 
 /**
  * @brief Comando para acesso ao modo de dubug
+ * @tparam
  * @param _Operacao: Modo de operação do comando
  * @param _Status: Status do modo debug
  * @retval Status de execução do comando
@@ -1118,6 +1167,7 @@ LoRa_StatusTypeDef AT_DebugMessageStatus(LoRa_OperationTypeDef _Operacao,
 
 /**
  * @brief Modo de onda contínua FSK Tx (teste de força Tx)
+ * @tparam
  * @param _Operacao: Modo de operação do comando
  * @param _Frequency: Frequência de operação do teste
  * @param _Power: Potência de transmissão na operação do teste
@@ -1136,6 +1186,7 @@ LoRa_StatusTypeDef AT_FSKTxContinuousWaveMode(LoRa_OperationTypeDef _Operacao,
 
 /**
  * @brief LoRa Rx (teste de força de RF)
+ * @tparam
  * @param _Operacao: Modo de operação do comando
  * @param _Frequency: Frequência de operação do teste
  * @param _DataRate: Configuração de taxa de dados do teste (0 - 7)
@@ -1157,6 +1208,7 @@ LoRa_StatusTypeDef AT_LoRaRxSignalStrengthTest(LoRa_OperationTypeDef _Operacao,
 
 /**
  * @brief LoRa Tx (teste de força de RF)
+ * @tparam
  * @param _Operacao: Modo de operação do comando
  * @param _Frequency: Frequência de operação do teste
  * @param _Power: Potência de transmissão na operação do teste
@@ -1181,6 +1233,7 @@ LoRa_StatusTypeDef AT_LoRaTxSignalStrengthTest(LoRa_OperationTypeDef _Operacao,
 
 /**
  * @brief Comando para finalização de teste de RF
+ * @tparam
  * @retval Status de execução do comando
  */
 
@@ -1194,6 +1247,7 @@ LoRa_StatusTypeDef AT_StopRFTest(void);
 
 /**
  * @brief Comando para acesso a configuração de pinos GPIO MS500
+ * @tparam
  * @param _Operacao: Modo de operação do comando
  * @param _GPIO: Pino GPIO para acesso
  * @param _Config: Configuração do pino GPIO
@@ -1211,6 +1265,7 @@ LoRa_StatusTypeDef AT_GPIOPinInformation(LoRa_OperationTypeDef _Operacao,
 
 /**
  * @brief Comando para listar canais de comunicação diponíveis, e seleção de canal para comunicação P2P
+ * @tparam
  * @param _Operacao: Modo de operação do comando
  * @param _Channel: Canal de comunicação P2P
  * @param _ChannelsList: Lista de canais disponíveis
@@ -1228,6 +1283,7 @@ LoRa_StatusTypeDef AT_RegionalChannelListP2P(LoRa_OperationTypeDef _Operacao,
 
 /**
  * @brief  Defina o endereço do dispositivo P2P (4 bytes) para comunicação
+ * @tparam
  * @param _Operacao: Modo de operação do comando
  * @param _Adress: Endereço de comunicação P2P
  * @retval Status de execução do comando
@@ -1244,6 +1300,7 @@ LoRa_StatusTypeDef AT_DeviceAdressP2P(LoRa_OperationTypeDef _Operacao,
 
 /**
  * @brief Comando para definição de chave de sincronização
+ * @tparam
  * @param _Operacao: Modo de operação do comando
  * @param _Word: Chave de sincronização (1 a 255)
  * @retval Status de execução do comando
