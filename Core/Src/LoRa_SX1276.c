@@ -685,7 +685,7 @@ LoRa_StatusTypeDef AT_ReturnRSSI(LoRa_RSSI *_Value) {
 LoRa_StatusTypeDef AT_ReturnsSNR(LoRa_Value *_Value) {
 	sprintf((char*) AT_RXcommand, "AT+SNR\r\n");
 	LORA_STATUS_RECEIVE = LORA_CLEAR;
-	if (LORA_ReceiveCommand(1000, 10) != LORA_OK)
+	if (LORA_ReceiveCommand(500, 10) != LORA_OK)
 		return LORA_FAILED;
 	sscanf(LORA_UART_BUFFER, "%s\r%hd\r\n", AT_RXcommand, (int16_t*) _Value);
 	return LORA_OK;
@@ -705,26 +705,25 @@ LoRa_StatusTypeDef AT_ReturnsSNR(LoRa_Value *_Value) {
  * @retval Status de execução do comando
  */
 LoRa_StatusTypeDef AT_LoRaMacRegion(LoRa_OperationTypeDef _Operacao,
-		LoRa_LoraMacRegionTypeDef *_Region){
+		LoRa_LoraMacRegionTypeDef *_Region) {
 	switch (_Operacao) {
-		case AT_OPERATION_READ:
-			sprintf((char*) AT_RXcommand, "AT+REGION\r\n");
-			LORA_STATUS_RECEIVE = LORA_CLEAR;
-			if (LORA_ReceiveCommand(1000, 10) != LORA_OK)
-				return LORA_FAILED;
-			sscanf(LORA_UART_BUFFER, "%s\r%hd\r\n", AT_RXcommand,
-					(uint16_t*) _Region);
-			break;
-		case AT_OPERATION_WRITE:
-			sprintf((char*) AT_TXcommand, "AT+REGION %hu\r\n",
-					(*_Region));
-			if (LORA_TransmitCommand(100) != LORA_OK)
-				return LORA_FAILED;
-			break;
-		default:
-			break;
-		}
-		return LORA_OK;
+	case AT_OPERATION_READ:
+		sprintf((char*) AT_RXcommand, "AT+REGION\r\n");
+		LORA_STATUS_RECEIVE = LORA_CLEAR;
+		if (LORA_ReceiveCommand(500, 10) != LORA_OK)
+			return LORA_FAILED;
+		sscanf(LORA_UART_BUFFER, "%s\r%hd\r\n", AT_RXcommand,
+				(uint16_t*) _Region);
+		break;
+	case AT_OPERATION_WRITE:
+		sprintf((char*) AT_TXcommand, "AT+REGION %hu\r\n", (*_Region));
+		if (LORA_TransmitCommand(100) != LORA_OK)
+			return LORA_FAILED;
+		break;
+	default:
+		break;
+	}
+	return LORA_OK;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -735,14 +734,32 @@ LoRa_StatusTypeDef AT_LoRaMacRegion(LoRa_OperationTypeDef _Operacao,
 
 /**
  * @brief Configuração de Auto Data Rate (ADR)
- * @tparam
+ * @tparam AT+ADR <0 | 1> <ENTER>
  * @param _Operacao: Modo de operação do comando
  * @param _Status: Status do ADR
  * @retval Status de execução do comando
  */
-
 LoRa_StatusTypeDef AT_AutoDateRate(LoRa_OperationTypeDef _Operacao,
-		LoRa_AutoDataRateTypeDef *_Status);
+		LoRa_AutoDataRateTypeDef *_Status) {
+	switch (_Operacao) {
+	case AT_OPERATION_READ:
+		sprintf((char*) AT_RXcommand, "AT+ADR\r\n");
+		LORA_STATUS_RECEIVE = LORA_CLEAR;
+		if (LORA_ReceiveCommand(500, 10) != LORA_OK)
+			return LORA_FAILED;
+		sscanf(LORA_UART_BUFFER, "%s\r%hd\r\n", AT_RXcommand,
+				(uint16_t*) _Status);
+		break;
+	case AT_OPERATION_WRITE:
+		sprintf((char*) AT_TXcommand, "AT+ADR %hu\r\n", (*_Status));
+		if (LORA_TransmitCommand(100) != LORA_OK)
+			return LORA_FAILED;
+		break;
+	default:
+		break;
+	}
+	return LORA_OK;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
