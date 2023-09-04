@@ -666,7 +666,7 @@ LoRa_StatusTypeDef AT_ReturnRSSI(LoRa_RSSI *_Value) {
 	LORA_STATUS_RECEIVE = LORA_CLEAR;
 	if (LORA_ReceiveCommand(1000, 10) != LORA_OK)
 		return LORA_FAILED;
-	sscanf(LORA_UART_BUFFER, "%s\r%hd\r\n", AT_RXcommand, (int16_t *) _Value);
+	sscanf(LORA_UART_BUFFER, "%s\r%hd\r\n", AT_RXcommand, (int16_t*) _Value);
 	return LORA_OK;
 }
 
@@ -678,12 +678,18 @@ LoRa_StatusTypeDef AT_ReturnRSSI(LoRa_RSSI *_Value) {
 
 /**
  * @brief Leitura do valor SNR (relação sinal-ruído) dos últimos dados recebidos
- * @tparam
+ * @tparam AT+SNR <ENTER>
  * @param _Value: Valor do SNR
  * @retval Status de execução do comando
  */
-
-LoRa_StatusTypeDef AT_ReturnsSNR(LoRa_Value *_Value);
+LoRa_StatusTypeDef AT_ReturnsSNR(LoRa_Value *_Value) {
+	sprintf((char*) AT_RXcommand, "AT+SNR\r\n");
+	LORA_STATUS_RECEIVE = LORA_CLEAR;
+	if (LORA_ReceiveCommand(1000, 10) != LORA_OK)
+		return LORA_FAILED;
+	sscanf(LORA_UART_BUFFER, "%s\r%hd\r\n", AT_RXcommand, (int16_t*) _Value);
+	return LORA_OK;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -693,14 +699,33 @@ LoRa_StatusTypeDef AT_ReturnsSNR(LoRa_Value *_Value);
 
 /**
  * @brief Retorna a configuração da região LoRaMAC. Reinicie após a atualização da configuração
- * @tparam
+ * @tparam  AT+REGION <0 - 9> <ENTER>
  * @param _Operacao: Modo de operação do comando
  * @param _Region: Região de LoRaMAC
  * @retval Status de execução do comando
  */
-
 LoRa_StatusTypeDef AT_LoRaMacRegion(LoRa_OperationTypeDef _Operacao,
-		LoRa_LoraMacRegionTypeDef *_Region);
+		LoRa_LoraMacRegionTypeDef *_Region){
+	switch (_Operacao) {
+		case AT_OPERATION_READ:
+			sprintf((char*) AT_RXcommand, "AT+REGION\r\n");
+			LORA_STATUS_RECEIVE = LORA_CLEAR;
+			if (LORA_ReceiveCommand(1000, 10) != LORA_OK)
+				return LORA_FAILED;
+			sscanf(LORA_UART_BUFFER, "%s\r%hd\r\n", AT_RXcommand,
+					(uint16_t*) _Region);
+			break;
+		case AT_OPERATION_WRITE:
+			sprintf((char*) AT_TXcommand, "AT+REGION %hu\r\n",
+					(*_Region));
+			if (LORA_TransmitCommand(100) != LORA_OK)
+				return LORA_FAILED;
+			break;
+		default:
+			break;
+		}
+		return LORA_OK;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

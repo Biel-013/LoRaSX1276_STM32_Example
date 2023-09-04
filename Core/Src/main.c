@@ -113,10 +113,10 @@ int main(void) {
 	data[0] = 0xf0;
 	AT_ReturnRSSI(&Value);
 	while (1) {
-//		if (adress != read_adress)
-//			AT_NetworkIdentifier(AT_OPERATION_WRITE, &adress);
+//		if (id != id)
+//			AT_EndDeviceIdentifier(AT_OPERATION_WRITE, &adress);
 //		if (status != LORA_NETWORK_JOINED)
-//			AT_AutoJoinNetworkServer();
+			AT_EndDeviceIdentifier(AT_OPERATION_READ, &id);
 
 		/* USER CODE END WHILE */
 
