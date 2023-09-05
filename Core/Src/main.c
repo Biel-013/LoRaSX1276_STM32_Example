@@ -111,7 +111,7 @@ int main(void) {
 	data[4] = 0x01;
 	data[2] = 0xa4;
 	data[0] = 0xf0;
-	AT_ReturnRSSI(&Value);
+	AT_ReturnsSNR(&Value);
 	while (1) {
 //		if (id != id)
 //			AT_EndDeviceIdentifier(AT_OPERATION_WRITE, &adress);

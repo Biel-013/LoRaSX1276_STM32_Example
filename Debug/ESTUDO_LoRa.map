@@ -249,7 +249,7 @@ Discarded input sections
                 0x0000000000000000       0x5c ./Core/Src/LoRa_SX1276.o
  .text.AT_ConfirmDownlinkDataHexadecimal
                 0x0000000000000000       0x5c ./Core/Src/LoRa_SX1276.o
- .text.AT_ReturnsSNR
+ .text.AT_ReturnRSSI
                 0x0000000000000000       0x54 ./Core/Src/LoRa_SX1276.o
  .text.AT_LoRaMacRegion
                 0x0000000000000000       0x90 ./Core/Src/LoRa_SX1276.o
@@ -2648,9 +2648,9 @@ LOAD c:/st/stm32cubeide_1.9.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.exte
  .text.AT_EndDeviceIdentifier
                 0x00000000080003f0       0x9c ./Core/Src/LoRa_SX1276.o
                 0x00000000080003f0                AT_EndDeviceIdentifier
- .text.AT_ReturnRSSI
+ .text.AT_ReturnsSNR
                 0x000000000800048c       0x54 ./Core/Src/LoRa_SX1276.o
-                0x000000000800048c                AT_ReturnRSSI
+                0x000000000800048c                AT_ReturnsSNR
  .text.main     0x00000000080004e0       0x4c ./Core/Src/main.o
                 0x00000000080004e0                main
  .text.SystemClock_Config
@@ -3297,21 +3297,21 @@ LOAD c:/st/stm32cubeide_1.9.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.exte
 LOAD c:/st/stm32cubeide_1.9.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.win32_1.0.0.202111181127/tools/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libm.a
 LOAD c:/st/stm32cubeide_1.9.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.win32_1.0.0.202111181127/tools/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7-m/nofp\libgcc.a
 
-.debug_info     0x0000000000000000     0x90d7
+.debug_info     0x0000000000000000     0x90e3
  .debug_info    0x0000000000000000      0x7b2 ./Core/Src/DMA_USART.o
  .debug_info    0x00000000000007b2     0x114a ./Core/Src/LoRa_SX1276.o
- .debug_info    0x00000000000018fc      0xdc2 ./Core/Src/main.o
- .debug_info    0x00000000000026be      0x8e0 ./Core/Src/stm32f1xx_hal_msp.o
- .debug_info    0x0000000000002f9e      0x3a5 ./Core/Src/stm32f1xx_it.o
- .debug_info    0x0000000000003343      0x171 ./Core/Src/sysmem.o
- .debug_info    0x00000000000034b4      0x23d ./Core/Src/system_stm32f1xx.o
- .debug_info    0x00000000000036f1       0x22 ./Core/Startup/startup_stm32f103c8tx.o
- .debug_info    0x0000000000003713      0x734 ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.o
- .debug_info    0x0000000000003e47      0xb20 ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.o
- .debug_info    0x0000000000004967      0x744 ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_dma.o
- .debug_info    0x00000000000050ab      0x615 ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.o
- .debug_info    0x00000000000056c0      0x865 ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.o
- .debug_info    0x0000000000005f25     0x31b2 ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.o
+ .debug_info    0x00000000000018fc      0xdce ./Core/Src/main.o
+ .debug_info    0x00000000000026ca      0x8e0 ./Core/Src/stm32f1xx_hal_msp.o
+ .debug_info    0x0000000000002faa      0x3a5 ./Core/Src/stm32f1xx_it.o
+ .debug_info    0x000000000000334f      0x171 ./Core/Src/sysmem.o
+ .debug_info    0x00000000000034c0      0x23d ./Core/Src/system_stm32f1xx.o
+ .debug_info    0x00000000000036fd       0x22 ./Core/Startup/startup_stm32f103c8tx.o
+ .debug_info    0x000000000000371f      0x734 ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.o
+ .debug_info    0x0000000000003e53      0xb20 ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.o
+ .debug_info    0x0000000000004973      0x744 ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_dma.o
+ .debug_info    0x00000000000050b7      0x615 ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.o
+ .debug_info    0x00000000000056cc      0x865 ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.o
+ .debug_info    0x0000000000005f31     0x31b2 ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.o
 
 .debug_abbrev   0x0000000000000000     0x1a91
  .debug_abbrev  0x0000000000000000      0x1ee ./Core/Src/DMA_USART.o
@@ -3480,7 +3480,7 @@ LOAD c:/st/stm32cubeide_1.9.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.exte
  .debug_str     0x000000000007f732     0x1971 ./Core/Src/LoRa_SX1276.o
                                       0x81354 (size before relaxing)
  .debug_str     0x00000000000810a3      0x55e ./Core/Src/main.o
-                                      0x81142 (size before relaxing)
+                                      0x8114d (size before relaxing)
  .debug_str     0x0000000000081601       0xaa ./Core/Src/stm32f1xx_hal_msp.o
                                       0x7ccaf (size before relaxing)
  .debug_str     0x00000000000816ab       0xf5 ./Core/Src/stm32f1xx_it.o
