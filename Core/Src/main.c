@@ -107,17 +107,15 @@ int main(void) {
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
-//	if (AT_JoinRequestNetworkServer() == LORA_OK)
-//						HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_0);
-	data[4] = 0x01;
-	data[2] = 0xa4;
-	data[0] = 0xf0;
-//	AT_AutoDateRate(AT_OPERATION_WRITE, &Value);
-	AT_RxWindow2DataRate(AT_OPERATION_READ, &Value);
+	AT_TxRxWindow1Delay(AT_OPERATION_READ, &Value);
 	Value = 4;
-	AT_RxWindow2DataRate(AT_OPERATION_WRITE, &Value);
+	AT_TxRxWindow1Delay(AT_OPERATION_WRITE, &Value);
 	Value = 2;
-	AT_RxWindow2DataRate(AT_OPERATION_READ, &Value);
+	AT_TxRxWindow1Delay(AT_OPERATION_READ, &Value);
+	Value = 0;
+	AT_TxRxWindow1Delay(AT_OPERATION_WRITE, &Value);
+	Value = 2;
+	AT_TxRxWindow1Delay(AT_OPERATION_READ, &Value);
 	while (1) {
 //		if (id != id)
 //			AT_EndDeviceIdentifier(AT_OPERATION_WRITE, &adress);
