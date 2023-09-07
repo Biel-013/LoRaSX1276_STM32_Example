@@ -50,10 +50,11 @@ char AT_comand[15] = "";
 extern uint8_t DMA_RX_Buffer_3[DMA_RX_BUFFER_SIZE];
 uint64_t id = 0x018fdea1;
 LoRa_LoraMacRegionTypeDef Value = 3;
-LoRa_AutoNetworkJoinTypeDef status = LORA_AUTO_NETWORK_JOIN_ON;
+//LoRa_AutoNetworkJoinTypeDef status = LORA_AUTO_NETWORK_JOIN_ON;
 LoRa_AutoNetworkJoinTypeDef read_status = LORA_AUTO_NETWORK_JOIN_OFF;
 LoRa_Adress adress = 0xd3ad12;
 LoRa_Data data[5];
+LoRa_AutoDataRateTypeDef status = 3;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -111,8 +112,12 @@ int main(void) {
 	data[4] = 0x01;
 	data[2] = 0xa4;
 	data[0] = 0xf0;
-	AT_LoRaMacRegion(AT_OPERATION_WRITE, &Value);
-	AT_LoRaMacRegion(AT_OPERATION_READ, &Value);
+//	AT_AutoDateRate(AT_OPERATION_WRITE, &Value);
+	AT_AutoDateRate(AT_OPERATION_READ, &status);
+	status = !status;
+	AT_AutoDateRate(AT_OPERATION_WRITE, &status);
+	status = !status;
+	AT_AutoDateRate(AT_OPERATION_READ, &status);
 	while (1) {
 //		if (id != id)
 //			AT_EndDeviceIdentifier(AT_OPERATION_WRITE, &adress);
