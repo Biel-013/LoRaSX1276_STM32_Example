@@ -49,7 +49,7 @@ uint8_t Send_STATUS = 1;
 char AT_comand[15] = "";
 extern uint8_t DMA_RX_Buffer_3[DMA_RX_BUFFER_SIZE];
 uint64_t id = 0x018fdea1;
-LoRa_DataRateTypeDef Value = LORA_CURRENT_DATA_RATE_SF10_BW125;
+LoRa_Rate Value = 2190851;
 //LoRa_AutoNetworkJoinTypeDef status = LORA_AUTO_NETWORK_JOIN_ON;
 LoRa_AutoNetworkJoinTypeDef read_status = LORA_AUTO_NETWORK_JOIN_OFF;
 LoRa_Adress adress = 0xd3ad12;
@@ -113,11 +113,11 @@ int main(void) {
 	data[2] = 0xa4;
 	data[0] = 0xf0;
 //	AT_AutoDateRate(AT_OPERATION_WRITE, &Value);
-	AT_DataRateCommand(AT_OPERATION_READ, &Value);
-	Value = LORA_CURRENT_DATA_RATE_SF7_BW125;
-	AT_DataRateCommand(AT_OPERATION_WRITE, &Value);
-	Value = LORA_CURRENT_DATA_RATE_SF12_BW125;
-	AT_DataRateCommand(AT_OPERATION_READ, &Value);
+//	AT_RxWindow2Frequency(AT_OPERATION_READ, &Value);
+	Value = 787000000;
+	AT_RxWindow2Frequency(AT_OPERATION_WRITE, &Value);
+	Value = 924871;
+	AT_RxWindow2Frequency(AT_OPERATION_READ, &Value);
 	while (1) {
 //		if (id != id)
 //			AT_EndDeviceIdentifier(AT_OPERATION_WRITE, &adress);

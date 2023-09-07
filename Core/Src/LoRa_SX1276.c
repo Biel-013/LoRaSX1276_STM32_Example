@@ -805,14 +805,33 @@ LoRa_StatusTypeDef AT_DataRateCommand(LoRa_OperationTypeDef _Operacao,
 
 /**
  * @brief Comando da frequência Rx da janela 2
- * @tparam
+ * @tparam AT+RX2FQ <Rx Window 2> <ENTER>
  * @param _Operacao: Modo de operação do comando
  * @param _Rate: Frequência
  * @retval Status de execução do comando
  */
 
 LoRa_StatusTypeDef AT_RxWindow2Frequency(LoRa_OperationTypeDef _Operacao,
-		LoRa_Rate *_Rate);
+		LoRa_Rate *_Rate) {
+	switch (_Operacao) {
+	case AT_OPERATION_READ:
+		sprintf((char*) AT_RXcommand, "AT+RX2FQ\r\n");
+		LORA_STATUS_RECEIVE = LORA_CLEAR;
+		if (LORA_ReceiveCommand(500, 10) != LORA_OK)
+			return LORA_FAILED;
+		sscanf(LORA_UART_BUFFER, "%s\r%lu\r\n", AT_RXcommand,
+				_Rate);
+		break;
+	case AT_OPERATION_WRITE:
+		sprintf((char*) AT_TXcommand, "AT+RX2FQ %lu\r\n", (*_Rate));
+		if (LORA_TransmitCommand(300) != LORA_OK)
+			return LORA_FAILED;
+		break;
+	default:
+		break;
+	}
+	return LORA_OK;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
