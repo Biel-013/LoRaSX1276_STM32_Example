@@ -24,4 +24,5 @@
 ../Core/Src/LoRa_SX1276.c:707:20:AT_LoRaMacRegion	16	static
 ../Core/Src/LoRa_SX1276.c:742:20:AT_AutoDateRate	16	static
 ../Core/Src/LoRa_SX1276.c:778:20:AT_DataRateCommand	16	static
-../Core/Src/LoRa_SX1276.c:814:20:AT_RxWindow2Frequency	16	static
+../Core/Src/LoRa_SX1276.c:813:20:AT_RxWindow2Frequency	16	static
+../Core/Src/LoRa_SX1276.c:848:20:AT_RxWindow2DataRate	16	static
