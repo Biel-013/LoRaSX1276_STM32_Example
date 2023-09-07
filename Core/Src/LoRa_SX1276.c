@@ -776,25 +776,25 @@ LoRa_StatusTypeDef AT_AutoDateRate(LoRa_OperationTypeDef _Operacao,
  */
 
 LoRa_StatusTypeDef AT_DataRateCommand(LoRa_OperationTypeDef _Operacao,
-		LoRa_DataRateTypeDef *_DateRate){
+		LoRa_DataRateTypeDef *_DateRate) {
 	switch (_Operacao) {
-		case AT_OPERATION_READ:
-			sprintf((char*) AT_RXcommand, "AT+DR\r\n");
-			LORA_STATUS_RECEIVE = LORA_CLEAR;
-			if (LORA_ReceiveCommand(500, 10) != LORA_OK)
-				return LORA_FAILED;
-			sscanf(LORA_UART_BUFFER, "%s\r%hd\r\n", AT_RXcommand,
-					(uint16_t*) _DateRate);
-			break;
-		case AT_OPERATION_WRITE:
-			sprintf((char*) AT_TXcommand, "AT+DR %hu\r\n", (*_DateRate));
-			if (LORA_TransmitCommand(100) != LORA_OK)
-				return LORA_FAILED;
-			break;
-		default:
-			break;
-		}
-		return LORA_OK;
+	case AT_OPERATION_READ:
+		sprintf((char*) AT_RXcommand, "AT+DR\r\n");
+		LORA_STATUS_RECEIVE = LORA_CLEAR;
+		if (LORA_ReceiveCommand(500, 10) != LORA_OK)
+			return LORA_FAILED;
+		sscanf(LORA_UART_BUFFER, "%s\r%hd\r\n", AT_RXcommand,
+				(uint16_t*) _DateRate);
+		break;
+	case AT_OPERATION_WRITE:
+		sprintf((char*) AT_TXcommand, "AT+DR %hu\r\n", (*_DateRate));
+		if (LORA_TransmitCommand(100) != LORA_OK)
+			return LORA_FAILED;
+		break;
+	default:
+		break;
+	}
+	return LORA_OK;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
