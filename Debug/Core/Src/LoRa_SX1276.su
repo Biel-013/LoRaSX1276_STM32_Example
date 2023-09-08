@@ -34,3 +34,4 @@
 ../Core/Src/LoRa_SX1276.c:1055:20:AT_ResendConfirmedUplink	16	static
 ../Core/Src/LoRa_SX1276.c:1090:20:AT_TxPowerIndex	16	static
 ../Core/Src/LoRa_SX1276.c:1125:20:AT_UplinkCounter	16	static
+../Core/Src/LoRa_SX1276.c:1160:20:AT_DownlinkCounter	16	static
