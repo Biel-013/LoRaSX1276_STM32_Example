@@ -1408,7 +1408,6 @@ LoRa_StatusTypeDef AT_SystemReboot(LoRa_SystemRebootModeTypeDef _Mode) {
  * @param _hInfo: Handler de informações do sistema
  * @retval Status de execução do comando
  */
-
 LoRa_StatusTypeDef AT_SystemInformation(LoRa_SystemInfoTypeDef *_hInfo) {
 	return LORA_FAILED;
 }
@@ -1425,7 +1424,6 @@ LoRa_StatusTypeDef AT_SystemInformation(LoRa_SystemInfoTypeDef *_hInfo) {
  * @param _Version: Versão do firmaware
  * @retval Status de execução do comando
  */
-
 LoRa_StatusTypeDef AT_FirmwareVersion(LoRa_Float *_Version) {
 	sprintf((char*) AT_RXcommand, "AT+VER\r\n");
 	LORA_STATUS_RECEIVE = LORA_CLEAR;
@@ -1448,7 +1446,6 @@ LoRa_StatusTypeDef AT_FirmwareVersion(LoRa_Float *_Version) {
  * @param _Gain: Ganho de antena
  * @retval Status de execução do comando
  */
-
 LoRa_StatusTypeDef AT_AntennaGain(LoRa_OperationTypeDef _Operacao,
 		LoRa_Float *_Gain) {
 	switch (_Operacao) {
@@ -1483,7 +1480,6 @@ LoRa_StatusTypeDef AT_AntennaGain(LoRa_OperationTypeDef _Operacao,
  * @param _Type: Tipo de pacote
  * @retval Status de execução do comando
  */
-
 LoRa_StatusTypeDef AT_UplinkPacketType(LoRa_OperationTypeDef _Operacao,
 		LoRa_UplinkTypePacketTypeDef *_Type) {
 	switch (_Operacao) {
@@ -1517,7 +1513,6 @@ LoRa_StatusTypeDef AT_UplinkPacketType(LoRa_OperationTypeDef _Operacao,
  * @tparam AT+SLEEP <ENTER>
  * @retval Status de execução do comando
  */
-
 LoRa_StatusTypeDef AT_EntersLowPowerMode(void) {
 	sprintf((char*) AT_TXcommand, "AT+SLEEP\r\n");
 	if (LORA_TransmitCommand(300) != LORA_OK)
@@ -1533,14 +1528,31 @@ LoRa_StatusTypeDef AT_EntersLowPowerMode(void) {
 
 /**
  * @brief Hora de despertar do "real time clock" (RTC)
- * @tparam
+ * @tparam AT+ALARM <ver> <ENTER>
  * @param _Operacao: Modo de operação do comando
  * @param _Time: Tempo para despertar (em segundos)
  * @retval Status de execução do comando
  */
-
 LoRa_StatusTypeDef AT_RTCWakeupTime(LoRa_OperationTypeDef _Operacao,
-		LoRa_Value *_Time);
+		LoRa_Value *_Time) {
+	switch (_Operacao) {
+	case AT_OPERATION_READ:
+		sprintf((char*) AT_RXcommand, "AT+ALARM\r\n");
+		LORA_STATUS_RECEIVE = LORA_CLEAR;
+		if (LORA_ReceiveCommand(500, 10) != LORA_OK)
+			return LORA_FAILED;
+		sscanf(LORA_UART_BUFFER, "%s\r%hu\r\n", AT_RXcommand, _Time);
+		break;
+	case AT_OPERATION_WRITE:
+		sprintf((char*) AT_TXcommand, "AT+ALARM %hu\r\n", (*_Time));
+		if (LORA_TransmitCommand(300) != LORA_OK)
+			return LORA_FAILED;
+		break;
+	default:
+		break;
+	}
+	return LORA_OK;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -40,8 +40,9 @@
 ../Core/Src/LoRa_SX1276.c:1245:20:AT_EncryptionConfiguration	16	static
 ../Core/Src/LoRa_SX1276.c:1282:20:AT_ChannelConfiguration	40	static
 ../Core/Src/LoRa_SX1276.c:1380:20:AT_SystemReboot	16	static
-../Core/Src/LoRa_SX1276.c:1412:20:AT_SystemInformation	16	static
-../Core/Src/LoRa_SX1276.c:1429:20:AT_FirmwareVersion	16	static
-../Core/Src/LoRa_SX1276.c:1452:20:AT_AntennaGain	16	static
-../Core/Src/LoRa_SX1276.c:1487:20:AT_UplinkPacketType	16	static
-../Core/Src/LoRa_SX1276.c:1521:20:AT_EntersLowPowerMode	8	static
+../Core/Src/LoRa_SX1276.c:1411:20:AT_SystemInformation	16	static
+../Core/Src/LoRa_SX1276.c:1427:20:AT_FirmwareVersion	16	static
+../Core/Src/LoRa_SX1276.c:1449:20:AT_AntennaGain	16	static
+../Core/Src/LoRa_SX1276.c:1483:20:AT_UplinkPacketType	16	static
+../Core/Src/LoRa_SX1276.c:1516:20:AT_EntersLowPowerMode	8	static
+../Core/Src/LoRa_SX1276.c:1537:20:AT_RTCWakeupTime	16	static
