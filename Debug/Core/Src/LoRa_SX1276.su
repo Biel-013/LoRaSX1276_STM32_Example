@@ -42,3 +42,4 @@
 ../Core/Src/LoRa_SX1276.c:1380:20:AT_SystemReboot	16	static
 ../Core/Src/LoRa_SX1276.c:1412:20:AT_SystemInformation	16	static
 ../Core/Src/LoRa_SX1276.c:1429:20:AT_FirmwareVersion	16	static
+../Core/Src/LoRa_SX1276.c:1452:20:AT_AntennaGain	16	static

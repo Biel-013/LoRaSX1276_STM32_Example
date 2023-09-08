@@ -1443,12 +1443,32 @@ LoRa_StatusTypeDef AT_FirmwareVersion(LoRa_Float *_Version) {
 
 /**
  * @brief O comando para acesso ao ganho da antena (-4 e 6)
- * @tparam
+ * @tparam AT+SAG <gain> <ENTER>
+ * @param _Operacao: Modo de operação do comando
  * @param _Gain: Ganho de antena
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_AntennaGain(LoRa_Float *_Gain);
+LoRa_StatusTypeDef AT_AntennaGain(LoRa_OperationTypeDef _Operacao, LoRa_Float *_Gain){
+	switch (_Operacao) {
+		case AT_OPERATION_READ:
+			sprintf((char*) AT_RXcommand, "AT+SAG\r\n");
+			LORA_STATUS_RECEIVE = LORA_CLEAR;
+			if (LORA_ReceiveCommand(500, 10) != LORA_OK)
+				return LORA_FAILED;
+			sscanf(LORA_UART_BUFFER, "%s\r%lf\r\n", AT_RXcommand,
+					 (double *) _Gain);
+			break;
+		case AT_OPERATION_WRITE:
+			sprintf((char*) AT_TXcommand, "AT+SAG %lf\r\n", (*_Gain));
+			if (LORA_TransmitCommand(300) != LORA_OK)
+				return LORA_FAILED;
+			break;
+		default:
+			break;
+		}
+		return LORA_OK;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

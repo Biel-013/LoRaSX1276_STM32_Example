@@ -856,11 +856,12 @@ LoRa_StatusTypeDef AT_FirmwareVersion (LoRa_Float *_Version);
 
 /**
  * @brief O comando para acesso ao ganho da antena (-4 e 6)
+ * @param _Operacao: Modo de operação do comando
  * @param _Gain: Ganho de antena
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_AntennaGain (LoRa_Float *_Gain);
+LoRa_StatusTypeDef AT_AntennaGain (LoRa_OperationTypeDef _Operacao, LoRa_Float *_Gain);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
