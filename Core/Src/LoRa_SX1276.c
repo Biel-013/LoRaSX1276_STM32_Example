@@ -1018,26 +1018,25 @@ LoRa_StatusTypeDef AT_TxRxWindow2JoinDelay(LoRa_OperationTypeDef _Operacao,
  * @param _Value: Número de repetiçoes
  * @retval Status de execução do comando
  */
-
 LoRa_StatusTypeDef AT_RepeatUnconfirmedUplink(LoRa_OperationTypeDef _Operacao,
-		LoRa_Value *_Value){
+		LoRa_Value *_Value) {
 	switch (_Operacao) {
-		case AT_OPERATION_READ:
-			sprintf((char*) AT_RXcommand, "AT+MUFR\r\n");
-			LORA_STATUS_RECEIVE = LORA_CLEAR;
-			if (LORA_ReceiveCommand(500, 10) != LORA_OK)
-				return LORA_FAILED;
-			sscanf(LORA_UART_BUFFER, "%s\r%hu\r\n", AT_RXcommand, _Value);
-			break;
-		case AT_OPERATION_WRITE:
-			sprintf((char*) AT_TXcommand, "AT+MUFR %u\r\n", (*_Value));
-			if (LORA_TransmitCommand(300) != LORA_OK)
-				return LORA_FAILED;
-			break;
-		default:
-			break;
-		}
-		return LORA_OK;
+	case AT_OPERATION_READ:
+		sprintf((char*) AT_RXcommand, "AT+MUFR\r\n");
+		LORA_STATUS_RECEIVE = LORA_CLEAR;
+		if (LORA_ReceiveCommand(500, 10) != LORA_OK)
+			return LORA_FAILED;
+		sscanf(LORA_UART_BUFFER, "%s\r%hu\r\n", AT_RXcommand, _Value);
+		break;
+	case AT_OPERATION_WRITE:
+		sprintf((char*) AT_TXcommand, "AT+MUFR %u\r\n", (*_Value));
+		if (LORA_TransmitCommand(300) != LORA_OK)
+			return LORA_FAILED;
+		break;
+	default:
+		break;
+	}
+	return LORA_OK;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1048,14 +1047,31 @@ LoRa_StatusTypeDef AT_RepeatUnconfirmedUplink(LoRa_OperationTypeDef _Operacao,
 
 /**
  * @brief Comando para reenvio de uplink confirmado. O envio se repete até que uma confirmação servidor chegue (1 - 8)
- * @tparam
+ * @tparam  AT+MCFR <number> <ENTER>
  * @param _Operacao: Modo de operação do comando
  * @param _Value: Número de repetiçoes
  * @retval Status de execução do comando
  */
-
 LoRa_StatusTypeDef AT_ResendConfirmedUplink(LoRa_OperationTypeDef _Operacao,
-		LoRa_Value *_Value);
+		LoRa_Value *_Value) {
+	switch (_Operacao) {
+	case AT_OPERATION_READ:
+		sprintf((char*) AT_RXcommand, "AT+MCFR\r\n");
+		LORA_STATUS_RECEIVE = LORA_CLEAR;
+		if (LORA_ReceiveCommand(500, 10) != LORA_OK)
+			return LORA_FAILED;
+		sscanf(LORA_UART_BUFFER, "%s\r%hu\r\n", AT_RXcommand, _Value);
+		break;
+	case AT_OPERATION_WRITE:
+		sprintf((char*) AT_TXcommand, "AT+MCFR %u\r\n", (*_Value));
+		if (LORA_TransmitCommand(300) != LORA_OK)
+			return LORA_FAILED;
+		break;
+	default:
+		break;
+	}
+	return LORA_OK;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
