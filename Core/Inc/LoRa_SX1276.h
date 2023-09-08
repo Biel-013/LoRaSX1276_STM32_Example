@@ -815,11 +815,10 @@ LoRa_StatusTypeDef AT_ChannelConfiguration  (LoRa_OperationTypeDef _Operacao,
 /**
  * @brief Comando de reinicialização do canal ou do sistema
  * @param _Mode: Modo de reinicialização
- * @param _Channel: Canal de reinicialização
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_SystemReboot  (LoRa_SystemRebootModeTypeDef _Mode, LoRa_Value *_Channel);
+LoRa_StatusTypeDef AT_SystemReboot  (LoRa_SystemRebootModeTypeDef _Mode);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

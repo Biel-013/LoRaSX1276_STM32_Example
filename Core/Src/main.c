@@ -109,25 +109,7 @@ int main(void) {
 	chanel.LoRa_Channel = 1;
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
-//	AT_ChannelConfiguration(AT_OPERATION_WRITE, AT_CHANNEL_OPERATION_CHANNEL, &chanel);
-//	for (int i = 0; i < 16; i++){
-//		chanel[i].LoRa_Channel = i;
-	AT_ChannelConfiguration(AT_OPERATION_READ, AT_CHANNEL_OPERATION_CHANNEL,
-			&chanel);
-//	}
-	chanel.LoRa_Frequency = chanel.LoRa_Frequency - 200000;
-	chanel.LoRa_MaxDrRange--;
-	chanel.LoRa_MinDrRange++;
-	chanel.LoRa_StatusChannel = !chanel.LoRa_StatusChannel;
-	AT_ChannelConfiguration(AT_OPERATION_WRITE, AT_CHANNEL_OPERATION_DRRANGE,
-			&chanel);
-	chanel.LoRa_Frequency = 13;
-	chanel.LoRa_MaxDrRange = 13;
-	chanel.LoRa_MinDrRange = 13;
-	chanel.LoRa_StatusChannel = 13;
-	AT_ChannelConfiguration(AT_OPERATION_READ, AT_CHANNEL_OPERATION_DRRANGE,
-			&chanel);
-//	status = !status;
+	AT_SystemReboot(AT_REBOOT_SYSTEM);
 //	AT_EncryptionConfiguration(AT_OPERATION_WRITE, &status);
 //	status = !status;
 //	AT_EncryptionConfiguration(AT_OPERATION_READ, &status);

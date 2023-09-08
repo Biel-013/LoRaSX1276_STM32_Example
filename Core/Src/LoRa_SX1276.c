@@ -560,7 +560,7 @@ LoRa_StatusTypeDef AT_NetworkIdentifier(LoRa_OperationTypeDef _Operacao,
  */
 LoRa_StatusTypeDef AT_ActivationSettingValue(
 		LoRa_ActivationSettingTypeDef *_hSettings) {
-	return LORA_OK;
+	return LORA_FAILED;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1372,14 +1372,28 @@ LoRa_StatusTypeDef AT_ChannelConfiguration(LoRa_OperationTypeDef _Operacao,
 
 /**
  * @brief Comando de reinicialização do canal ou do sistema
- * @tparam
+ * @tparam AT+RESET <ENTER>
+ * @tparam AT+RESET channels<ENTER>
  * @param _Mode: Modo de reinicialização
- * @param _Channel: Canal de reinicialização
  * @retval Status de execução do comando
  */
-
-LoRa_StatusTypeDef AT_SystemReboot(LoRa_SystemRebootModeTypeDef _Mode,
-		LoRa_Value *_Channel);
+LoRa_StatusTypeDef AT_SystemReboot(LoRa_SystemRebootModeTypeDef _Mode) {
+	switch (_Mode) {
+	case AT_REBOOT_SYSTEM:
+		sprintf((char*) AT_TXcommand, "AT+RESET\r\n");
+		if (LORA_TransmitCommand(300) != LORA_OK)
+			return LORA_FAILED;
+		break;
+	case AT_REBOOOT_CHANNEL:
+		sprintf((char*) AT_TXcommand, "AT+RESET channels\r\n");
+		if (LORA_TransmitCommand(300) != LORA_OK)
+			return LORA_FAILED;
+		break;
+	default:
+		break;
+	}
+	return LORA_OK;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1389,12 +1403,15 @@ LoRa_StatusTypeDef AT_SystemReboot(LoRa_SystemRebootModeTypeDef _Mode,
 
 /**
  * @brief Comando para ler informações do sistema
- * @tparam
+ * @tparam AT+SINF <ENTER>
+ * @attention Essa função não foi continuada, por haver outras funções que realizam o mesmo trabalho
  * @param _hInfo: Handler de informações do sistema
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_SystemInformation(LoRa_SystemInfoTypeDef *_hInfo);
+LoRa_StatusTypeDef AT_SystemInformation(LoRa_SystemInfoTypeDef *_hInfo) {
+	return LORA_FAILED;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1404,12 +1421,19 @@ LoRa_StatusTypeDef AT_SystemInformation(LoRa_SystemInfoTypeDef *_hInfo);
 
 /**
  * @brief Informações sobre a versão do firmware
- * @tparam
+ * @tparam AT+VER <ENTER>
  * @param _Version: Versão do firmaware
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_FirmwareVersion(LoRa_Float *_Version);
+LoRa_StatusTypeDef AT_FirmwareVersion(LoRa_Float *_Version) {
+	sprintf((char*) AT_RXcommand, "AT+VER\r\n");
+	LORA_STATUS_RECEIVE = LORA_CLEAR;
+	if (LORA_ReceiveCommand(500, 10) != LORA_OK)
+		return LORA_FAILED;
+	sscanf(LORA_UART_BUFFER, "%s\r%f\r\n", AT_RXcommand, _Version);
+	return LORA_OK;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
