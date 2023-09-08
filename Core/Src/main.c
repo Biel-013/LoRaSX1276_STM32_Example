@@ -53,8 +53,9 @@ LoRa_Value Value = 12;
 //LoRa_AutoNetworkJoinTypeDef status = LORA_AUTO_NETWORK_JOIN_ON;
 LoRa_AutoNetworkJoinTypeDef read_status = LORA_AUTO_NETWORK_JOIN_OFF;
 LoRa_Adress adress = 0xd3ad12;
-LoRa_Data data[5];
-LoRa_ReadoutEncryptionTypeDef status = LORA_READOUT_ENCRYPTION_ARIA;
+LoRa_LoraMacRegionTypeDef regiao = LORAMAC_REGION_US915;
+
+LoRa_ChannelConfigurationTypeDef chanel;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -103,15 +104,33 @@ int main(void) {
 	MX_USART3_UART_Init();
 	/* USER CODE BEGIN 2 */
 	USART_Init();
-	/* USER CODE END 2 */
 
+	/* USER CODE END 2 */
+	chanel.LoRa_Channel = 1;
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
-	AT_EncryptionConfiguration(AT_OPERATION_READ, &status);
-	status = !status;
-	AT_EncryptionConfiguration(AT_OPERATION_WRITE, &status);
-	status = !status;
-	AT_EncryptionConfiguration(AT_OPERATION_READ, &status);
+//	AT_ChannelConfiguration(AT_OPERATION_WRITE, AT_CHANNEL_OPERATION_CHANNEL, &chanel);
+//	for (int i = 0; i < 16; i++){
+//		chanel[i].LoRa_Channel = i;
+	AT_ChannelConfiguration(AT_OPERATION_READ, AT_CHANNEL_OPERATION_CHANNEL,
+			&chanel);
+//	}
+	chanel.LoRa_Frequency = chanel.LoRa_Frequency - 200000;
+	chanel.LoRa_MaxDrRange--;
+	chanel.LoRa_MinDrRange++;
+	chanel.LoRa_StatusChannel = !chanel.LoRa_StatusChannel;
+	AT_ChannelConfiguration(AT_OPERATION_WRITE, AT_CHANNEL_OPERATION_DRRANGE,
+			&chanel);
+	chanel.LoRa_Frequency = 13;
+	chanel.LoRa_MaxDrRange = 13;
+	chanel.LoRa_MinDrRange = 13;
+	chanel.LoRa_StatusChannel = 13;
+	AT_ChannelConfiguration(AT_OPERATION_READ, AT_CHANNEL_OPERATION_DRRANGE,
+			&chanel);
+//	status = !status;
+//	AT_EncryptionConfiguration(AT_OPERATION_WRITE, &status);
+//	status = !status;
+//	AT_EncryptionConfiguration(AT_OPERATION_READ, &status);
 //	Value = 0;
 //	AT_RepeatUnconfirmedUplink(AT_OPERATION_WRITE, &Value);
 //	Value = 4400;

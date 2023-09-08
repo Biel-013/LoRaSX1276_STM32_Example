@@ -804,7 +804,7 @@ LoRa_StatusTypeDef AT_EncryptionConfiguration (LoRa_OperationTypeDef _Operacao,
  */
 
 LoRa_StatusTypeDef AT_ChannelConfiguration  (LoRa_OperationTypeDef _Operacao,
-		LoRa_ChannelOperationTypeDef *_ChOperation, LoRa_ChannelConfigurationTypeDef *_hConfiguration);
+		LoRa_ChannelOperationTypeDef _ChOperation, LoRa_ChannelConfigurationTypeDef *_hConfiguration);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

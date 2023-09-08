@@ -1222,7 +1222,6 @@ LoRa_StatusTypeDef AT_BatteryLevel(LoRa_OperationTypeDef _Operacao,
  * @tparam AT+LCHK <ENTER>
  * @retval Status de execução do comando
  */
-
 LoRa_StatusTypeDef AT_MacLineCheckRequest(void) {
 	sprintf((char*) AT_TXcommand, "AT+LCHK\r\n");
 	if (LORA_TransmitCommand(300) != LORA_OK)
@@ -1243,7 +1242,6 @@ LoRa_StatusTypeDef AT_MacLineCheckRequest(void) {
  * @param _Encryption: Modo de encriptação
  * @retval Status de execução do comando
  */
-
 LoRa_StatusTypeDef AT_EncryptionConfiguration(LoRa_OperationTypeDef _Operacao,
 		LoRa_ReadoutEncryptionTypeDef *_Encryption) {
 	switch (_Operacao) {
@@ -1274,16 +1272,97 @@ LoRa_StatusTypeDef AT_EncryptionConfiguration(LoRa_OperationTypeDef _Operacao,
 
 /**
  * @brief Comando para ler as configurações atuais do canal, e atualizar-las
- * @tparam
+ * @tparam AT+CH [ freq? / drrange? / status? / <ch> ? ] <ENTER>
  * @param _Operacao: Modo de operação do comando
  * @param _ChOperation: Configuração a ser lida ou modificada
  * @param _hConfiguration: Handler de configurações do canal
  * @retval Status de execução do comando
+ * AT+CH 1?\rfreq 902500000 drrange 0 to 3 status 1\r\n\
  */
-
 LoRa_StatusTypeDef AT_ChannelConfiguration(LoRa_OperationTypeDef _Operacao,
-		LoRa_ChannelOperationTypeDef *_ChOperation,
-		LoRa_ChannelConfigurationTypeDef *_hConfiguration);
+		LoRa_ChannelOperationTypeDef _ChOperation,
+		LoRa_ChannelConfigurationTypeDef *_hConfiguration) {
+	switch (_Operacao) {
+	case AT_OPERATION_READ:
+		switch (_ChOperation) {
+		case AT_CHANNEL_OPERATION_CHANNEL:
+			sprintf((char*) AT_RXcommand, "AT+CH %hu?\r\n",
+					_hConfiguration->LoRa_Channel);
+			LORA_STATUS_RECEIVE = LORA_CLEAR;
+			if (LORA_ReceiveCommand(1000, 10) != LORA_OK)
+				return LORA_FAILED;
+			sscanf(LORA_UART_BUFFER,
+					"%s %hu?\rfreq %lu drrange %hu to %hu status %hu\r\n",
+					AT_RXcommand, &_hConfiguration->LoRa_Channel,
+					&_hConfiguration->LoRa_Frequency,
+					&_hConfiguration->LoRa_MinDrRange,
+					&_hConfiguration->LoRa_MaxDrRange,
+					&_hConfiguration->LoRa_StatusChannel);
+			break;
+		case AT_CHANNEL_OPERATION_FREQ:
+			sprintf((char*) AT_RXcommand, "AT+CH %hu freq?\r\n",
+					_hConfiguration->LoRa_Channel);
+			LORA_STATUS_RECEIVE = LORA_CLEAR;
+			if (LORA_ReceiveCommand(750, 20) != LORA_OK)
+				return LORA_FAILED;
+			sscanf(LORA_UART_BUFFER, "%s %hu freq?\r%lu\r\n", AT_RXcommand,
+					&_hConfiguration->LoRa_Channel,
+					&_hConfiguration->LoRa_Frequency);
+			break;
+		case AT_CHANNEL_OPERATION_DRRANGE:
+			sprintf((char*) AT_RXcommand, "AT+CH %hu drrange?\r\n",
+					_hConfiguration->LoRa_Channel);
+			LORA_STATUS_RECEIVE = LORA_CLEAR;
+			if (LORA_ReceiveCommand(500, 10) != LORA_OK)
+				return LORA_FAILED;
+			sscanf(LORA_UART_BUFFER, "%s %hu drrange?\r%hu to %hu\r\n",
+					AT_RXcommand, &_hConfiguration->LoRa_Channel,
+					&_hConfiguration->LoRa_MinDrRange,
+					&_hConfiguration->LoRa_MaxDrRange);
+			break;
+		case AT_CHANNEL_OPERATION_STATUS:
+			sprintf((char*) AT_RXcommand, "AT+CH %hu status?\r\n",
+					_hConfiguration->LoRa_Channel);
+			LORA_STATUS_RECEIVE = LORA_CLEAR;
+			if (LORA_ReceiveCommand(500, 10) != LORA_OK)
+				return LORA_FAILED;
+			sscanf(LORA_UART_BUFFER, "%s %hu status?\r%hu\r\n", AT_RXcommand,
+					&_hConfiguration->LoRa_Channel,
+					&_hConfiguration->LoRa_StatusChannel);
+			break;
+		default:
+			return LORA_FAILED_COMMAND;
+		}
+		break;
+	case AT_OPERATION_WRITE:
+		switch (_ChOperation) {
+		case AT_CHANNEL_OPERATION_FREQ:
+			sprintf((char*) AT_TXcommand, "AT+CH %hu freq=%lu\r\n",
+					_hConfiguration->LoRa_Channel,
+					_hConfiguration->LoRa_Frequency);
+			break;
+		case AT_CHANNEL_OPERATION_DRRANGE:
+			sprintf((char*) AT_TXcommand, "AT+CH %hu drrange=%hu %hu\r\n",
+					_hConfiguration->LoRa_Channel,
+					_hConfiguration->LoRa_MinDrRange,
+					_hConfiguration->LoRa_MaxDrRange);
+			break;
+		case AT_CHANNEL_OPERATION_STATUS:
+			sprintf((char*) AT_TXcommand, "AT+CH %hu status=%hu\r\n",
+					_hConfiguration->LoRa_Channel,
+					_hConfiguration->LoRa_StatusChannel);
+			break;
+		default:
+			return LORA_FAILED_COMMAND;
+		}
+		if (LORA_TransmitCommand(300) != LORA_OK)
+			return LORA_FAILED;
+		break;
+	default:
+		break;
+	}
+	return LORA_OK;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -58,7 +58,7 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size) {
 	if (huart->Instance == USART3) {
 		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_4);
 		HAL_UART_DMAPause(&huart3);
-		for (int i = 0; i < 10; i++)
+		for (int i = 0; i < 11; i++)
 			if (!memcmp(DMA_RX_Buffer_3 + i, fistTERM, strlen(fistTERM))) {
 				LORA_ReceivedCallback(DMA_RX_Buffer_3);
 

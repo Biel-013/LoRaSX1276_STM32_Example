@@ -36,5 +36,6 @@
 ../Core/Src/LoRa_SX1276.c:1123:20:AT_UplinkCounter	16	static
 ../Core/Src/LoRa_SX1276.c:1157:20:AT_DownlinkCounter	16	static
 ../Core/Src/LoRa_SX1276.c:1191:20:AT_BatteryLevel	16	static
-../Core/Src/LoRa_SX1276.c:1226:20:AT_MacLineCheckRequest	8	static
-../Core/Src/LoRa_SX1276.c:1247:20:AT_EncryptionConfiguration	16	static
+../Core/Src/LoRa_SX1276.c:1225:20:AT_MacLineCheckRequest	8	static
+../Core/Src/LoRa_SX1276.c:1245:20:AT_EncryptionConfiguration	16	static
+../Core/Src/LoRa_SX1276.c:1282:20:AT_ChannelConfiguration	40	static
