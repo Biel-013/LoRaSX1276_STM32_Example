@@ -110,12 +110,12 @@ int main(void) {
 	chanel.LoRa_Channel = 1;
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
-//	AT_AntennaGain(&FLOAT);
-	AT_UplinkPacketType(AT_OPERATION_READ, &Value);
-	Value = !Value;
-	AT_UplinkPacketType(AT_OPERATION_WRITE, &Value);
-	Value = !Value;
-	AT_UplinkPacketType(AT_OPERATION_READ, &Value);
+	AT_EntersLowPowerMode();
+//	AT_UplinkPacketType(AT_OPERATION_READ, &Value);
+//	Value = !Value;
+//	AT_UplinkPacketType(AT_OPERATION_WRITE, &Value);
+//	Value = !Value;
+//	AT_UplinkPacketType(AT_OPERATION_READ, &Value);
 	while (1) {
 //		if (id != id)
 //			AT_EndDeviceIdentifier(AT_OPERATION_WRITE, &adress);
