@@ -1562,14 +1562,36 @@ LoRa_StatusTypeDef AT_RTCWakeupTime(LoRa_OperationTypeDef _Operacao,
 
 /**
  * @brief Comando de acessor ao relógio do "real time clock" (RTC)
- * @tparam
+ * @tparam AT+TIME Hour(2 digit):Min(2 digit):Sec(2 digit):ms(3 digit)
  * @param _Operacao: Modo de operação do comando
  * @param _Time: Tempo do RTC
  * @retval Status de execução do comando
  */
 
 LoRa_StatusTypeDef AT_RTCTime(LoRa_OperationTypeDef _Operacao,
-		LoRa_TimeTypeDef *_Time);
+		LoRa_TimeTypeDef *_Time) {
+	switch (_Operacao) {
+	case AT_OPERATION_READ:
+		sprintf((char*) AT_RXcommand, "AT+TIME\r\n");
+		LORA_STATUS_RECEIVE = LORA_CLEAR;
+		if (LORA_ReceiveCommand(500, 10) != LORA_OK)
+			return LORA_FAILED;
+		sscanf(LORA_UART_BUFFER, "%s\r%hu:%hu:%f\r\n", AT_RXcommand,
+				&_Time->LoRa_Horas, &_Time->LoRa_Minutos,
+				&_Time->LoRa_Segundos);
+		break;
+	case AT_OPERATION_WRITE:
+		sprintf((char*) AT_TXcommand, "AT+TIME %02hu:%02hu:%02hu\r\n",
+				_Time->LoRa_Horas, _Time->LoRa_Minutos,
+				(uint16_t) _Time->LoRa_Segundos);
+		if (LORA_TransmitCommand(300) != LORA_OK)
+			return LORA_FAILED;
+		break;
+	default:
+		break;
+	}
+	return LORA_OK;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
