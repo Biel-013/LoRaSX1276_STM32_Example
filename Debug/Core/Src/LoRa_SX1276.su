@@ -46,4 +46,5 @@
 ../Core/Src/LoRa_SX1276.c:1483:20:AT_UplinkPacketType	16	static
 ../Core/Src/LoRa_SX1276.c:1516:20:AT_EntersLowPowerMode	8	static
 ../Core/Src/LoRa_SX1276.c:1536:20:AT_RTCWakeupTime	16	static
-../Core/Src/LoRa_SX1276.c:1571:20:AT_RTCTime	32	static
+../Core/Src/LoRa_SX1276.c:1570:20:AT_RTCTime	32	static
+../Core/Src/LoRa_SX1276.c:1609:20:AT_RTCDate	24	static
