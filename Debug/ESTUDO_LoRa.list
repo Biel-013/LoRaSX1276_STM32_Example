@@ -7,43 +7,43 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
   1 .text         000038c4  0800010c  0800010c  0001010c  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .rodata       000005ac  080039d0  080039d0  000139d0  2**2
+  2 .rodata       000005c4  080039d0  080039d0  000139d0  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  3 .ARM.extab    00000000  08003f7c  08003f7c  00020078  2**0
+  3 .ARM.extab    00000000  08003f94  08003f94  00020078  2**0
                   CONTENTS
-  4 .ARM          00000000  08003f7c  08003f7c  00020078  2**0
+  4 .ARM          00000000  08003f94  08003f94  00020078  2**0
                   CONTENTS
-  5 .preinit_array 00000000  08003f7c  08003f7c  00020078  2**0
+  5 .preinit_array 00000000  08003f94  08003f94  00020078  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  6 .init_array   00000004  08003f7c  08003f7c  00013f7c  2**2
+  6 .init_array   00000004  08003f94  08003f94  00013f94  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  7 .fini_array   00000004  08003f80  08003f80  00013f80  2**2
+  7 .fini_array   00000004  08003f98  08003f98  00013f98  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  8 .data         00000078  20000000  08003f84  00020000  2**2
+  8 .data         00000078  20000000  08003f9c  00020000  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  9 .bss          000001d4  20000078  08003ffc  00020078  2**2
+  9 .bss          000001d4  20000078  08004014  00020078  2**2
                   ALLOC
- 10 ._user_heap_stack 00000604  2000024c  08003ffc  0002024c  2**0
+ 10 ._user_heap_stack 00000604  2000024c  08004014  0002024c  2**0
                   ALLOC
  11 .ARM.attributes 00000029  00000000  00000000  00020078  2**0
                   CONTENTS, READONLY
- 12 .debug_info   000092e6  00000000  00000000  000200a1  2**0
+ 12 .debug_info   00009322  00000000  00000000  000200a1  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 13 .debug_abbrev 00001a7a  00000000  00000000  00029387  2**0
+ 13 .debug_abbrev 00001a7a  00000000  00000000  000293c3  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_aranges 000007f8  00000000  00000000  0002ae08  2**3
+ 14 .debug_aranges 00000800  00000000  00000000  0002ae40  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_ranges 00000750  00000000  00000000  0002b600  2**3
+ 15 .debug_ranges 00000758  00000000  00000000  0002b640  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_macro  0001746b  00000000  00000000  0002bd50  2**0
+ 16 .debug_macro  0001746b  00000000  00000000  0002bd98  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   00009b9e  00000000  00000000  000431bb  2**0
+ 17 .debug_line   00009be3  00000000  00000000  00043203  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    000830c5  00000000  00000000  0004cd59  2**0
+ 18 .debug_str    000830d5  00000000  00000000  0004cde6  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000050  00000000  00000000  000cfe1e  2**0
+ 19 .comment      00000050  00000000  00000000  000cfebb  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  00002788  00000000  00000000  000cfe70  2**2
+ 20 .debug_frame  000027ac  00000000  00000000  000cff0c  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -514,13 +514,13 @@ LoRa_StatusTypeDef LORA_ReceiveCommand(uint16_t _TimerWait, uint16_t _Periodo) {
  8000420:	200001a8 	.word	0x200001a8
  8000424:	20000004 	.word	0x20000004
 
-08000428 <AT_ResendConfirmedUplink>:
- * @param _Operacao: Modo de operação do comando
- * @param _Value: Número de repetiçoes
+08000428 <AT_TxPowerIndex>:
+ * @param _Value: Índice de Potência
  * @retval Status de execução do comando
  */
-LoRa_StatusTypeDef AT_ResendConfirmedUplink(LoRa_OperationTypeDef _Operacao,
-		LoRa_Value *_Value) {
+
+LoRa_StatusTypeDef AT_TxPowerIndex(LoRa_OperationTypeDef _Operacao,
+		LoRa_Value *_Value){
  8000428:	b580      	push	{r7, lr}
  800042a:	b082      	sub	sp, #8
  800042c:	af00      	add	r7, sp, #0
@@ -530,74 +530,74 @@ LoRa_StatusTypeDef AT_ResendConfirmedUplink(LoRa_OperationTypeDef _Operacao,
 	switch (_Operacao) {
  8000434:	79fb      	ldrb	r3, [r7, #7]
  8000436:	2b00      	cmp	r3, #0
- 8000438:	d002      	beq.n	8000440 <AT_ResendConfirmedUplink+0x18>
+ 8000438:	d002      	beq.n	8000440 <AT_TxPowerIndex+0x18>
  800043a:	2b01      	cmp	r3, #1
- 800043c:	d018      	beq.n	8000470 <AT_ResendConfirmedUplink+0x48>
-		sprintf((char*) AT_TXcommand, "AT+MCFR %u\r\n", (*_Value));
-		if (LORA_TransmitCommand(300) != LORA_OK)
-			return LORA_FAILED;
-		break;
-	default:
-		break;
- 800043e:	e028      	b.n	8000492 <AT_ResendConfirmedUplink+0x6a>
-		sprintf((char*) AT_RXcommand, "AT+MCFR\r\n");
- 8000440:	4916      	ldr	r1, [pc, #88]	; (800049c <AT_ResendConfirmedUplink+0x74>)
- 8000442:	4817      	ldr	r0, [pc, #92]	; (80004a0 <AT_ResendConfirmedUplink+0x78>)
+ 800043c:	d018      	beq.n	8000470 <AT_TxPowerIndex+0x48>
+			sprintf((char*) AT_TXcommand, "AT+TXP %u\r\n", (*_Value));
+			if (LORA_TransmitCommand(300) != LORA_OK)
+				return LORA_FAILED;
+			break;
+		default:
+			break;
+ 800043e:	e028      	b.n	8000492 <AT_TxPowerIndex+0x6a>
+			sprintf((char*) AT_RXcommand, "AT+TXP\r\n");
+ 8000440:	4916      	ldr	r1, [pc, #88]	; (800049c <AT_TxPowerIndex+0x74>)
+ 8000442:	4817      	ldr	r0, [pc, #92]	; (80004a0 <AT_TxPowerIndex+0x78>)
  8000444:	f002 f98a 	bl	800275c <siprintf>
-		LORA_STATUS_RECEIVE = LORA_CLEAR;
- 8000448:	4b16      	ldr	r3, [pc, #88]	; (80004a4 <AT_ResendConfirmedUplink+0x7c>)
+			LORA_STATUS_RECEIVE = LORA_CLEAR;
+ 8000448:	4b16      	ldr	r3, [pc, #88]	; (80004a4 <AT_TxPowerIndex+0x7c>)
  800044a:	2206      	movs	r2, #6
  800044c:	701a      	strb	r2, [r3, #0]
-		if (LORA_ReceiveCommand(500, 10) != LORA_OK)
+			if (LORA_ReceiveCommand(500, 10) != LORA_OK)
  800044e:	210a      	movs	r1, #10
  8000450:	f44f 70fa 	mov.w	r0, #500	; 0x1f4
  8000454:	f7ff ff9a 	bl	800038c <LORA_ReceiveCommand>
  8000458:	4603      	mov	r3, r0
  800045a:	2b01      	cmp	r3, #1
- 800045c:	d001      	beq.n	8000462 <AT_ResendConfirmedUplink+0x3a>
-			return LORA_FAILED;
+ 800045c:	d001      	beq.n	8000462 <AT_TxPowerIndex+0x3a>
+				return LORA_FAILED;
  800045e:	2300      	movs	r3, #0
- 8000460:	e018      	b.n	8000494 <AT_ResendConfirmedUplink+0x6c>
-		sscanf(LORA_UART_BUFFER, "%s\r%hu\r\n", AT_RXcommand, _Value);
+ 8000460:	e018      	b.n	8000494 <AT_TxPowerIndex+0x6c>
+			sscanf(LORA_UART_BUFFER, "%s\r%hu\r\n", AT_RXcommand, _Value);
  8000462:	683b      	ldr	r3, [r7, #0]
- 8000464:	4a0e      	ldr	r2, [pc, #56]	; (80004a0 <AT_ResendConfirmedUplink+0x78>)
- 8000466:	4910      	ldr	r1, [pc, #64]	; (80004a8 <AT_ResendConfirmedUplink+0x80>)
- 8000468:	4810      	ldr	r0, [pc, #64]	; (80004ac <AT_ResendConfirmedUplink+0x84>)
+ 8000464:	4a0e      	ldr	r2, [pc, #56]	; (80004a0 <AT_TxPowerIndex+0x78>)
+ 8000466:	4910      	ldr	r1, [pc, #64]	; (80004a8 <AT_TxPowerIndex+0x80>)
+ 8000468:	4810      	ldr	r0, [pc, #64]	; (80004ac <AT_TxPowerIndex+0x84>)
  800046a:	f002 f997 	bl	800279c <siscanf>
-		break;
- 800046e:	e010      	b.n	8000492 <AT_ResendConfirmedUplink+0x6a>
-		sprintf((char*) AT_TXcommand, "AT+MCFR %u\r\n", (*_Value));
+			break;
+ 800046e:	e010      	b.n	8000492 <AT_TxPowerIndex+0x6a>
+			sprintf((char*) AT_TXcommand, "AT+TXP %u\r\n", (*_Value));
  8000470:	683b      	ldr	r3, [r7, #0]
  8000472:	881b      	ldrh	r3, [r3, #0]
  8000474:	461a      	mov	r2, r3
- 8000476:	490e      	ldr	r1, [pc, #56]	; (80004b0 <AT_ResendConfirmedUplink+0x88>)
- 8000478:	480e      	ldr	r0, [pc, #56]	; (80004b4 <AT_ResendConfirmedUplink+0x8c>)
+ 8000476:	490e      	ldr	r1, [pc, #56]	; (80004b0 <AT_TxPowerIndex+0x88>)
+ 8000478:	480e      	ldr	r0, [pc, #56]	; (80004b4 <AT_TxPowerIndex+0x8c>)
  800047a:	f002 f96f 	bl	800275c <siprintf>
-		if (LORA_TransmitCommand(300) != LORA_OK)
+			if (LORA_TransmitCommand(300) != LORA_OK)
  800047e:	f44f 7096 	mov.w	r0, #300	; 0x12c
  8000482:	f7ff ff63 	bl	800034c <LORA_TransmitCommand>
  8000486:	4603      	mov	r3, r0
  8000488:	2b01      	cmp	r3, #1
- 800048a:	d001      	beq.n	8000490 <AT_ResendConfirmedUplink+0x68>
-			return LORA_FAILED;
+ 800048a:	d001      	beq.n	8000490 <AT_TxPowerIndex+0x68>
+				return LORA_FAILED;
  800048c:	2300      	movs	r3, #0
- 800048e:	e001      	b.n	8000494 <AT_ResendConfirmedUplink+0x6c>
-		break;
+ 800048e:	e001      	b.n	8000494 <AT_TxPowerIndex+0x6c>
+			break;
  8000490:	bf00      	nop
-	}
-	return LORA_OK;
+		}
+		return LORA_OK;
  8000492:	2301      	movs	r3, #1
 }
  8000494:	4618      	mov	r0, r3
  8000496:	3708      	adds	r7, #8
  8000498:	46bd      	mov	sp, r7
  800049a:	bd80      	pop	{r7, pc}
- 800049c:	08003d78 	.word	0x08003d78
+ 800049c:	08003d94 	.word	0x08003d94
  80004a0:	20000140 	.word	0x20000140
  80004a4:	20000004 	.word	0x20000004
  80004a8:	08003a98 	.word	0x08003a98
  80004ac:	200000dc 	.word	0x200000dc
- 80004b0:	08003d84 	.word	0x08003d84
+ 80004b0:	08003da0 	.word	0x08003da0
  80004b4:	20000174 	.word	0x20000174
 
 080004b8 <main>:
@@ -641,26 +641,26 @@ int main(void) {
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
-	AT_ResendConfirmedUplink(AT_OPERATION_READ, &Value);
+	AT_TxPowerIndex(AT_OPERATION_READ, &Value);
  80004d4:	4909      	ldr	r1, [pc, #36]	; (80004fc <main+0x44>)
  80004d6:	2000      	movs	r0, #0
- 80004d8:	f7ff ffa6 	bl	8000428 <AT_ResendConfirmedUplink>
+ 80004d8:	f7ff ffa6 	bl	8000428 <AT_TxPowerIndex>
 	Value = 4;
  80004dc:	4b07      	ldr	r3, [pc, #28]	; (80004fc <main+0x44>)
  80004de:	2204      	movs	r2, #4
  80004e0:	801a      	strh	r2, [r3, #0]
-	AT_ResendConfirmedUplink(AT_OPERATION_WRITE, &Value);
+	AT_TxPowerIndex(AT_OPERATION_WRITE, &Value);
  80004e2:	4906      	ldr	r1, [pc, #24]	; (80004fc <main+0x44>)
  80004e4:	2001      	movs	r0, #1
- 80004e6:	f7ff ff9f 	bl	8000428 <AT_ResendConfirmedUplink>
+ 80004e6:	f7ff ff9f 	bl	8000428 <AT_TxPowerIndex>
 	Value = 5;
  80004ea:	4b04      	ldr	r3, [pc, #16]	; (80004fc <main+0x44>)
  80004ec:	2205      	movs	r2, #5
  80004ee:	801a      	strh	r2, [r3, #0]
-	AT_ResendConfirmedUplink(AT_OPERATION_READ, &Value);
+	AT_TxPowerIndex(AT_OPERATION_READ, &Value);
  80004f0:	4902      	ldr	r1, [pc, #8]	; (80004fc <main+0x44>)
  80004f2:	2000      	movs	r0, #0
- 80004f4:	f7ff ff98 	bl	8000428 <AT_ResendConfirmedUplink>
+ 80004f4:	f7ff ff98 	bl	8000428 <AT_TxPowerIndex>
 //	Value = 0;
 //	AT_RepeatUnconfirmedUplink(AT_OPERATION_WRITE, &Value);
 //	Value = 4400;
@@ -1549,7 +1549,7 @@ LoopFillZerobss:
   ldr r1, =_edata
  8000910:	20000078 	.word	0x20000078
   ldr r2, =_sidata
- 8000914:	08003f84 	.word	0x08003f84
+ 8000914:	08003f9c 	.word	0x08003f9c
   ldr r2, =_sbss
  8000918:	20000078 	.word	0x20000078
   ldr r4, =_ebss
@@ -4632,7 +4632,7 @@ if (((RCC_ClkInitStruct->ClockType) & RCC_CLOCKTYPE_PCLK1) == RCC_CLOCKTYPE_PCLK
  8001a56:	bf00      	nop
  8001a58:	40022000 	.word	0x40022000
  8001a5c:	40021000 	.word	0x40021000
- 8001a60:	08003da0 	.word	0x08003da0
+ 8001a60:	08003db8 	.word	0x08003db8
  8001a64:	20000008 	.word	0x20000008
  8001a68:	2000000c 	.word	0x2000000c
 
@@ -4767,8 +4767,8 @@ uint32_t HAL_RCC_GetSysClockFreq(void)
  8001afe:	bf00      	nop
  8001b00:	40021000 	.word	0x40021000
  8001b04:	007a1200 	.word	0x007a1200
- 8001b08:	08003db8 	.word	0x08003db8
- 8001b0c:	08003dc8 	.word	0x08003dc8
+ 8001b08:	08003dd0 	.word	0x08003dd0
+ 8001b0c:	08003de0 	.word	0x08003de0
  8001b10:	003d0900 	.word	0x003d0900
 
 08001b14 <HAL_RCC_GetHCLKFreq>:
@@ -4814,7 +4814,7 @@ uint32_t HAL_RCC_GetPCLK1Freq(void)
  8001b44:	4618      	mov	r0, r3
  8001b46:	bd80      	pop	{r7, pc}
  8001b48:	40021000 	.word	0x40021000
- 8001b4c:	08003db0 	.word	0x08003db0
+ 8001b4c:	08003dc8 	.word	0x08003dc8
 
 08001b50 <HAL_RCC_GetPCLK2Freq>:
   * @note   Each time PCLK2 changes, this function must be called to update the
@@ -4840,7 +4840,7 @@ uint32_t HAL_RCC_GetPCLK2Freq(void)
  8001b6c:	4618      	mov	r0, r3
  8001b6e:	bd80      	pop	{r7, pc}
  8001b70:	40021000 	.word	0x40021000
- 8001b74:	08003db0 	.word	0x08003db0
+ 8001b74:	08003dc8 	.word	0x08003dc8
 
 08001b78 <RCC_Delay>:
   * @brief  This function provides delay (in milliseconds) based on CPU cycles method.
@@ -6863,10 +6863,10 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  8002716:	4798      	blx	r3
  8002718:	3601      	adds	r6, #1
  800271a:	e7f2      	b.n	8002702 <__libc_init_array+0x1e>
- 800271c:	08003f7c 	.word	0x08003f7c
- 8002720:	08003f7c 	.word	0x08003f7c
- 8002724:	08003f7c 	.word	0x08003f7c
- 8002728:	08003f80 	.word	0x08003f80
+ 800271c:	08003f94 	.word	0x08003f94
+ 8002720:	08003f94 	.word	0x08003f94
+ 8002724:	08003f94 	.word	0x08003f94
+ 8002728:	08003f98 	.word	0x08003f98
 
 0800272c <memcmp>:
  800272c:	b510      	push	{r4, lr}
@@ -7239,9 +7239,9 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  8002a90:	f000 fa50 	bl	8002f34 <_printf_i>
  8002a94:	e7eb      	b.n	8002a6e <_svfiprintf_r+0x1c2>
  8002a96:	bf00      	nop
- 8002a98:	08003dca 	.word	0x08003dca
- 8002a9c:	08003dd0 	.word	0x08003dd0
- 8002aa0:	08003dd4 	.word	0x08003dd4
+ 8002a98:	08003de2 	.word	0x08003de2
+ 8002a9c:	08003de8 	.word	0x08003de8
+ 8002aa0:	08003dec 	.word	0x08003dec
  8002aa4:	00000000 	.word	0x00000000
  8002aa8:	080027f5 	.word	0x080027f5
 
@@ -7608,8 +7608,8 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  8002e0e:	e7ab      	b.n	8002d68 <__ssvfiscanf_r+0x208>
  8002e10:	08002aad 	.word	0x08002aad
  8002e14:	08002b27 	.word	0x08002b27
- 8002e18:	08003e19 	.word	0x08003e19
- 8002e1c:	08003dd0 	.word	0x08003dd0
+ 8002e18:	08003e31 	.word	0x08003e31
+ 8002e1c:	08003de8 	.word	0x08003de8
  8002e20:	4b0b      	ldr	r3, [pc, #44]	; (8002e50 <__ssvfiscanf_r+0x2f0>)
  8002e22:	2b00      	cmp	r3, #0
  8002e24:	f43f aec2 	beq.w	8002bac <__ssvfiscanf_r+0x4c>
@@ -7965,8 +7965,8 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  8003170:	2500      	movs	r5, #0
  8003172:	f104 0619 	add.w	r6, r4, #25
  8003176:	e7f5      	b.n	8003164 <_printf_i+0x230>
- 8003178:	08003ddb 	.word	0x08003ddb
- 800317c:	08003dec 	.word	0x08003dec
+ 8003178:	08003df3 	.word	0x08003df3
+ 800317c:	08003e04 	.word	0x08003e04
 
 08003180 <_scanf_chars>:
  8003180:	e92d 43f8 	stmdb	sp!, {r3, r4, r5, r6, r7, r8, r9, lr}
@@ -8049,7 +8049,7 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  8003228:	6123      	str	r3, [r4, #16]
  800322a:	e8bd 83f8 	ldmia.w	sp!, {r3, r4, r5, r6, r7, r8, r9, pc}
  800322e:	bf00      	nop
- 8003230:	08003e19 	.word	0x08003e19
+ 8003230:	08003e31 	.word	0x08003e31
 
 08003234 <_scanf_i>:
  8003234:	e92d 4ff0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, lr}
@@ -8245,10 +8245,10 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  800340e:	2001      	movs	r0, #1
  8003410:	e7ed      	b.n	80033ee <_scanf_i+0x1ba>
  8003412:	bf00      	nop
- 8003414:	08003d94 	.word	0x08003d94
+ 8003414:	08003dac 	.word	0x08003dac
  8003418:	08003675 	.word	0x08003675
  800341c:	0800358d 	.word	0x0800358d
- 8003420:	08003e16 	.word	0x08003e16
+ 8003420:	08003e2e 	.word	0x08003e2e
 
 08003424 <__sccl>:
  8003424:	b570      	push	{r4, r5, r6, lr}
@@ -8407,7 +8407,7 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  8003582:	d0a9      	beq.n	80034d8 <_strtol_l.constprop.0+0x44>
  8003584:	230a      	movs	r3, #10
  8003586:	e7af      	b.n	80034e8 <_strtol_l.constprop.0+0x54>
- 8003588:	08003e19 	.word	0x08003e19
+ 8003588:	08003e31 	.word	0x08003e31
 
 0800358c <_strtol_r>:
  800358c:	f7ff bf82 	b.w	8003494 <_strtol_l.constprop.0>
@@ -8505,7 +8505,7 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  800366a:	230a      	movs	r3, #10
  800366c:	e7af      	b.n	80035ce <_strtoul_l.constprop.0+0x3e>
  800366e:	bf00      	nop
- 8003670:	08003e19 	.word	0x08003e19
+ 8003670:	08003e31 	.word	0x08003e31
 
 08003674 <_strtoul_r>:
  8003674:	f7ff bf8c 	b.w	8003590 <_strtoul_l.constprop.0>

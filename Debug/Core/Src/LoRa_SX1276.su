@@ -32,3 +32,4 @@
 ../Core/Src/LoRa_SX1276.c:987:20:AT_TxRxWindow2JoinDelay	16	static
 ../Core/Src/LoRa_SX1276.c:1021:20:AT_RepeatUnconfirmedUplink	16	static
 ../Core/Src/LoRa_SX1276.c:1055:20:AT_ResendConfirmedUplink	16	static
+../Core/Src/LoRa_SX1276.c:1090:20:AT_TxPowerIndex	16	static

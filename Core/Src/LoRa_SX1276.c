@@ -1081,14 +1081,32 @@ LoRa_StatusTypeDef AT_ResendConfirmedUplink(LoRa_OperationTypeDef _Operacao,
 
 /**
  * @brief Comando de Índice de Potência Tx
- * @tparam
+ * @tparam AT+TXP <index(0 ~ 10)> <ENTER>
  * @param _Operacao: Modo de operação do comando
  * @param _Value: Índice de Potência
  * @retval Status de execução do comando
  */
 
 LoRa_StatusTypeDef AT_TxPowerIndex(LoRa_OperationTypeDef _Operacao,
-		LoRa_Value *_Value);
+		LoRa_Value *_Value){
+	switch (_Operacao) {
+		case AT_OPERATION_READ:
+			sprintf((char*) AT_RXcommand, "AT+TXP\r\n");
+			LORA_STATUS_RECEIVE = LORA_CLEAR;
+			if (LORA_ReceiveCommand(500, 10) != LORA_OK)
+				return LORA_FAILED;
+			sscanf(LORA_UART_BUFFER, "%s\r%hu\r\n", AT_RXcommand, _Value);
+			break;
+		case AT_OPERATION_WRITE:
+			sprintf((char*) AT_TXcommand, "AT+TXP %u\r\n", (*_Value));
+			if (LORA_TransmitCommand(300) != LORA_OK)
+				return LORA_FAILED;
+			break;
+		default:
+			break;
+		}
+		return LORA_OK;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

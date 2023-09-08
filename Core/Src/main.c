@@ -107,11 +107,11 @@ int main(void) {
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
-	AT_ResendConfirmedUplink(AT_OPERATION_READ, &Value);
+	AT_TxPowerIndex(AT_OPERATION_READ, &Value);
 	Value = 4;
-	AT_ResendConfirmedUplink(AT_OPERATION_WRITE, &Value);
+	AT_TxPowerIndex(AT_OPERATION_WRITE, &Value);
 	Value = 5;
-	AT_ResendConfirmedUplink(AT_OPERATION_READ, &Value);
+	AT_TxPowerIndex(AT_OPERATION_READ, &Value);
 //	Value = 0;
 //	AT_RepeatUnconfirmedUplink(AT_OPERATION_WRITE, &Value);
 //	Value = 4400;
