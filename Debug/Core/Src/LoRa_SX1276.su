@@ -48,4 +48,5 @@
 ../Core/Src/LoRa_SX1276.c:1536:20:AT_RTCWakeupTime	16	static
 ../Core/Src/LoRa_SX1276.c:1570:20:AT_RTCTime	32	static
 ../Core/Src/LoRa_SX1276.c:1608:20:AT_RTCDate	24	static
-../Core/Src/LoRa_SX1276.c:1646:20:AT_ECHO	16	static
+../Core/Src/LoRa_SX1276.c:1644:20:AT_ECHO	16	static
+../Core/Src/LoRa_SX1276.c:1677:20:AT_ResetConfiguration	8	static

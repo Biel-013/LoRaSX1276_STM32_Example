@@ -1614,13 +1614,11 @@ LoRa_StatusTypeDef AT_RTCDate(LoRa_OperationTypeDef _Operacao,
 		if (LORA_ReceiveCommand(500, 10) != LORA_OK)
 			return LORA_FAILED;
 		sscanf(LORA_UART_BUFFER, "%s\r%hu:%hu:%hu\r\n", AT_RXcommand,
-				&_Date->LoRa_Ano, &_Date->LoRa_Mes,
-				&_Date->LoRa_Dia);
+				&_Date->LoRa_Ano, &_Date->LoRa_Mes, &_Date->LoRa_Dia);
 		break;
 	case AT_OPERATION_WRITE:
 		sprintf((char*) AT_TXcommand, "AT+DATE %04hu:%02hu:%02hu\r\n",
-				_Date->LoRa_Ano, _Date->LoRa_Mes,
-				(uint16_t) _Date->LoRa_Dia);
+				_Date->LoRa_Ano, _Date->LoRa_Mes, (uint16_t) _Date->LoRa_Dia);
 		if (LORA_TransmitCommand(300) != LORA_OK)
 			return LORA_FAILED;
 		break;
@@ -1673,11 +1671,15 @@ LoRa_StatusTypeDef AT_ECHO(LoRa_OperationTypeDef _Operacao,
 
 /**
  * @brief Comando para redefinir as configuração
- * @tparam
+ * @tparam AT+FRESET <ENTER>
  * @retval Status de execução do comando
  */
-
-LoRa_StatusTypeDef AT_ResetConfiguration(void);
+LoRa_StatusTypeDef AT_ResetConfiguration(void) {
+	sprintf((char*) AT_TXcommand, "AT+FRESET\r\n");
+	if (LORA_TransmitCommand(100) != LORA_OK)
+		return LORA_FAILED;
+	return LORA_OK;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
