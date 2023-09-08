@@ -1189,24 +1189,25 @@ LoRa_StatusTypeDef AT_DownlinkCounter(LoRa_OperationTypeDef _Operacao,
  * @retval Status de execução do comando
  */
 LoRa_StatusTypeDef AT_BatteryLevel(LoRa_OperationTypeDef _Operacao,
-		LoRa_BateryLevelTypeDef *_Level){
+		LoRa_BateryLevelTypeDef *_Level) {
 	switch (_Operacao) {
-		case AT_OPERATION_READ:
-			sprintf((char*) AT_RXcommand, "AT+FCD\r\n");
-			LORA_STATUS_RECEIVE = LORA_CLEAR;
-			if (LORA_ReceiveCommand(500, 10) != LORA_OK)
-				return LORA_FAILED;
-			sscanf(LORA_UART_BUFFER, "%s\r%hu\r\n", AT_RXcommand, (uint16_t *)_Level);
-			break;
-		case AT_OPERATION_WRITE:
-			sprintf((char*) AT_TXcommand, "AT+FCD %u\r\n", (*_Level));
-			if (LORA_TransmitCommand(300) != LORA_OK)
-				return LORA_FAILED;
-			break;
-		default:
-			break;
-		}
-		return LORA_OK;
+	case AT_OPERATION_READ:
+		sprintf((char*) AT_RXcommand, "AT+FCD\r\n");
+		LORA_STATUS_RECEIVE = LORA_CLEAR;
+		if (LORA_ReceiveCommand(500, 10) != LORA_OK)
+			return LORA_FAILED;
+		sscanf(LORA_UART_BUFFER, "%s\r%hu\r\n", AT_RXcommand,
+				(uint16_t*) _Level);
+		break;
+	case AT_OPERATION_WRITE:
+		sprintf((char*) AT_TXcommand, "AT+FCD %u\r\n", (*_Level));
+		if (LORA_TransmitCommand(300) != LORA_OK)
+			return LORA_FAILED;
+		break;
+	default:
+		break;
+	}
+	return LORA_OK;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1217,11 +1218,17 @@ LoRa_StatusTypeDef AT_BatteryLevel(LoRa_OperationTypeDef _Operacao,
 
 /**
  * @brief Comando usado para verificar se o link está funcionando corretamente
- * @tparam
+ * @attention Essa função não foi continuada, por não apresentar utilidade para o fim dessa biblioteca
+ * @tparam AT+LCHK <ENTER>
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_MacLineCheckRequest(void);
+LoRa_StatusTypeDef AT_MacLineCheckRequest(void) {
+	sprintf((char*) AT_TXcommand, "AT+LCHK %u\r\n", (*_Level));
+	if (LORA_TransmitCommand(300) != LORA_OK)
+		return LORA_FAILED;
+	return LORA_OK;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
