@@ -107,15 +107,15 @@ int main(void) {
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
-	AT_TxRxWindow1JoinDelay(AT_OPERATION_READ, &Value);
+	AT_TxRxWindow2JoinDelay(AT_OPERATION_READ, &Value);
 	Value = 500;
-	AT_TxRxWindow1JoinDelay(AT_OPERATION_WRITE, &Value);
-	Value = 3000;
-	AT_TxRxWindow1JoinDelay(AT_OPERATION_READ, &Value);
+	AT_TxRxWindow2JoinDelay(AT_OPERATION_WRITE, &Value);
+	Value = 1500;
+	AT_TxRxWindow2JoinDelay(AT_OPERATION_READ, &Value);
 	Value = 0;
-	AT_TxRxWindow1JoinDelay(AT_OPERATION_WRITE, &Value);
+	AT_TxRxWindow2JoinDelay(AT_OPERATION_WRITE, &Value);
 	Value = 4400;
-	AT_TxRxWindow1JoinDelay(AT_OPERATION_READ, &Value);
+	AT_TxRxWindow2JoinDelay(AT_OPERATION_READ, &Value);
 	while (1) {
 //		if (id != id)
 //			AT_EndDeviceIdentifier(AT_OPERATION_WRITE, &adress);

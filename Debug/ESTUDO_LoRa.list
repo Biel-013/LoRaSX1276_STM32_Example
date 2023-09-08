@@ -7,43 +7,43 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
   1 .text         000038e4  0800010c  0800010c  0001010c  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .rodata       00000558  080039f0  080039f0  000139f0  2**2
+  2 .rodata       00000574  080039f0  080039f0  000139f0  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  3 .ARM.extab    00000000  08003f48  08003f48  00020078  2**0
+  3 .ARM.extab    00000000  08003f64  08003f64  00020078  2**0
                   CONTENTS
-  4 .ARM          00000000  08003f48  08003f48  00020078  2**0
+  4 .ARM          00000000  08003f64  08003f64  00020078  2**0
                   CONTENTS
-  5 .preinit_array 00000000  08003f48  08003f48  00020078  2**0
+  5 .preinit_array 00000000  08003f64  08003f64  00020078  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  6 .init_array   00000004  08003f48  08003f48  00013f48  2**2
+  6 .init_array   00000004  08003f64  08003f64  00013f64  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  7 .fini_array   00000004  08003f4c  08003f4c  00013f4c  2**2
+  7 .fini_array   00000004  08003f68  08003f68  00013f68  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  8 .data         00000078  20000000  08003f50  00020000  2**2
+  8 .data         00000078  20000000  08003f6c  00020000  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  9 .bss          000001d8  20000078  08003fc8  00020078  2**2
+  9 .bss          000001d8  20000078  08003fe4  00020078  2**2
                   ALLOC
- 10 ._user_heap_stack 00000600  20000250  08003fc8  00020250  2**0
+ 10 ._user_heap_stack 00000600  20000250  08003fe4  00020250  2**0
                   ALLOC
  11 .ARM.attributes 00000029  00000000  00000000  00020078  2**0
                   CONTENTS, READONLY
- 12 .debug_info   00009232  00000000  00000000  000200a1  2**0
+ 12 .debug_info   0000926e  00000000  00000000  000200a1  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 13 .debug_abbrev 00001a7a  00000000  00000000  000292d3  2**0
+ 13 .debug_abbrev 00001a7a  00000000  00000000  0002930f  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_aranges 000007e0  00000000  00000000  0002ad50  2**3
+ 14 .debug_aranges 000007e8  00000000  00000000  0002ad90  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_ranges 00000738  00000000  00000000  0002b530  2**3
+ 15 .debug_ranges 00000740  00000000  00000000  0002b578  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_macro  0001746b  00000000  00000000  0002bc68  2**0
+ 16 .debug_macro  0001746b  00000000  00000000  0002bcb8  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   00009adb  00000000  00000000  000430d3  2**0
+ 17 .debug_line   00009b20  00000000  00000000  00043123  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    00083079  00000000  00000000  0004cbae  2**0
+ 18 .debug_str    00083091  00000000  00000000  0004cc43  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000050  00000000  00000000  000cfc27  2**0
+ 19 .comment      00000050  00000000  00000000  000cfcd4  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  0000271c  00000000  00000000  000cfc78  2**2
+ 20 .debug_frame  00002740  00000000  00000000  000cfd24  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -514,12 +514,12 @@ LoRa_StatusTypeDef LORA_ReceiveCommand(uint16_t _TimerWait, uint16_t _Periodo) {
  8000420:	200001a8 	.word	0x200001a8
  8000424:	20000004 	.word	0x20000004
 
-08000428 <AT_TxRxWindow1JoinDelay>:
+08000428 <AT_TxRxWindow2JoinDelay>:
+ * @param _Operacao: Modo de operação do comando
  * @param _Value: Delay em ms
  * @retval Status de execução do comando
  */
-
-LoRa_StatusTypeDef AT_TxRxWindow1JoinDelay(LoRa_OperationTypeDef _Operacao,
+LoRa_StatusTypeDef AT_TxRxWindow2JoinDelay(LoRa_OperationTypeDef _Operacao,
 		LoRa_Value *_Value) {
  8000428:	b580      	push	{r7, lr}
  800042a:	b082      	sub	sp, #8
@@ -530,22 +530,22 @@ LoRa_StatusTypeDef AT_TxRxWindow1JoinDelay(LoRa_OperationTypeDef _Operacao,
 	switch (_Operacao) {
  8000434:	79fb      	ldrb	r3, [r7, #7]
  8000436:	2b00      	cmp	r3, #0
- 8000438:	d002      	beq.n	8000440 <AT_TxRxWindow1JoinDelay+0x18>
+ 8000438:	d002      	beq.n	8000440 <AT_TxRxWindow2JoinDelay+0x18>
  800043a:	2b01      	cmp	r3, #1
- 800043c:	d018      	beq.n	8000470 <AT_TxRxWindow1JoinDelay+0x48>
-		sprintf((char*) AT_TXcommand, "AT+JN1DL %u\r\n", (*_Value));
+ 800043c:	d018      	beq.n	8000470 <AT_TxRxWindow2JoinDelay+0x48>
+		sprintf((char*) AT_TXcommand, "AT+JN2DL %u\r\n", (*_Value));
 		if (LORA_TransmitCommand(300) != LORA_OK)
 			return LORA_FAILED;
 		break;
 	default:
 		break;
- 800043e:	e028      	b.n	8000492 <AT_TxRxWindow1JoinDelay+0x6a>
-		sprintf((char*) AT_RXcommand, "AT+JN1DL\r\n");
- 8000440:	4916      	ldr	r1, [pc, #88]	; (800049c <AT_TxRxWindow1JoinDelay+0x74>)
- 8000442:	4817      	ldr	r0, [pc, #92]	; (80004a0 <AT_TxRxWindow1JoinDelay+0x78>)
+ 800043e:	e028      	b.n	8000492 <AT_TxRxWindow2JoinDelay+0x6a>
+		sprintf((char*) AT_RXcommand, "AT+JN2DL\r\n");
+ 8000440:	4916      	ldr	r1, [pc, #88]	; (800049c <AT_TxRxWindow2JoinDelay+0x74>)
+ 8000442:	4817      	ldr	r0, [pc, #92]	; (80004a0 <AT_TxRxWindow2JoinDelay+0x78>)
  8000444:	f002 f99a 	bl	800277c <siprintf>
 		LORA_STATUS_RECEIVE = LORA_CLEAR;
- 8000448:	4b16      	ldr	r3, [pc, #88]	; (80004a4 <AT_TxRxWindow1JoinDelay+0x7c>)
+ 8000448:	4b16      	ldr	r3, [pc, #88]	; (80004a4 <AT_TxRxWindow2JoinDelay+0x7c>)
  800044a:	2206      	movs	r2, #6
  800044c:	701a      	strb	r2, [r3, #0]
 		if (LORA_ReceiveCommand(500, 10) != LORA_OK)
@@ -554,34 +554,34 @@ LoRa_StatusTypeDef AT_TxRxWindow1JoinDelay(LoRa_OperationTypeDef _Operacao,
  8000454:	f7ff ff9a 	bl	800038c <LORA_ReceiveCommand>
  8000458:	4603      	mov	r3, r0
  800045a:	2b01      	cmp	r3, #1
- 800045c:	d001      	beq.n	8000462 <AT_TxRxWindow1JoinDelay+0x3a>
+ 800045c:	d001      	beq.n	8000462 <AT_TxRxWindow2JoinDelay+0x3a>
 			return LORA_FAILED;
  800045e:	2300      	movs	r3, #0
- 8000460:	e018      	b.n	8000494 <AT_TxRxWindow1JoinDelay+0x6c>
+ 8000460:	e018      	b.n	8000494 <AT_TxRxWindow2JoinDelay+0x6c>
 		sscanf(LORA_UART_BUFFER, "%s\r%hu\r\n", AT_RXcommand, _Value);
  8000462:	683b      	ldr	r3, [r7, #0]
- 8000464:	4a0e      	ldr	r2, [pc, #56]	; (80004a0 <AT_TxRxWindow1JoinDelay+0x78>)
- 8000466:	4910      	ldr	r1, [pc, #64]	; (80004a8 <AT_TxRxWindow1JoinDelay+0x80>)
- 8000468:	4810      	ldr	r0, [pc, #64]	; (80004ac <AT_TxRxWindow1JoinDelay+0x84>)
+ 8000464:	4a0e      	ldr	r2, [pc, #56]	; (80004a0 <AT_TxRxWindow2JoinDelay+0x78>)
+ 8000466:	4910      	ldr	r1, [pc, #64]	; (80004a8 <AT_TxRxWindow2JoinDelay+0x80>)
+ 8000468:	4810      	ldr	r0, [pc, #64]	; (80004ac <AT_TxRxWindow2JoinDelay+0x84>)
  800046a:	f002 f9a7 	bl	80027bc <siscanf>
 		break;
- 800046e:	e010      	b.n	8000492 <AT_TxRxWindow1JoinDelay+0x6a>
-		sprintf((char*) AT_TXcommand, "AT+JN1DL %u\r\n", (*_Value));
+ 800046e:	e010      	b.n	8000492 <AT_TxRxWindow2JoinDelay+0x6a>
+		sprintf((char*) AT_TXcommand, "AT+JN2DL %u\r\n", (*_Value));
  8000470:	683b      	ldr	r3, [r7, #0]
  8000472:	881b      	ldrh	r3, [r3, #0]
  8000474:	461a      	mov	r2, r3
- 8000476:	490e      	ldr	r1, [pc, #56]	; (80004b0 <AT_TxRxWindow1JoinDelay+0x88>)
- 8000478:	480e      	ldr	r0, [pc, #56]	; (80004b4 <AT_TxRxWindow1JoinDelay+0x8c>)
+ 8000476:	490e      	ldr	r1, [pc, #56]	; (80004b0 <AT_TxRxWindow2JoinDelay+0x88>)
+ 8000478:	480e      	ldr	r0, [pc, #56]	; (80004b4 <AT_TxRxWindow2JoinDelay+0x8c>)
  800047a:	f002 f97f 	bl	800277c <siprintf>
 		if (LORA_TransmitCommand(300) != LORA_OK)
  800047e:	f44f 7096 	mov.w	r0, #300	; 0x12c
  8000482:	f7ff ff63 	bl	800034c <LORA_TransmitCommand>
  8000486:	4603      	mov	r3, r0
  8000488:	2b01      	cmp	r3, #1
- 800048a:	d001      	beq.n	8000490 <AT_TxRxWindow1JoinDelay+0x68>
+ 800048a:	d001      	beq.n	8000490 <AT_TxRxWindow2JoinDelay+0x68>
 			return LORA_FAILED;
  800048c:	2300      	movs	r3, #0
- 800048e:	e001      	b.n	8000494 <AT_TxRxWindow1JoinDelay+0x6c>
+ 800048e:	e001      	b.n	8000494 <AT_TxRxWindow2JoinDelay+0x6c>
 		break;
  8000490:	bf00      	nop
 	}
@@ -592,12 +592,12 @@ LoRa_StatusTypeDef AT_TxRxWindow1JoinDelay(LoRa_OperationTypeDef _Operacao,
  8000496:	3708      	adds	r7, #8
  8000498:	46bd      	mov	sp, r7
  800049a:	bd80      	pop	{r7, pc}
- 800049c:	08003d44 	.word	0x08003d44
+ 800049c:	08003d60 	.word	0x08003d60
  80004a0:	20000140 	.word	0x20000140
  80004a4:	20000004 	.word	0x20000004
  80004a8:	08003ab8 	.word	0x08003ab8
  80004ac:	200000dc 	.word	0x200000dc
- 80004b0:	08003d50 	.word	0x08003d50
+ 80004b0:	08003d6c 	.word	0x08003d6c
  80004b4:	20000174 	.word	0x20000174
 
 080004b8 <main>:
@@ -641,42 +641,42 @@ int main(void) {
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
-	AT_TxRxWindow1JoinDelay(AT_OPERATION_READ, &Value);
+	AT_TxRxWindow2JoinDelay(AT_OPERATION_READ, &Value);
  80004d4:	4911      	ldr	r1, [pc, #68]	; (800051c <main+0x64>)
  80004d6:	2000      	movs	r0, #0
- 80004d8:	f7ff ffa6 	bl	8000428 <AT_TxRxWindow1JoinDelay>
+ 80004d8:	f7ff ffa6 	bl	8000428 <AT_TxRxWindow2JoinDelay>
 	Value = 500;
  80004dc:	4b0f      	ldr	r3, [pc, #60]	; (800051c <main+0x64>)
  80004de:	f44f 72fa 	mov.w	r2, #500	; 0x1f4
  80004e2:	801a      	strh	r2, [r3, #0]
-	AT_TxRxWindow1JoinDelay(AT_OPERATION_WRITE, &Value);
+	AT_TxRxWindow2JoinDelay(AT_OPERATION_WRITE, &Value);
  80004e4:	490d      	ldr	r1, [pc, #52]	; (800051c <main+0x64>)
  80004e6:	2001      	movs	r0, #1
- 80004e8:	f7ff ff9e 	bl	8000428 <AT_TxRxWindow1JoinDelay>
-	Value = 3000;
+ 80004e8:	f7ff ff9e 	bl	8000428 <AT_TxRxWindow2JoinDelay>
+	Value = 1500;
  80004ec:	4b0b      	ldr	r3, [pc, #44]	; (800051c <main+0x64>)
- 80004ee:	f640 32b8 	movw	r2, #3000	; 0xbb8
+ 80004ee:	f240 52dc 	movw	r2, #1500	; 0x5dc
  80004f2:	801a      	strh	r2, [r3, #0]
-	AT_TxRxWindow1JoinDelay(AT_OPERATION_READ, &Value);
+	AT_TxRxWindow2JoinDelay(AT_OPERATION_READ, &Value);
  80004f4:	4909      	ldr	r1, [pc, #36]	; (800051c <main+0x64>)
  80004f6:	2000      	movs	r0, #0
- 80004f8:	f7ff ff96 	bl	8000428 <AT_TxRxWindow1JoinDelay>
+ 80004f8:	f7ff ff96 	bl	8000428 <AT_TxRxWindow2JoinDelay>
 	Value = 0;
  80004fc:	4b07      	ldr	r3, [pc, #28]	; (800051c <main+0x64>)
  80004fe:	2200      	movs	r2, #0
  8000500:	801a      	strh	r2, [r3, #0]
-	AT_TxRxWindow1JoinDelay(AT_OPERATION_WRITE, &Value);
+	AT_TxRxWindow2JoinDelay(AT_OPERATION_WRITE, &Value);
  8000502:	4906      	ldr	r1, [pc, #24]	; (800051c <main+0x64>)
  8000504:	2001      	movs	r0, #1
- 8000506:	f7ff ff8f 	bl	8000428 <AT_TxRxWindow1JoinDelay>
+ 8000506:	f7ff ff8f 	bl	8000428 <AT_TxRxWindow2JoinDelay>
 	Value = 4400;
  800050a:	4b04      	ldr	r3, [pc, #16]	; (800051c <main+0x64>)
  800050c:	f241 1230 	movw	r2, #4400	; 0x1130
  8000510:	801a      	strh	r2, [r3, #0]
-	AT_TxRxWindow1JoinDelay(AT_OPERATION_READ, &Value);
+	AT_TxRxWindow2JoinDelay(AT_OPERATION_READ, &Value);
  8000512:	4902      	ldr	r1, [pc, #8]	; (800051c <main+0x64>)
  8000514:	2000      	movs	r0, #0
- 8000516:	f7ff ff87 	bl	8000428 <AT_TxRxWindow1JoinDelay>
+ 8000516:	f7ff ff87 	bl	8000428 <AT_TxRxWindow2JoinDelay>
 	while (1) {
  800051a:	e7fe      	b.n	800051a <main+0x62>
  800051c:	20000234 	.word	0x20000234
@@ -1560,7 +1560,7 @@ LoopFillZerobss:
   ldr r1, =_edata
  8000930:	20000078 	.word	0x20000078
   ldr r2, =_sidata
- 8000934:	08003f50 	.word	0x08003f50
+ 8000934:	08003f6c 	.word	0x08003f6c
   ldr r2, =_sbss
  8000938:	20000078 	.word	0x20000078
   ldr r4, =_ebss
@@ -4643,7 +4643,7 @@ if (((RCC_ClkInitStruct->ClockType) & RCC_CLOCKTYPE_PCLK1) == RCC_CLOCKTYPE_PCLK
  8001a76:	bf00      	nop
  8001a78:	40022000 	.word	0x40022000
  8001a7c:	40021000 	.word	0x40021000
- 8001a80:	08003d6c 	.word	0x08003d6c
+ 8001a80:	08003d88 	.word	0x08003d88
  8001a84:	20000008 	.word	0x20000008
  8001a88:	2000000c 	.word	0x2000000c
 
@@ -4778,8 +4778,8 @@ uint32_t HAL_RCC_GetSysClockFreq(void)
  8001b1e:	bf00      	nop
  8001b20:	40021000 	.word	0x40021000
  8001b24:	007a1200 	.word	0x007a1200
- 8001b28:	08003d84 	.word	0x08003d84
- 8001b2c:	08003d94 	.word	0x08003d94
+ 8001b28:	08003da0 	.word	0x08003da0
+ 8001b2c:	08003db0 	.word	0x08003db0
  8001b30:	003d0900 	.word	0x003d0900
 
 08001b34 <HAL_RCC_GetHCLKFreq>:
@@ -4825,7 +4825,7 @@ uint32_t HAL_RCC_GetPCLK1Freq(void)
  8001b64:	4618      	mov	r0, r3
  8001b66:	bd80      	pop	{r7, pc}
  8001b68:	40021000 	.word	0x40021000
- 8001b6c:	08003d7c 	.word	0x08003d7c
+ 8001b6c:	08003d98 	.word	0x08003d98
 
 08001b70 <HAL_RCC_GetPCLK2Freq>:
   * @note   Each time PCLK2 changes, this function must be called to update the
@@ -4851,7 +4851,7 @@ uint32_t HAL_RCC_GetPCLK2Freq(void)
  8001b8c:	4618      	mov	r0, r3
  8001b8e:	bd80      	pop	{r7, pc}
  8001b90:	40021000 	.word	0x40021000
- 8001b94:	08003d7c 	.word	0x08003d7c
+ 8001b94:	08003d98 	.word	0x08003d98
 
 08001b98 <RCC_Delay>:
   * @brief  This function provides delay (in milliseconds) based on CPU cycles method.
@@ -6874,10 +6874,10 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  8002736:	4798      	blx	r3
  8002738:	3601      	adds	r6, #1
  800273a:	e7f2      	b.n	8002722 <__libc_init_array+0x1e>
- 800273c:	08003f48 	.word	0x08003f48
- 8002740:	08003f48 	.word	0x08003f48
- 8002744:	08003f48 	.word	0x08003f48
- 8002748:	08003f4c 	.word	0x08003f4c
+ 800273c:	08003f64 	.word	0x08003f64
+ 8002740:	08003f64 	.word	0x08003f64
+ 8002744:	08003f64 	.word	0x08003f64
+ 8002748:	08003f68 	.word	0x08003f68
 
 0800274c <memcmp>:
  800274c:	b510      	push	{r4, lr}
@@ -7250,9 +7250,9 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  8002ab0:	f000 fa50 	bl	8002f54 <_printf_i>
  8002ab4:	e7eb      	b.n	8002a8e <_svfiprintf_r+0x1c2>
  8002ab6:	bf00      	nop
- 8002ab8:	08003d96 	.word	0x08003d96
- 8002abc:	08003d9c 	.word	0x08003d9c
- 8002ac0:	08003da0 	.word	0x08003da0
+ 8002ab8:	08003db2 	.word	0x08003db2
+ 8002abc:	08003db8 	.word	0x08003db8
+ 8002ac0:	08003dbc 	.word	0x08003dbc
  8002ac4:	00000000 	.word	0x00000000
  8002ac8:	08002815 	.word	0x08002815
 
@@ -7619,8 +7619,8 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  8002e2e:	e7ab      	b.n	8002d88 <__ssvfiscanf_r+0x208>
  8002e30:	08002acd 	.word	0x08002acd
  8002e34:	08002b47 	.word	0x08002b47
- 8002e38:	08003de5 	.word	0x08003de5
- 8002e3c:	08003d9c 	.word	0x08003d9c
+ 8002e38:	08003e01 	.word	0x08003e01
+ 8002e3c:	08003db8 	.word	0x08003db8
  8002e40:	4b0b      	ldr	r3, [pc, #44]	; (8002e70 <__ssvfiscanf_r+0x2f0>)
  8002e42:	2b00      	cmp	r3, #0
  8002e44:	f43f aec2 	beq.w	8002bcc <__ssvfiscanf_r+0x4c>
@@ -7976,8 +7976,8 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  8003190:	2500      	movs	r5, #0
  8003192:	f104 0619 	add.w	r6, r4, #25
  8003196:	e7f5      	b.n	8003184 <_printf_i+0x230>
- 8003198:	08003da7 	.word	0x08003da7
- 800319c:	08003db8 	.word	0x08003db8
+ 8003198:	08003dc3 	.word	0x08003dc3
+ 800319c:	08003dd4 	.word	0x08003dd4
 
 080031a0 <_scanf_chars>:
  80031a0:	e92d 43f8 	stmdb	sp!, {r3, r4, r5, r6, r7, r8, r9, lr}
@@ -8060,7 +8060,7 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  8003248:	6123      	str	r3, [r4, #16]
  800324a:	e8bd 83f8 	ldmia.w	sp!, {r3, r4, r5, r6, r7, r8, r9, pc}
  800324e:	bf00      	nop
- 8003250:	08003de5 	.word	0x08003de5
+ 8003250:	08003e01 	.word	0x08003e01
 
 08003254 <_scanf_i>:
  8003254:	e92d 4ff0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, lr}
@@ -8256,10 +8256,10 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  800342e:	2001      	movs	r0, #1
  8003430:	e7ed      	b.n	800340e <_scanf_i+0x1ba>
  8003432:	bf00      	nop
- 8003434:	08003d60 	.word	0x08003d60
+ 8003434:	08003d7c 	.word	0x08003d7c
  8003438:	08003695 	.word	0x08003695
  800343c:	080035ad 	.word	0x080035ad
- 8003440:	08003de2 	.word	0x08003de2
+ 8003440:	08003dfe 	.word	0x08003dfe
 
 08003444 <__sccl>:
  8003444:	b570      	push	{r4, r5, r6, lr}
@@ -8418,7 +8418,7 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  80035a2:	d0a9      	beq.n	80034f8 <_strtol_l.constprop.0+0x44>
  80035a4:	230a      	movs	r3, #10
  80035a6:	e7af      	b.n	8003508 <_strtol_l.constprop.0+0x54>
- 80035a8:	08003de5 	.word	0x08003de5
+ 80035a8:	08003e01 	.word	0x08003e01
 
 080035ac <_strtol_r>:
  80035ac:	f7ff bf82 	b.w	80034b4 <_strtol_l.constprop.0>
@@ -8516,7 +8516,7 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  800368a:	230a      	movs	r3, #10
  800368c:	e7af      	b.n	80035ee <_strtoul_l.constprop.0+0x3e>
  800368e:	bf00      	nop
- 8003690:	08003de5 	.word	0x08003de5
+ 8003690:	08003e01 	.word	0x08003e01
 
 08003694 <_strtoul_r>:
  8003694:	f7ff bf8c 	b.w	80035b0 <_strtoul_l.constprop.0>
