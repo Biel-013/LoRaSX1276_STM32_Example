@@ -54,7 +54,7 @@ LoRa_Value Value = 12;
 LoRa_AutoNetworkJoinTypeDef read_status = LORA_AUTO_NETWORK_JOIN_OFF;
 LoRa_Adress adress = 0xd3ad12;
 LoRa_Data data[5];
-LoRa_AutoDataRateTypeDef status = 3;
+LoRa_BateryLevelTypeDef status = LORA_BATERY_LEVEL_MAX_LEVEL;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -107,11 +107,11 @@ int main(void) {
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
-	AT_DownlinkCounter(AT_OPERATION_READ, &Value);
-	Value = 4;
-	AT_DownlinkCounter(AT_OPERATION_WRITE, &Value);
-	Value = 5;
-	AT_DownlinkCounter(AT_OPERATION_READ, &Value);
+	AT_BatteryLevel(AT_OPERATION_READ, &status);
+	status = LORA_BATERY_LEVEL_MIN_LEVEL;
+	AT_BatteryLevel(AT_OPERATION_WRITE, &status);
+	status = LORA_BATERY_LEVEL_MAX_LEVEL;
+	AT_BatteryLevel(AT_OPERATION_READ, &status);
 //	Value = 0;
 //	AT_RepeatUnconfirmedUplink(AT_OPERATION_WRITE, &Value);
 //	Value = 4400;

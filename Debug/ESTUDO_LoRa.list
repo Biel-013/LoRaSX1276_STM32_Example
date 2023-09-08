@@ -27,23 +27,23 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
  11 .ARM.attributes 00000029  00000000  00000000  00020078  2**0
                   CONTENTS, READONLY
- 12 .debug_info   0000939a  00000000  00000000  000200a1  2**0
+ 12 .debug_info   0000941b  00000000  00000000  000200a1  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 13 .debug_abbrev 00001a7a  00000000  00000000  0002943b  2**0
+ 13 .debug_abbrev 00001a7a  00000000  00000000  000294bc  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_aranges 00000810  00000000  00000000  0002aeb8  2**3
+ 14 .debug_aranges 00000818  00000000  00000000  0002af38  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_ranges 00000768  00000000  00000000  0002b6c8  2**3
+ 15 .debug_ranges 00000770  00000000  00000000  0002b750  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_macro  0001746b  00000000  00000000  0002be30  2**0
+ 16 .debug_macro  0001746b  00000000  00000000  0002bec0  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   00009c6d  00000000  00000000  0004329b  2**0
+ 17 .debug_line   00009cb2  00000000  00000000  0004332b  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    000830f9  00000000  00000000  0004cf08  2**0
+ 18 .debug_str    0008318e  00000000  00000000  0004cfdd  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000050  00000000  00000000  000d0001  2**0
+ 19 .comment      00000050  00000000  00000000  000d016b  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  000027f4  00000000  00000000  000d0054  2**2
+ 20 .debug_frame  00002818  00000000  00000000  000d01bc  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -514,13 +514,13 @@ LoRa_StatusTypeDef LORA_ReceiveCommand(uint16_t _TimerWait, uint16_t _Periodo) {
  8000420:	200001a8 	.word	0x200001a8
  8000424:	20000004 	.word	0x20000004
 
-08000428 <AT_DownlinkCounter>:
- * @param _Value: Número de downlinks
+08000428 <AT_BatteryLevel>:
+ * @param _Operacao: Modo de operação do comando
+ * @param _Level: Nível de bateria
  * @retval Status de execução do comando
  */
-
-LoRa_StatusTypeDef AT_DownlinkCounter(LoRa_OperationTypeDef _Operacao,
-		LoRa_Value *_Value) {
+LoRa_StatusTypeDef AT_BatteryLevel(LoRa_OperationTypeDef _Operacao,
+		LoRa_BateryLevelTypeDef *_Level){
  8000428:	b580      	push	{r7, lr}
  800042a:	b082      	sub	sp, #8
  800042c:	af00      	add	r7, sp, #0
@@ -530,62 +530,62 @@ LoRa_StatusTypeDef AT_DownlinkCounter(LoRa_OperationTypeDef _Operacao,
 	switch (_Operacao) {
  8000434:	79fb      	ldrb	r3, [r7, #7]
  8000436:	2b00      	cmp	r3, #0
- 8000438:	d002      	beq.n	8000440 <AT_DownlinkCounter+0x18>
+ 8000438:	d002      	beq.n	8000440 <AT_BatteryLevel+0x18>
  800043a:	2b01      	cmp	r3, #1
- 800043c:	d018      	beq.n	8000470 <AT_DownlinkCounter+0x48>
-		sprintf((char*) AT_TXcommand, "AT+FCD %u\r\n", (*_Value));
-		if (LORA_TransmitCommand(300) != LORA_OK)
-			return LORA_FAILED;
-		break;
-	default:
-		break;
- 800043e:	e028      	b.n	8000492 <AT_DownlinkCounter+0x6a>
-		sprintf((char*) AT_RXcommand, "AT+FCD\r\n");
- 8000440:	4916      	ldr	r1, [pc, #88]	; (800049c <AT_DownlinkCounter+0x74>)
- 8000442:	4817      	ldr	r0, [pc, #92]	; (80004a0 <AT_DownlinkCounter+0x78>)
+ 800043c:	d018      	beq.n	8000470 <AT_BatteryLevel+0x48>
+			sprintf((char*) AT_TXcommand, "AT+FCD %u\r\n", (*_Level));
+			if (LORA_TransmitCommand(300) != LORA_OK)
+				return LORA_FAILED;
+			break;
+		default:
+			break;
+ 800043e:	e028      	b.n	8000492 <AT_BatteryLevel+0x6a>
+			sprintf((char*) AT_RXcommand, "AT+FCD\r\n");
+ 8000440:	4916      	ldr	r1, [pc, #88]	; (800049c <AT_BatteryLevel+0x74>)
+ 8000442:	4817      	ldr	r0, [pc, #92]	; (80004a0 <AT_BatteryLevel+0x78>)
  8000444:	f002 f98a 	bl	800275c <siprintf>
-		LORA_STATUS_RECEIVE = LORA_CLEAR;
- 8000448:	4b16      	ldr	r3, [pc, #88]	; (80004a4 <AT_DownlinkCounter+0x7c>)
+			LORA_STATUS_RECEIVE = LORA_CLEAR;
+ 8000448:	4b16      	ldr	r3, [pc, #88]	; (80004a4 <AT_BatteryLevel+0x7c>)
  800044a:	2206      	movs	r2, #6
  800044c:	701a      	strb	r2, [r3, #0]
-		if (LORA_ReceiveCommand(500, 10) != LORA_OK)
+			if (LORA_ReceiveCommand(500, 10) != LORA_OK)
  800044e:	210a      	movs	r1, #10
  8000450:	f44f 70fa 	mov.w	r0, #500	; 0x1f4
  8000454:	f7ff ff9a 	bl	800038c <LORA_ReceiveCommand>
  8000458:	4603      	mov	r3, r0
  800045a:	2b01      	cmp	r3, #1
- 800045c:	d001      	beq.n	8000462 <AT_DownlinkCounter+0x3a>
-			return LORA_FAILED;
+ 800045c:	d001      	beq.n	8000462 <AT_BatteryLevel+0x3a>
+				return LORA_FAILED;
  800045e:	2300      	movs	r3, #0
- 8000460:	e018      	b.n	8000494 <AT_DownlinkCounter+0x6c>
-		sscanf(LORA_UART_BUFFER, "%s\r%hu\r\n", AT_RXcommand, _Value);
+ 8000460:	e018      	b.n	8000494 <AT_BatteryLevel+0x6c>
+			sscanf(LORA_UART_BUFFER, "%s\r%hu\r\n", AT_RXcommand, (uint16_t *)_Level);
  8000462:	683b      	ldr	r3, [r7, #0]
- 8000464:	4a0e      	ldr	r2, [pc, #56]	; (80004a0 <AT_DownlinkCounter+0x78>)
- 8000466:	4910      	ldr	r1, [pc, #64]	; (80004a8 <AT_DownlinkCounter+0x80>)
- 8000468:	4810      	ldr	r0, [pc, #64]	; (80004ac <AT_DownlinkCounter+0x84>)
+ 8000464:	4a0e      	ldr	r2, [pc, #56]	; (80004a0 <AT_BatteryLevel+0x78>)
+ 8000466:	4910      	ldr	r1, [pc, #64]	; (80004a8 <AT_BatteryLevel+0x80>)
+ 8000468:	4810      	ldr	r0, [pc, #64]	; (80004ac <AT_BatteryLevel+0x84>)
  800046a:	f002 f997 	bl	800279c <siscanf>
-		break;
- 800046e:	e010      	b.n	8000492 <AT_DownlinkCounter+0x6a>
-		sprintf((char*) AT_TXcommand, "AT+FCD %u\r\n", (*_Value));
+			break;
+ 800046e:	e010      	b.n	8000492 <AT_BatteryLevel+0x6a>
+			sprintf((char*) AT_TXcommand, "AT+FCD %u\r\n", (*_Level));
  8000470:	683b      	ldr	r3, [r7, #0]
- 8000472:	881b      	ldrh	r3, [r3, #0]
+ 8000472:	781b      	ldrb	r3, [r3, #0]
  8000474:	461a      	mov	r2, r3
- 8000476:	490e      	ldr	r1, [pc, #56]	; (80004b0 <AT_DownlinkCounter+0x88>)
- 8000478:	480e      	ldr	r0, [pc, #56]	; (80004b4 <AT_DownlinkCounter+0x8c>)
+ 8000476:	490e      	ldr	r1, [pc, #56]	; (80004b0 <AT_BatteryLevel+0x88>)
+ 8000478:	480e      	ldr	r0, [pc, #56]	; (80004b4 <AT_BatteryLevel+0x8c>)
  800047a:	f002 f96f 	bl	800275c <siprintf>
-		if (LORA_TransmitCommand(300) != LORA_OK)
+			if (LORA_TransmitCommand(300) != LORA_OK)
  800047e:	f44f 7096 	mov.w	r0, #300	; 0x12c
  8000482:	f7ff ff63 	bl	800034c <LORA_TransmitCommand>
  8000486:	4603      	mov	r3, r0
  8000488:	2b01      	cmp	r3, #1
- 800048a:	d001      	beq.n	8000490 <AT_DownlinkCounter+0x68>
-			return LORA_FAILED;
+ 800048a:	d001      	beq.n	8000490 <AT_BatteryLevel+0x68>
+				return LORA_FAILED;
  800048c:	2300      	movs	r3, #0
- 800048e:	e001      	b.n	8000494 <AT_DownlinkCounter+0x6c>
-		break;
+ 800048e:	e001      	b.n	8000494 <AT_BatteryLevel+0x6c>
+			break;
  8000490:	bf00      	nop
-	}
-	return LORA_OK;
+		}
+		return LORA_OK;
  8000492:	2301      	movs	r3, #1
 }
  8000494:	4618      	mov	r0, r3
@@ -641,26 +641,26 @@ int main(void) {
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
-	AT_DownlinkCounter(AT_OPERATION_READ, &Value);
+	AT_BatteryLevel(AT_OPERATION_READ, &status);
  80004d4:	4909      	ldr	r1, [pc, #36]	; (80004fc <main+0x44>)
  80004d6:	2000      	movs	r0, #0
- 80004d8:	f7ff ffa6 	bl	8000428 <AT_DownlinkCounter>
-	Value = 4;
+ 80004d8:	f7ff ffa6 	bl	8000428 <AT_BatteryLevel>
+	status = LORA_BATERY_LEVEL_MIN_LEVEL;
  80004dc:	4b07      	ldr	r3, [pc, #28]	; (80004fc <main+0x44>)
- 80004de:	2204      	movs	r2, #4
- 80004e0:	801a      	strh	r2, [r3, #0]
-	AT_DownlinkCounter(AT_OPERATION_WRITE, &Value);
+ 80004de:	2201      	movs	r2, #1
+ 80004e0:	701a      	strb	r2, [r3, #0]
+	AT_BatteryLevel(AT_OPERATION_WRITE, &status);
  80004e2:	4906      	ldr	r1, [pc, #24]	; (80004fc <main+0x44>)
  80004e4:	2001      	movs	r0, #1
- 80004e6:	f7ff ff9f 	bl	8000428 <AT_DownlinkCounter>
-	Value = 5;
+ 80004e6:	f7ff ff9f 	bl	8000428 <AT_BatteryLevel>
+	status = LORA_BATERY_LEVEL_MAX_LEVEL;
  80004ea:	4b04      	ldr	r3, [pc, #16]	; (80004fc <main+0x44>)
- 80004ec:	2205      	movs	r2, #5
- 80004ee:	801a      	strh	r2, [r3, #0]
-	AT_DownlinkCounter(AT_OPERATION_READ, &Value);
+ 80004ec:	22fe      	movs	r2, #254	; 0xfe
+ 80004ee:	701a      	strb	r2, [r3, #0]
+	AT_BatteryLevel(AT_OPERATION_READ, &status);
  80004f0:	4902      	ldr	r1, [pc, #8]	; (80004fc <main+0x44>)
  80004f2:	2000      	movs	r0, #0
- 80004f4:	f7ff ff98 	bl	8000428 <AT_DownlinkCounter>
+ 80004f4:	f7ff ff98 	bl	8000428 <AT_BatteryLevel>
 //	Value = 0;
 //	AT_RepeatUnconfirmedUplink(AT_OPERATION_WRITE, &Value);
 //	Value = 4400;
@@ -668,7 +668,7 @@ int main(void) {
 	while (1) {
  80004f8:	e7fe      	b.n	80004f8 <main+0x40>
  80004fa:	bf00      	nop
- 80004fc:	20000006 	.word	0x20000006
+ 80004fc:	20000005 	.word	0x20000005
 
 08000500 <SystemClock_Config>:
 

@@ -1086,7 +1086,6 @@ LoRa_StatusTypeDef AT_ResendConfirmedUplink(LoRa_OperationTypeDef _Operacao,
  * @param _Value: Índice de Potência
  * @retval Status de execução do comando
  */
-
 LoRa_StatusTypeDef AT_TxPowerIndex(LoRa_OperationTypeDef _Operacao,
 		LoRa_Value *_Value) {
 	switch (_Operacao) {
@@ -1121,7 +1120,6 @@ LoRa_StatusTypeDef AT_TxPowerIndex(LoRa_OperationTypeDef _Operacao,
  * @param _Value: Número de uplinks
  * @retval Status de execução do comando
  */
-
 LoRa_StatusTypeDef AT_UplinkCounter(LoRa_OperationTypeDef _Operacao,
 		LoRa_Value *_Value) {
 	switch (_Operacao) {
@@ -1156,7 +1154,6 @@ LoRa_StatusTypeDef AT_UplinkCounter(LoRa_OperationTypeDef _Operacao,
  * @param _Value: Número de downlinks
  * @retval Status de execução do comando
  */
-
 LoRa_StatusTypeDef AT_DownlinkCounter(LoRa_OperationTypeDef _Operacao,
 		LoRa_Value *_Value) {
 	switch (_Operacao) {
@@ -1186,14 +1183,31 @@ LoRa_StatusTypeDef AT_DownlinkCounter(LoRa_OperationTypeDef _Operacao,
 
 /**
  * @brief Este comando permite ao usuário acessar o nível da bateria do dispositivo final
- * @tparam
+ * @tparam AT+BAT <Battery level> <ENTER>
  * @param _Operacao: Modo de operação do comando
  * @param _Level: Nível de bateria
  * @retval Status de execução do comando
  */
-
 LoRa_StatusTypeDef AT_BatteryLevel(LoRa_OperationTypeDef _Operacao,
-		LoRa_BateryLevelTypeDef *_Level);
+		LoRa_BateryLevelTypeDef *_Level){
+	switch (_Operacao) {
+		case AT_OPERATION_READ:
+			sprintf((char*) AT_RXcommand, "AT+FCD\r\n");
+			LORA_STATUS_RECEIVE = LORA_CLEAR;
+			if (LORA_ReceiveCommand(500, 10) != LORA_OK)
+				return LORA_FAILED;
+			sscanf(LORA_UART_BUFFER, "%s\r%hu\r\n", AT_RXcommand, (uint16_t *)_Level);
+			break;
+		case AT_OPERATION_WRITE:
+			sprintf((char*) AT_TXcommand, "AT+FCD %u\r\n", (*_Level));
+			if (LORA_TransmitCommand(300) != LORA_OK)
+				return LORA_FAILED;
+			break;
+		default:
+			break;
+		}
+		return LORA_OK;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
