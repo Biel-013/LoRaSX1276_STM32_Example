@@ -1449,25 +1449,25 @@ LoRa_StatusTypeDef AT_FirmwareVersion(LoRa_Float *_Version) {
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_AntennaGain(LoRa_OperationTypeDef _Operacao, LoRa_Float *_Gain){
+LoRa_StatusTypeDef AT_AntennaGain(LoRa_OperationTypeDef _Operacao,
+		LoRa_Float *_Gain) {
 	switch (_Operacao) {
-		case AT_OPERATION_READ:
-			sprintf((char*) AT_RXcommand, "AT+SAG\r\n");
-			LORA_STATUS_RECEIVE = LORA_CLEAR;
-			if (LORA_ReceiveCommand(500, 10) != LORA_OK)
-				return LORA_FAILED;
-			sscanf(LORA_UART_BUFFER, "%s\r%lf\r\n", AT_RXcommand,
-					 (double *) _Gain);
-			break;
-		case AT_OPERATION_WRITE:
-			sprintf((char*) AT_TXcommand, "AT+SAG %lf\r\n", (*_Gain));
-			if (LORA_TransmitCommand(300) != LORA_OK)
-				return LORA_FAILED;
-			break;
-		default:
-			break;
-		}
-		return LORA_OK;
+	case AT_OPERATION_READ:
+		sprintf((char*) AT_RXcommand, "AT+SAG\r\n");
+		LORA_STATUS_RECEIVE = LORA_CLEAR;
+		if (LORA_ReceiveCommand(500, 10) != LORA_OK)
+			return LORA_FAILED;
+		sscanf(LORA_UART_BUFFER, "%s\r%lf\r\n", AT_RXcommand, (double*) _Gain);
+		break;
+	case AT_OPERATION_WRITE:
+		sprintf((char*) AT_TXcommand, "AT+SAG %lf\r\n", (*_Gain));
+		if (LORA_TransmitCommand(300) != LORA_OK)
+			return LORA_FAILED;
+		break;
+	default:
+		break;
+	}
+	return LORA_OK;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1478,14 +1478,32 @@ LoRa_StatusTypeDef AT_AntennaGain(LoRa_OperationTypeDef _Operacao, LoRa_Float *_
 
 /**
  * @brief Comando de leitura e definição de tipo de pacote uplink (0 ou 1)
- * @tparam
+ * @tparam AT+CFM <type> <ENTER>
  * @param _Operacao: Modo de operação do comando
  * @param _Type: Tipo de pacote
  * @retval Status de execução do comando
  */
 
 LoRa_StatusTypeDef AT_UplinkPacketType(LoRa_OperationTypeDef _Operacao,
-		LoRa_UplinkTypePacketTypeDef *_Type);
+		LoRa_UplinkTypePacketTypeDef *_Type) {
+	switch (_Operacao) {
+	case AT_OPERATION_READ:
+		sprintf((char*) AT_RXcommand, "AT+CFM\r\n");
+		LORA_STATUS_RECEIVE = LORA_CLEAR;
+		if (LORA_ReceiveCommand(500, 10) != LORA_OK)
+			return LORA_FAILED;
+		sscanf(LORA_UART_BUFFER, "%s\r%hu\r\n", AT_RXcommand, (uint16_t *) _Type);
+		break;
+	case AT_OPERATION_WRITE:
+		sprintf((char*) AT_TXcommand, "AT+CFM %hu\r\n", (*_Type));
+		if (LORA_TransmitCommand(300) != LORA_OK)
+			return LORA_FAILED;
+		break;
+	default:
+		break;
+	}
+	return LORA_OK;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
