@@ -46,6 +46,7 @@ DMA_HandleTypeDef hdma_usart3_rx;
 
 /* USER CODE BEGIN PV */
 uint8_t Send_STATUS = 1;
+LoRa_Float FLOAT = 12.5;
 char AT_comand[15] = "";
 extern uint8_t DMA_RX_Buffer_3[DMA_RX_BUFFER_SIZE];
 uint64_t id = 0x018fdea1;
@@ -109,7 +110,7 @@ int main(void) {
 	chanel.LoRa_Channel = 1;
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
-	AT_SystemReboot(AT_REBOOT_SYSTEM);
+	AT_FirmwareVersion(&FLOAT);
 //	AT_EncryptionConfiguration(AT_OPERATION_WRITE, &status);
 //	status = !status;
 //	AT_EncryptionConfiguration(AT_OPERATION_READ, &status);
