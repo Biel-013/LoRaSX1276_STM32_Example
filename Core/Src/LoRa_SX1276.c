@@ -1638,14 +1638,32 @@ LoRa_StatusTypeDef AT_RTCDate(LoRa_OperationTypeDef _Operacao,
 
 /**
  * @brief Comando de retorno de eco
- * @tparam
+ * @tparam AT+ECHO < 0 | 1 > <ENTER>
  * @param _Operacao: Modo de operação do comando
  * @param _Echo: Retorno do eco
  * @retval Status de execução do comando
  */
-
 LoRa_StatusTypeDef AT_ECHO(LoRa_OperationTypeDef _Operacao,
-		LoRa_LoraEchoTypeDef *_Echo);
+		LoRa_LoraEchoTypeDef *_Echo) {
+	switch (_Operacao) {
+	case AT_OPERATION_READ:
+		sprintf((char*) AT_RXcommand, "AT+ECHO\r\n");
+		LORA_STATUS_RECEIVE = LORA_CLEAR;
+		if (LORA_ReceiveCommand(500, 10) != LORA_OK)
+			return LORA_FAILED;
+		sscanf(LORA_UART_BUFFER, "%s\r%hu\r\n", AT_RXcommand,
+				(uint16_t*) _Echo);
+		break;
+	case AT_OPERATION_WRITE:
+		sprintf((char*) AT_TXcommand, "AT+ECHO %hu\r\n", (*_Echo));
+		if (LORA_TransmitCommand(300) != LORA_OK)
+			return LORA_FAILED;
+		break;
+	default:
+		break;
+	}
+	return LORA_OK;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
