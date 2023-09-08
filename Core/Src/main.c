@@ -50,7 +50,7 @@ LoRa_Float FLOAT = 12.5;
 char AT_comand[15] = "";
 extern uint8_t DMA_RX_Buffer_3[DMA_RX_BUFFER_SIZE];
 uint64_t id = 0x018fdea1;
-LoRa_Value Value = 12;
+LoRa_Float Value = 12;
 //LoRa_AutoNetworkJoinTypeDef status = LORA_AUTO_NETWORK_JOIN_ON;
 LoRa_AutoNetworkJoinTypeDef read_status = LORA_AUTO_NETWORK_JOIN_OFF;
 LoRa_Adress adress = 0xd3ad12;
@@ -110,14 +110,12 @@ int main(void) {
 	chanel.LoRa_Channel = 1;
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
-	AT_FirmwareVersion(&FLOAT);
-//	AT_EncryptionConfiguration(AT_OPERATION_WRITE, &status);
-//	status = !status;
-//	AT_EncryptionConfiguration(AT_OPERATION_READ, &status);
-//	Value = 0;
-//	AT_RepeatUnconfirmedUplink(AT_OPERATION_WRITE, &Value);
-//	Value = 4400;
-//	AT_RepeatUnconfirmedUplink(AT_OPERATION_READ, &Value);
+//	AT_AntennaGain(&FLOAT);
+	AT_AntennaGain(AT_OPERATION_READ, &Value);
+	Value = 2;
+	AT_AntennaGain(AT_OPERATION_WRITE, &Value);
+	Value = 4;
+	AT_AntennaGain(AT_OPERATION_READ, &Value);
 	while (1) {
 //		if (id != id)
 //			AT_EndDeviceIdentifier(AT_OPERATION_WRITE, &adress);

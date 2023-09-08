@@ -1454,7 +1454,7 @@ LoRa_StatusTypeDef AT_AntennaGain(LoRa_OperationTypeDef _Operacao,
 		LORA_STATUS_RECEIVE = LORA_CLEAR;
 		if (LORA_ReceiveCommand(500, 10) != LORA_OK)
 			return LORA_FAILED;
-		sscanf(LORA_UART_BUFFER, "%s\r%lf\r\n", AT_RXcommand, (double*) _Gain);
+		sscanf(LORA_UART_BUFFER, "%s\r%f\r\n", AT_RXcommand, _Gain);
 		break;
 	case AT_OPERATION_WRITE:
 		sprintf((char*) AT_TXcommand, "AT+SAG %lf\r\n", (*_Gain));
