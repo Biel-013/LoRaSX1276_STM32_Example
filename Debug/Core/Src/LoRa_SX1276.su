@@ -44,3 +44,4 @@
 ../Core/Src/LoRa_SX1276.c:1429:20:AT_FirmwareVersion	16	static
 ../Core/Src/LoRa_SX1276.c:1452:20:AT_AntennaGain	16	static
 ../Core/Src/LoRa_SX1276.c:1487:20:AT_UplinkPacketType	16	static
+../Core/Src/LoRa_SX1276.c:1521:20:AT_EntersLowPowerMode	8	static

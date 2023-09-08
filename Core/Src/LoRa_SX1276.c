@@ -1492,7 +1492,8 @@ LoRa_StatusTypeDef AT_UplinkPacketType(LoRa_OperationTypeDef _Operacao,
 		LORA_STATUS_RECEIVE = LORA_CLEAR;
 		if (LORA_ReceiveCommand(500, 10) != LORA_OK)
 			return LORA_FAILED;
-		sscanf(LORA_UART_BUFFER, "%s\r%hu\r\n", AT_RXcommand, (uint16_t *) _Type);
+		sscanf(LORA_UART_BUFFER, "%s\r%hu\r\n", AT_RXcommand,
+				(uint16_t*) _Type);
 		break;
 	case AT_OPERATION_WRITE:
 		sprintf((char*) AT_TXcommand, "AT+CFM %hu\r\n", (*_Type));
@@ -1513,11 +1514,16 @@ LoRa_StatusTypeDef AT_UplinkPacketType(LoRa_OperationTypeDef _Operacao,
 
 /**
  * @brief Comando para entrar no modo de baixo consumo (usar reset para voltar ao normal)
- * @tparam
+ * @tparam AT+SLEEP <ENTER>
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_EntersLowPowerMode(void);
+LoRa_StatusTypeDef AT_EntersLowPowerMode(void) {
+	sprintf((char*) AT_TXcommand, "AT+SLEEP\r\n");
+	if (LORA_TransmitCommand(300) != LORA_OK)
+		return LORA_FAILED;
+	return LORA_OK;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
