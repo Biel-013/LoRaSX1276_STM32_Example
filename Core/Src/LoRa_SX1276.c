@@ -73,8 +73,12 @@ void LORA_ReceivedCallback(uint8_t buffer[50]) {
 				LORA_UART_BUFFER[i] = '\000';
 		}
 		LORA_STATUS_RECEIVE = LORA_OK;
+		for (int i = 0; i < 15; i++)
+			buffer[i] = '\0';
 		return;
 	}
+	for (int i = 0; i < 15; i++)
+		buffer[i] = '\0';
 	LORA_STATUS_RECEIVE = LORA_FAILED;
 }
 
@@ -889,10 +893,7 @@ LoRa_StatusTypeDef AT_TxRxWindow1Delay(LoRa_OperationTypeDef _Operacao,
 		sscanf(LORA_UART_BUFFER, "%s\r%hu\r\n", AT_RXcommand, _Value);
 		break;
 	case AT_OPERATION_WRITE:
-		if ((*_Value) != 0)
-			sprintf((char*) AT_TXcommand, "AT+RX1DL %hu\r\n", (*_Value));
-		else
-			sprintf((char*) AT_TXcommand, "AT+RX1DL reset\r\n");
+		sprintf((char*) AT_TXcommand, "AT+RX1DL %hu\r\n", (*_Value));
 		if (LORA_TransmitCommand(300) != LORA_OK)
 			return LORA_FAILED;
 		break;
@@ -915,7 +916,6 @@ LoRa_StatusTypeDef AT_TxRxWindow1Delay(LoRa_OperationTypeDef _Operacao,
  * @param _Value: Delay em ms
  * @retval Status de execução do comando
  */
-
 LoRa_StatusTypeDef AT_TxRxWindow2Delay(LoRa_OperationTypeDef _Operacao,
 		LoRa_Value *_Value) {
 	switch (_Operacao) {
@@ -927,7 +927,7 @@ LoRa_StatusTypeDef AT_TxRxWindow2Delay(LoRa_OperationTypeDef _Operacao,
 		sscanf(LORA_UART_BUFFER, "%s\r%hu\r\n", AT_RXcommand, _Value);
 		break;
 	case AT_OPERATION_WRITE:
-			sprintf((char*) AT_TXcommand, "AT+RX2DL %u\r\n", (*_Value));
+		sprintf((char*) AT_TXcommand, "AT+RX2DL %u\r\n", (*_Value));
 		if (LORA_TransmitCommand(300) != LORA_OK)
 			return LORA_FAILED;
 		break;
@@ -945,15 +945,31 @@ LoRa_StatusTypeDef AT_TxRxWindow2Delay(LoRa_OperationTypeDef _Operacao,
 
 /**
  * @brief Comando para acessar o atraso de junção na janela RX 1 em ms
- * @tparam
+ * @tparam AT+JN1DL <delay> <ENTER>
  * @param _Operacao: Modo de operação do comando
  * @param _Value: Delay em ms
  * @retval Status de execução do comando
  */
 
 LoRa_StatusTypeDef AT_TxRxWindow1JoinDelay(LoRa_OperationTypeDef _Operacao,
-		LoRa_Value *_Value){
-
+		LoRa_Value *_Value) {
+	switch (_Operacao) {
+	case AT_OPERATION_READ:
+		sprintf((char*) AT_RXcommand, "AT+JN1DL\r\n");
+		LORA_STATUS_RECEIVE = LORA_CLEAR;
+		if (LORA_ReceiveCommand(500, 10) != LORA_OK)
+			return LORA_FAILED;
+		sscanf(LORA_UART_BUFFER, "%s\r%hu\r\n", AT_RXcommand, _Value);
+		break;
+	case AT_OPERATION_WRITE:
+		sprintf((char*) AT_TXcommand, "AT+JN1DL %u\r\n", (*_Value));
+		if (LORA_TransmitCommand(300) != LORA_OK)
+			return LORA_FAILED;
+		break;
+	default:
+		break;
+	}
+	return LORA_OK;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
