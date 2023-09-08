@@ -1689,14 +1689,33 @@ LoRa_StatusTypeDef AT_ResetConfiguration(void) {
 
 /**
  * @brief Comando para acesso ao modo de dubug
- * @tparam
+ * @tparam AT+DBG < 0 | 1 > <ENTER>
  * @param _Operacao: Modo de operação do comando
  * @param _Status: Status do modo debug
  * @retval Status de execução do comando
  */
 
 LoRa_StatusTypeDef AT_DebugMessageStatus(LoRa_OperationTypeDef _Operacao,
-		LoRa_DebugMessageTypeDef *_Status);
+		LoRa_DebugMessageTypeDef *_Status) {
+	switch (_Operacao) {
+	case AT_OPERATION_READ:
+		sprintf((char*) AT_RXcommand, "AT+DBG\r\n");
+		LORA_STATUS_RECEIVE = LORA_CLEAR;
+		if (LORA_ReceiveCommand(500, 10) != LORA_OK)
+			return LORA_FAILED;
+		sscanf(LORA_UART_BUFFER, "%s\r%hu\r\n", AT_RXcommand,
+				(uint16_t*) _Status);
+		break;
+	case AT_OPERATION_WRITE:
+		sprintf((char*) AT_TXcommand, "AT+DBG %hu\r\n", (*_Status));
+		if (LORA_TransmitCommand(300) != LORA_OK)
+			return LORA_FAILED;
+		break;
+	default:
+		break;
+	}
+	return LORA_OK;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1706,7 +1725,7 @@ LoRa_StatusTypeDef AT_DebugMessageStatus(LoRa_OperationTypeDef _Operacao,
 
 /**
  * @brief Modo de onda contínua FSK Tx (teste de força Tx)
- * @tparam
+ * @tparam AT+TXCW <frequency> <Power in dBm> <Timeout (Sec)> <ENTER>
  * @param _Operacao: Modo de operação do comando
  * @param _Frequency: Frequência de operação do teste
  * @param _Power: Potência de transmissão na operação do teste
@@ -1715,7 +1734,13 @@ LoRa_StatusTypeDef AT_DebugMessageStatus(LoRa_OperationTypeDef _Operacao,
  */
 
 LoRa_StatusTypeDef AT_FSKTxContinuousWaveMode(LoRa_OperationTypeDef _Operacao,
-		LoRa_Rate _Frequency, LoRa_Value _Power, LoRa_Value *_Timeout);
+		LoRa_Rate _Frequency, LoRa_Value _Power, LoRa_Value _Timeout) {
+	sprintf((char*) AT_TXcommand, "AT+TXCW %lu %hu %hu\r\n", _Frequency, _Power,
+			_Timeout);
+	if (LORA_TransmitCommand(300) != LORA_OK)
+		return LORA_FAILED;
+	return LORA_OK;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

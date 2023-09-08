@@ -995,7 +995,7 @@ LoRa_StatusTypeDef AT_DebugMessageStatus (LoRa_OperationTypeDef _Operacao, LoRa_
  */
 
 LoRa_StatusTypeDef AT_FSKTxContinuousWaveMode (LoRa_OperationTypeDef _Operacao, LoRa_Rate _Frequency,
-		LoRa_Value _Power, LoRa_Value *_Timeout);
+		LoRa_Value _Power, LoRa_Value _Timeout);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
