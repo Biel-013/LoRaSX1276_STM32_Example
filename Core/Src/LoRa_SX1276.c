@@ -1224,7 +1224,7 @@ LoRa_StatusTypeDef AT_BatteryLevel(LoRa_OperationTypeDef _Operacao,
  */
 
 LoRa_StatusTypeDef AT_MacLineCheckRequest(void) {
-	sprintf((char*) AT_TXcommand, "AT+LCHK %u\r\n", (*_Level));
+	sprintf((char*) AT_TXcommand, "AT+LCHK\r\n");
 	if (LORA_TransmitCommand(300) != LORA_OK)
 		return LORA_FAILED;
 	return LORA_OK;
@@ -1238,14 +1238,33 @@ LoRa_StatusTypeDef AT_MacLineCheckRequest(void) {
 
 /**
  * @brief Configuração de criptografia de leitura
- * @tparam
+ * @tparam AT+CRYPTO <number> <ENTER>
  * @param _Operacao: Modo de operação do comando
  * @param _Encryption: Modo de encriptação
  * @retval Status de execução do comando
  */
 
 LoRa_StatusTypeDef AT_EncryptionConfiguration(LoRa_OperationTypeDef _Operacao,
-		LoRa_ReadoutEncryptionTypeDef *_Encryption);
+		LoRa_ReadoutEncryptionTypeDef *_Encryption) {
+	switch (_Operacao) {
+	case AT_OPERATION_READ:
+		sprintf((char*) AT_RXcommand, "AT+CRYPTO\r\n");
+		LORA_STATUS_RECEIVE = LORA_CLEAR;
+		if (LORA_ReceiveCommand(500, 10) != LORA_OK)
+			return LORA_FAILED;
+		sscanf(LORA_UART_BUFFER, "%s\r%hu\r\n", AT_RXcommand,
+				(uint16_t*) _Encryption);
+		break;
+	case AT_OPERATION_WRITE:
+		sprintf((char*) AT_TXcommand, "AT+CRYPTO %u\r\n", (*_Encryption));
+		if (LORA_TransmitCommand(300) != LORA_OK)
+			return LORA_FAILED;
+		break;
+	default:
+		break;
+	}
+	return LORA_OK;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
