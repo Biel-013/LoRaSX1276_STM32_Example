@@ -27,3 +27,4 @@
 ../Core/Src/LoRa_SX1276.c:813:20:AT_RxWindow2Frequency	16	static
 ../Core/Src/LoRa_SX1276.c:847:20:AT_RxWindow2DataRate	16	static
 ../Core/Src/LoRa_SX1276.c:881:20:AT_TxRxWindow1Delay	16	static
+../Core/Src/LoRa_SX1276.c:919:20:AT_TxRxWindow2Delay	16	static
