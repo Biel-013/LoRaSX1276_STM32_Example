@@ -110,7 +110,7 @@ int main(void) {
 	/* USER CODE END 2 */
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
-	AT_LoRaRxSignalStrengthTest( 920000000, 4, 1);
+	AT_LoRaTxSignalStrengthTest(922500000, 12, 5, 1, 3, 2);
 //	AT_SystemReboot(AT_REBOOT_SYSTEM);
 //	AT_DebugMessageStatus(AT_OPERATION_READ, &Value);
 //	Value = !Value;

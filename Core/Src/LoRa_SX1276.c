@@ -1707,7 +1707,7 @@ LoRa_StatusTypeDef AT_DebugMessageStatus(LoRa_OperationTypeDef _Operacao,
 		break;
 	case AT_OPERATION_WRITE:
 		sprintf((char*) AT_TXcommand, "AT+DBG %hu\r\n", (*_Status));
-		if (LORA_TransmitCommand(300) != LORA_OK)
+		if (LORA_TransmitCommand(100) != LORA_OK)
 			return LORA_FAILED;
 		break;
 	default:
@@ -1755,8 +1755,8 @@ LoRa_StatusTypeDef AT_FSKTxContinuousWaveMode(LoRa_Rate _Frequency,
  */
 LoRa_StatusTypeDef AT_LoRaRxSignalStrengthTest(LoRa_Rate _Frequency,
 		LoRa_Value _DataRate, LoRa_StrenghtTestBaundTypeDef _TBaund) {
-	sprintf((char*) AT_TXcommand, "AT+RXTT %lu %hu %hu\r\n", _Frequency, _DataRate,
-			_TBaund);
+	sprintf((char*) AT_TXcommand, "AT+RXTT %lu %hu %hu\r\n", _Frequency,
+			_DataRate, _TBaund);
 	if (LORA_TransmitCommand(300) != LORA_OK)
 		return LORA_FAILED;
 	return LORA_OK;
@@ -1770,22 +1770,26 @@ LoRa_StatusTypeDef AT_LoRaRxSignalStrengthTest(LoRa_Rate _Frequency,
 
 /**
  * @brief LoRa Tx (teste de força de RF)
- * @tparam
- * @param _Operacao: Modo de operação do comando
+ * @tparam AT+TXTT <Power(dBm)> <Spreading Factor(Data rate)> BW<0,1,2> <transmission frequency (sec)> <ENTER>
  * @param _Frequency: Frequência de operação do teste
  * @param _Power: Potência de transmissão na operação do teste
  * @param _DataRate: Configuração de taxa de dados do teste (0 - 7)
  * @param _TBaund: Largura de banda do teste (0 a 3)
  * @param _NumberBytes: Número de bytes para transmissão
  * @param _Period: Periodo de transmissão dos bytes
- * @param _Status: Status de final do teste
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_LoRaTxSignalStrengthTest(LoRa_OperationTypeDef _Operacao,
-		LoRa_Rate _Frequency, LoRa_Value _Power, LoRa_Value _DataRate,
+LoRa_StatusTypeDef AT_LoRaTxSignalStrengthTest(LoRa_Rate _Frequency,
+		LoRa_Value _Power, LoRa_Value _DataRate,
 		LoRa_StrenghtTestBaundTypeDef _TBaund, LoRa_Value _NumberBytes,
-		LoRa_Value _Period, LoRa_StrenghtTestStatusTypeDef *_Status);
+		LoRa_Value _Period) {
+	sprintf((char*) AT_TXcommand, "AT+TXTT %lu %hu %hu %hu %hu %hu\r\n",
+			_Frequency, _Power, _DataRate, _TBaund, _NumberBytes, _Period);
+	if (LORA_TransmitCommand(400) != LORA_OK)
+		return LORA_FAILED;
+	return LORA_OK;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -1021,20 +1021,18 @@ LoRa_StatusTypeDef AT_LoRaRxSignalStrengthTest (LoRa_Rate _Frequency, LoRa_Value
 
 /**
  * @brief LoRa Tx (teste de força de RF)
- * @param _Operacao: Modo de operação do comando
  * @param _Frequency: Frequência de operação do teste
  * @param _Power: Potência de transmissão na operação do teste
  * @param _DataRate: Configuração de taxa de dados do teste (0 - 7)
  * @param _TBaund: Largura de banda do teste (0 a 3)
  * @param _NumberBytes: Número de bytes para transmissão
  * @param _Period: Periodo de transmissão dos bytes
- * @param _Status: Status de final do teste
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_LoRaTxSignalStrengthTest (LoRa_OperationTypeDef _Operacao, LoRa_Rate _Frequency,
-		LoRa_Value _Power, LoRa_Value _DataRate, LoRa_StrenghtTestBaundTypeDef _TBaund,
-			LoRa_Value _NumberBytes, LoRa_Value _Period, LoRa_StrenghtTestStatusTypeDef *_Status);
+LoRa_StatusTypeDef AT_LoRaTxSignalStrengthTest (LoRa_Rate _Frequency, LoRa_Value _Power,
+		LoRa_Value _DataRate, LoRa_StrenghtTestBaundTypeDef _TBaund,
+			LoRa_Value _NumberBytes, LoRa_Value _Period);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -53,3 +53,4 @@
 ../Core/Src/LoRa_SX1276.c:1697:20:AT_DebugMessageStatus	16	static
 ../Core/Src/LoRa_SX1276.c:1733:20:AT_FSKTxContinuousWaveMode	24	static
 ../Core/Src/LoRa_SX1276.c:1756:20:AT_LoRaRxSignalStrengthTest	24	static
+../Core/Src/LoRa_SX1276.c:1783:20:AT_LoRaTxSignalStrengthTest	48	static
