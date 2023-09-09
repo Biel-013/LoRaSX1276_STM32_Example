@@ -50,5 +50,6 @@
 ../Core/Src/LoRa_SX1276.c:1608:20:AT_RTCDate	24	static
 ../Core/Src/LoRa_SX1276.c:1644:20:AT_ECHO	16	static
 ../Core/Src/LoRa_SX1276.c:1677:20:AT_ResetConfiguration	8	static
-../Core/Src/LoRa_SX1276.c:1698:20:AT_DebugMessageStatus	16	static
-../Core/Src/LoRa_SX1276.c:1734:20:AT_FSKTxContinuousWaveMode	24	static
+../Core/Src/LoRa_SX1276.c:1697:20:AT_DebugMessageStatus	16	static
+../Core/Src/LoRa_SX1276.c:1733:20:AT_FSKTxContinuousWaveMode	24	static
+../Core/Src/LoRa_SX1276.c:1756:20:AT_LoRaRxSignalStrengthTest	24	static

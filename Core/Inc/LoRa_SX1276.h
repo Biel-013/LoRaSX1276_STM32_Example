@@ -1004,16 +1004,14 @@ LoRa_StatusTypeDef AT_FSKTxContinuousWaveMode ( LoRa_Rate _Frequency,LoRa_Value 
 
 /**
  * @brief LoRa Rx (teste de força de RF)
- * @param _Operacao: Modo de operação do comando
  * @param _Frequency: Frequência de operação do teste
  * @param _DataRate: Configuração de taxa de dados do teste (0 - 7)
- * @param _TBaund: Largura de banda do teste (0 a 3)
- * @param _hInfo: Handler de informação sobre o teste
+ * @param _TBaund: Largura de banda do teste (0 a 2)
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_LoRaRxSignalStrengthTest (LoRa_OperationTypeDef _Operacao, LoRa_Rate _Frequency,
-		LoRa_Value _DataRate, LoRa_StrenghtTestBaundTypeDef _TBaund, LoRa_RxStrengthTestTypeDef *_hInfo);
+LoRa_StatusTypeDef AT_LoRaRxSignalStrengthTest (LoRa_Rate _Frequency, LoRa_Value _DataRate,
+		LoRa_StrenghtTestBaundTypeDef _TBaund);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

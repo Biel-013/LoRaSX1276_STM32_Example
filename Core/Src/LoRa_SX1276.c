@@ -1694,7 +1694,6 @@ LoRa_StatusTypeDef AT_ResetConfiguration(void) {
  * @param _Status: Status do modo debug
  * @retval Status de execução do comando
  */
-
 LoRa_StatusTypeDef AT_DebugMessageStatus(LoRa_OperationTypeDef _Operacao,
 		LoRa_DebugMessageTypeDef *_Status) {
 	switch (_Operacao) {
@@ -1748,19 +1747,20 @@ LoRa_StatusTypeDef AT_FSKTxContinuousWaveMode(LoRa_Rate _Frequency,
 
 /**
  * @brief LoRa Rx (teste de força de RF)
- * @tparam
- * @param _Operacao: Modo de operação do comando
+ * @tparam AT+RXTT <Spreading Factor (Data rate)> <Bandwidth> <ENTER>
  * @param _Frequency: Frequência de operação do teste
  * @param _DataRate: Configuração de taxa de dados do teste (0 - 7)
- * @param _TBaund: Largura de banda do teste (0 a 3)
- * @param _hInfo: Handler de informação sobre o teste
+ * @param _TBaund: Largura de banda do teste (0 a 2)
  * @retval Status de execução do comando
  */
-
-LoRa_StatusTypeDef AT_LoRaRxSignalStrengthTest(LoRa_OperationTypeDef _Operacao,
-		LoRa_Rate _Frequency, LoRa_Value _DataRate,
-		LoRa_StrenghtTestBaundTypeDef _TBaund,
-		LoRa_RxStrengthTestTypeDef *_hInfo);
+LoRa_StatusTypeDef AT_LoRaRxSignalStrengthTest(LoRa_Rate _Frequency,
+		LoRa_Value _DataRate, LoRa_StrenghtTestBaundTypeDef _TBaund) {
+	sprintf((char*) AT_TXcommand, "AT+RXTT %lu %hu %hu\r\n", _Frequency, _DataRate,
+			_TBaund);
+	if (LORA_TransmitCommand(300) != LORA_OK)
+		return LORA_FAILED;
+	return LORA_OK;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -110,7 +110,7 @@ int main(void) {
 	/* USER CODE END 2 */
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
-	AT_FSKTxContinuousWaveMode( 920000000, 12, 5);
+	AT_LoRaRxSignalStrengthTest( 920000000, 4, 1);
 //	AT_SystemReboot(AT_REBOOT_SYSTEM);
 //	AT_DebugMessageStatus(AT_OPERATION_READ, &Value);
 //	Value = !Value;
@@ -118,10 +118,6 @@ int main(void) {
 //	Value = !Value;
 //	AT_DebugMessageStatus(AT_OPERATION_READ, &Value);
 	while (1) {
-//		if (id != id)
-//			AT_EndDeviceIdentifier(AT_OPERATION_WRITE, &adress);
-//		if (status != LORA_NETWORK_JOINED)
-//			AT_EndDeviceIdentifier(AT_OPERATION_READ, &id);
 
 		/* USER CODE END WHILE */
 
