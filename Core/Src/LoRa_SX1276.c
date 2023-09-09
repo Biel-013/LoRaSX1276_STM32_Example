@@ -1539,7 +1539,7 @@ LoRa_StatusTypeDef AT_RTCWakeupTime(LoRa_OperationTypeDef _Operacao,
 	case AT_OPERATION_READ:
 		sprintf((char*) AT_RXcommand, "AT+ALARM\r\n");
 		LORA_STATUS_RECEIVE = LORA_CLEAR;
-		if (LORA_ReceiveCommand(500, 10) != LORA_OK)
+		if (LORA_ReceiveCommand(1000, 15) != LORA_OK)
 			return LORA_FAILED;
 		sscanf(LORA_UART_BUFFER, "%s\r%hu\r\n", AT_RXcommand, _Time);
 		break;
