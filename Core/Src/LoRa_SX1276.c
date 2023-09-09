@@ -1879,15 +1879,32 @@ LoRa_StatusTypeDef AT_GPIOPinInformation(LoRa_OperationTypeDef _Operacao,
 
 /**
  * @brief Comando para listar canais de comunicação diponíveis, e seleção de canal para comunicação P2P
- * @tparam
+ * @tparam AT+P2PCH <Channel> <ENTER>
  * @param _Operacao: Modo de operação do comando
  * @param _Channel: Canal de comunicação P2P
  * @param _ChannelsList: Lista de canais disponíveis
  * @retval Status de execução do comando
  */
-
 LoRa_StatusTypeDef AT_RegionalChannelListP2P(LoRa_OperationTypeDef _Operacao,
-		LoRa_Value _Channel, LoRa_ChannelsTypeDef *_ChannelsList);
+		LoRa_Value _Channel, LoRa_ChannelsTypeDef *_ChannelsList) {
+	switch (_Operacao) {
+	case AT_OPERATION_READ:
+		for (int i = 0; i < 16; i++) {
+			_ChannelsList->LoRa_Channels[i].LoRa_Channel = i;
+			AT_ChannelConfiguration(AT_OPERATION_READ,
+					AT_CHANNEL_OPERATION_CHANNEL, &_ChannelsList->LoRa_Channels[i]);
+		}
+		break;
+	case AT_OPERATION_WRITE:
+		sprintf((char*) AT_TXcommand, "AT+P2PCH %hu\r\n", _Channel);
+		if (LORA_TransmitCommand(100) != LORA_OK)
+			return LORA_FAILED;
+		break;
+	default:
+		break;
+	}
+	return LORA_OK;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

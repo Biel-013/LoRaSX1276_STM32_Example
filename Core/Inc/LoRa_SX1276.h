@@ -40,131 +40,121 @@ typedef struct {
 } LoRa_KeyTypeDef;
 
 typedef enum {
-	LORA_FAILED             = 0x00U,
-	LORA_OK                 = 0x01U,
-	LORA_FAILED_CHARACTER   = 0x02U,
-	LORA_FAILED_COMMAND     = 0x03U,
-	LORA_BUSY               = 0x04U,
-	LORA_TIMEOUT            = 0x05U,
-	LORA_CLEAR              = 0x06U
+	LORA_FAILED = 0x00U,
+	LORA_OK = 0x01U,
+	LORA_FAILED_CHARACTER = 0x02U,
+	LORA_FAILED_COMMAND = 0x03U,
+	LORA_BUSY = 0x04U,
+	LORA_TIMEOUT = 0x05U,
+	LORA_CLEAR = 0x06U
 } LoRa_StatusTypeDef;
 
 typedef enum {
-	LORA_PUBLIC_NETWORK_OFF   = 0x00U,
-	LORA_PUBLIC_NETWORK_ON    = 0x01U
+	LORA_PUBLIC_NETWORK_OFF = 0x00U, LORA_PUBLIC_NETWORK_ON = 0x01U
 } LoRa_PublicNetworkTypeDef;
 
 typedef enum {
-	LORA_NETWORK_JOIN_MODE_ABP     = 0x00U,
-	LORA_NETWORK_JOIN_MODE_OTAA    = 0x01U,
-	LORA_NETWORK_JOIN_MODE_P2P     = 0x02U
+	LORA_NETWORK_JOIN_MODE_ABP = 0x00U,
+	LORA_NETWORK_JOIN_MODE_OTAA = 0x01U,
+	LORA_NETWORK_JOIN_MODE_P2P = 0x02U
 } LoRa_NetworkJoinModeTypeDef;
 
 typedef enum {
-	LORA_MAC_CLASS_A     = 'A',
-	LORA_MAC_CLASS_B     = 'B',
-	LORA_MAC_CLASS_C     = 'C'
+	LORA_MAC_CLASS_A = 'A', LORA_MAC_CLASS_B = 'B', LORA_MAC_CLASS_C = 'C'
 } LoRa_MacClassTypeDef;
 
 typedef enum {
-	LORA_NETWORK_NOT_JOINED   = 0x00U,
-	LORA_NETWORK_JOINED       = 0x01U
+	LORA_NETWORK_NOT_JOINED = 0x00U, LORA_NETWORK_JOINED = 0x01U
 } LoRa_NetworkJoinTypeDef;
 
 typedef enum {
-	LORA_AUTO_NETWORK_JOIN_ON       = 0x00U,
-	LORA_AUTO_NETWORK_JOIN_OFF      = 0x01U
+	LORA_AUTO_NETWORK_JOIN_ON = 0x00U, LORA_AUTO_NETWORK_JOIN_OFF = 0x01U
 } LoRa_AutoNetworkJoinTypeDef;
 typedef enum {
-	LORA_AUTO_DATA_RATE_OFF   = 0x00U,
-	LORA_AUTO_DATA_RATE_ON    = 0x01U
+	LORA_AUTO_DATA_RATE_OFF = 0x00U, LORA_AUTO_DATA_RATE_ON = 0x01U
 } LoRa_AutoDataRateTypeDef;
 
 typedef enum {
-	LORA_BATERY_LEVEL_USB          = 0x00U,
-	LORA_BATERY_LEVEL_MIN_LEVEL    = 0x01U,
-	LORA_BATERY_LEVEL_MAX_LEVEL    = 0xFEU,
-	LORA_BATERY_LEVEL_ERROR        = 0xFFU
+	LORA_BATERY_LEVEL_USB = 0x00U,
+	LORA_BATERY_LEVEL_MIN_LEVEL = 0x01U,
+	LORA_BATERY_LEVEL_MAX_LEVEL = 0xFEU,
+	LORA_BATERY_LEVEL_ERROR = 0xFFU
 } LoRa_BateryLevelTypeDef;
 
 typedef enum {
-	LORA_READOUT_ENCRYPTION_AES     = 0x00U,
-	LORA_READOUT_ENCRYPTION_ARIA    = 0x01U
+	LORA_READOUT_ENCRYPTION_AES = 0x00U, LORA_READOUT_ENCRYPTION_ARIA = 0x01U
 } LoRa_ReadoutEncryptionTypeDef;
 
 typedef enum {
-	LORA_UPLINK_PACKET_TYPE_NOT_CONFIRMED   = 0x00U,
-	LORA_UPLINK_PACKET_TYPE_CONFIRMED       = 0x01U
+	LORA_UPLINK_PACKET_TYPE_NOT_CONFIRMED = 0x00U,
+	LORA_UPLINK_PACKET_TYPE_CONFIRMED = 0x01U
 } LoRa_UplinkTypePacketTypeDef;
 
 typedef enum {
-	LORA_ECHO_OFF   = 0x00U,
-	LORA_ECHO_ON    = 0x01U
+	LORA_ECHO_OFF = 0x00U, LORA_ECHO_ON = 0x01U
 } LoRa_LoraEchoTypeDef;
 
 typedef enum {
-	LORA_DEBUG_MESSAG_OFF   = 0x00U,
-	LORA_DEBUG_MESSAG_ON    = 0x01U
+	LORA_DEBUG_MESSAG_OFF = 0x00U, LORA_DEBUG_MESSAG_ON = 0x01U
 } LoRa_DebugMessageTypeDef;
 
 typedef enum {
-	LORA_RF_STRENGHT_TEST_ERROR    = 0x00U,
-	LORA_RF_STRENGHT_TEST_DONE     = 0x01U
+	LORA_RF_STRENGHT_TEST_ERROR = 0x00U, LORA_RF_STRENGHT_TEST_DONE = 0x01U
 } LoRa_StrenghtTestStatusTypeDef;
 
 typedef enum {
-	LORA_RF_STRENGHT_TEST_BAUND_125KHZ    = 0x00U,
-	LORA_RF_STRENGHT_TEST_BAUND_250KHZ    = 0x01U,
-	LORA_RF_STRENGHT_TEST_BAUND_500KHZ    = 0x02U
+	LORA_RF_STRENGHT_TEST_BAUND_125KHZ = 0x00U,
+	LORA_RF_STRENGHT_TEST_BAUND_250KHZ = 0x01U,
+	LORA_RF_STRENGHT_TEST_BAUND_500KHZ = 0x02U
 } LoRa_StrenghtTestBaundTypeDef;
 
 typedef enum {
-	AT_OPERATION_READ             = 0x00U,
-	AT_OPERATION_WRITE            = 0x01U,
-	AT_OPERATION_ASYNCHRONOUS     = 0x02U
+	AT_OPERATION_READ = 0x00U,
+	AT_OPERATION_WRITE = 0x01U,
+	AT_OPERATION_ASYNCHRONOUS = 0x02U
 } LoRa_OperationTypeDef;
 
 typedef enum {
-	LORA_CURRENT_DATA_RATE_SF12_BW125    = 0x00U,
-	LORA_CURRENT_DATA_RATE_SF11_BW125    = 0x01U,
-	LORA_CURRENT_DATA_RATE_SF10_BW125    = 0x02U,
-	LORA_CURRENT_DATA_RATE_SF9_BW125     = 0x03U,
-	LORA_CURRENT_DATA_RATE_SF8_BW125     = 0x04U,
-	LORA_CURRENT_DATA_RATE_SF7_BW125     = 0x05U,
-	LORA_CURRENT_DATA_RATE_SF7_BW250     = 0x06U,
-	LORA_CURRENT_DATA_RATE_FSK           = 0x07U
+	LORA_CURRENT_DATA_RATE_SF12_BW125 = 0x00U,
+	LORA_CURRENT_DATA_RATE_SF11_BW125 = 0x01U,
+	LORA_CURRENT_DATA_RATE_SF10_BW125 = 0x02U,
+	LORA_CURRENT_DATA_RATE_SF9_BW125 = 0x03U,
+	LORA_CURRENT_DATA_RATE_SF8_BW125 = 0x04U,
+	LORA_CURRENT_DATA_RATE_SF7_BW125 = 0x05U,
+	LORA_CURRENT_DATA_RATE_SF7_BW250 = 0x06U,
+	LORA_CURRENT_DATA_RATE_FSK = 0x07U
 } LoRa_DataRateTypeDef;
 
 typedef enum {
-	LORAMAC_REGION_AS923      = 0x00U,
-	LORAMAC_REGION_AU915      = 0x01U,
-	LORAMAC_REGION_CN470      = 0x02U,
-	LORAMAC_REGION_CN779      = 0x03U,
-	LORAMAC_REGION_EU433      = 0x04U,
-	LORAMAC_REGION_EU868      = 0x05U,
-	LORAMAC_REGION_KR920      = 0x06U,
-	LORAMAC_REGION_IN865      = 0x07U,
-	LORAMAC_REGION_US915      = 0x08U
+	LORAMAC_REGION_AS923 = 0x00U,
+	LORAMAC_REGION_AU915 = 0x01U,
+	LORAMAC_REGION_CN470 = 0x02U,
+	LORAMAC_REGION_CN779 = 0x03U,
+	LORAMAC_REGION_EU433 = 0x04U,
+	LORAMAC_REGION_EU868 = 0x05U,
+	LORAMAC_REGION_KR920 = 0x06U,
+	LORAMAC_REGION_IN865 = 0x07U,
+	LORAMAC_REGION_US915 = 0x08U,
+	LORAMAC_REGION_US915_HYBRID = 0x09U
 } LoRa_LoraMacRegionTypeDef;
 
 typedef enum {
-	AT_CHANNEL_OPERATION_CHANNEL      = 0x00U,
-	AT_CHANNEL_OPERATION_FREQ         = 0x01U,
-	AT_CHANNEL_OPERATION_DRRANGE      = 0x02U,
-	AT_CHANNEL_OPERATION_STATUS       = 0x03U
+	AT_CHANNEL_OPERATION_CHANNEL = 0x00U,
+	AT_CHANNEL_OPERATION_FREQ = 0x01U,
+	AT_CHANNEL_OPERATION_DRRANGE = 0x02U,
+	AT_CHANNEL_OPERATION_STATUS = 0x03U
 } LoRa_ChannelOperationTypeDef;
 
 typedef enum {
-	AT_REBOOT_SYSTEM      = 0x00U,
-	AT_REBOOOT_CHANNEL      = 0x01U
+	AT_REBOOT_SYSTEM = 0x00U, AT_REBOOOT_CHANNEL = 0x01U
 } LoRa_SystemRebootModeTypeDef;
 
 typedef enum {
-	AT_GPIO_MODE_INPUT      = 'i',
-	AT_GPIO_MODE_OUTPUT      = 'o',
-	AT_GPIO_SET_LOW      = 0x00U,
-	AT_GPIO_SET_HIGH      = 0x01U,
-	AT_GPIO_DEFAULT      = 0x02U
+	AT_GPIO_MODE_INPUT = 'i',
+	AT_GPIO_MODE_OUTPUT = 'o',
+	AT_GPIO_SET_LOW = 0x00U,
+	AT_GPIO_SET_HIGH = 0x01U,
+	AT_GPIO_DEFAULT = 0x02U
 } LoRa_PinConfigurationTypeDef;
 
 typedef struct {
@@ -232,14 +222,7 @@ typedef struct {
 } LoRa_RxStrengthTestTypeDef;
 
 typedef struct {
-	LoRa_Value LoRa_Channel_0;
-	LoRa_Value LoRa_Channel_1;
-	LoRa_Value LoRa_Channel_2;
-	LoRa_Value LoRa_Channel_3;
-	LoRa_Value LoRa_Channel_4;
-	LoRa_Value LoRa_Channel_5;
-	LoRa_Value LoRa_Channel_6;
-	LoRa_Value LoRa_Channel_7;
+	LoRa_ChannelConfigurationTypeDef LoRa_Channels[16];
 } LoRa_ChannelsTypeDef;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -255,7 +238,8 @@ typedef struct {
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_EndDeviceIdentifier (LoRa_OperationTypeDef _Operacao, LoRa_Id *_Identifier);
+LoRa_StatusTypeDef AT_EndDeviceIdentifier(LoRa_OperationTypeDef _Operacao,
+		LoRa_Id *_Identifier);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -270,7 +254,8 @@ LoRa_StatusTypeDef AT_EndDeviceIdentifier (LoRa_OperationTypeDef _Operacao, LoRa
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_AppEUIAdress (LoRa_OperationTypeDef _Operacao, LoRa_Id *_Identifier);
+LoRa_StatusTypeDef AT_AppEUIAdress(LoRa_OperationTypeDef _Operacao,
+		LoRa_Id *_Identifier);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -285,7 +270,8 @@ LoRa_StatusTypeDef AT_AppEUIAdress (LoRa_OperationTypeDef _Operacao, LoRa_Id *_I
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_ApplicationKey (LoRa_OperationTypeDef _Operacao, LoRa_KeyTypeDef *_Keyword);
+LoRa_StatusTypeDef AT_ApplicationKey(LoRa_OperationTypeDef _Operacao,
+		LoRa_KeyTypeDef *_Keyword);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -300,7 +286,7 @@ LoRa_StatusTypeDef AT_ApplicationKey (LoRa_OperationTypeDef _Operacao, LoRa_KeyT
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_PublicNetworkModeStatus (LoRa_OperationTypeDef _Operacao,
+LoRa_StatusTypeDef AT_PublicNetworkModeStatus(LoRa_OperationTypeDef _Operacao,
 		LoRa_PublicNetworkTypeDef *_Status);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -316,7 +302,8 @@ LoRa_StatusTypeDef AT_PublicNetworkModeStatus (LoRa_OperationTypeDef _Operacao,
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_NetworkJoinMode (LoRa_OperationTypeDef _Operacao, LoRa_NetworkJoinModeTypeDef *_Mode);
+LoRa_StatusTypeDef AT_NetworkJoinMode(LoRa_OperationTypeDef _Operacao,
+		LoRa_NetworkJoinModeTypeDef *_Mode);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -331,7 +318,8 @@ LoRa_StatusTypeDef AT_NetworkJoinMode (LoRa_OperationTypeDef _Operacao, LoRa_Net
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_LoRaMacClass (LoRa_OperationTypeDef _Operacao, LoRa_MacClassTypeDef *_Class);
+LoRa_StatusTypeDef AT_LoRaMacClass(LoRa_OperationTypeDef _Operacao,
+		LoRa_MacClassTypeDef *_Class);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -345,7 +333,7 @@ LoRa_StatusTypeDef AT_LoRaMacClass (LoRa_OperationTypeDef _Operacao, LoRa_MacCla
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_JoinRequestNetworkServer (void);
+LoRa_StatusTypeDef AT_JoinRequestNetworkServer(void);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -359,7 +347,7 @@ LoRa_StatusTypeDef AT_JoinRequestNetworkServer (void);
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_JoinNetworkServerStatus (LoRa_NetworkJoinTypeDef *_Status);
+LoRa_StatusTypeDef AT_JoinNetworkServerStatus(LoRa_NetworkJoinTypeDef *_Status);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -374,7 +362,8 @@ LoRa_StatusTypeDef AT_JoinNetworkServerStatus (LoRa_NetworkJoinTypeDef *_Status)
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_AutoJoinNetworkServer (LoRa_OperationTypeDef _Operacao, LoRa_AutoNetworkJoinTypeDef *_Status);
+LoRa_StatusTypeDef AT_AutoJoinNetworkServer(LoRa_OperationTypeDef _Operacao,
+		LoRa_AutoNetworkJoinTypeDef *_Status);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -389,7 +378,8 @@ LoRa_StatusTypeDef AT_AutoJoinNetworkServer (LoRa_OperationTypeDef _Operacao, Lo
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_NetworkSessionKey (LoRa_OperationTypeDef _Operacao, LoRa_KeyTypeDef *_Keyword);
+LoRa_StatusTypeDef AT_NetworkSessionKey(LoRa_OperationTypeDef _Operacao,
+		LoRa_KeyTypeDef *_Keyword);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -404,7 +394,8 @@ LoRa_StatusTypeDef AT_NetworkSessionKey (LoRa_OperationTypeDef _Operacao, LoRa_K
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_ApplicationSessionKey (LoRa_OperationTypeDef _Operacao, LoRa_KeyTypeDef *_Keyword);
+LoRa_StatusTypeDef AT_ApplicationSessionKey(LoRa_OperationTypeDef _Operacao,
+		LoRa_KeyTypeDef *_Keyword);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -419,7 +410,8 @@ LoRa_StatusTypeDef AT_ApplicationSessionKey (LoRa_OperationTypeDef _Operacao, Lo
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_DeviceAddress (LoRa_OperationTypeDef _Operacao, LoRa_Adress *_Adress);
+LoRa_StatusTypeDef AT_DeviceAddress(LoRa_OperationTypeDef _Operacao,
+		LoRa_Adress *_Adress);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -434,7 +426,8 @@ LoRa_StatusTypeDef AT_DeviceAddress (LoRa_OperationTypeDef _Operacao, LoRa_Adres
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_NetworkIdentifier (LoRa_OperationTypeDef _Operacao, LoRa_Adress *_Identifier);
+LoRa_StatusTypeDef AT_NetworkIdentifier(LoRa_OperationTypeDef _Operacao,
+		LoRa_Adress *_Identifier);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -448,7 +441,8 @@ LoRa_StatusTypeDef AT_NetworkIdentifier (LoRa_OperationTypeDef _Operacao, LoRa_A
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_ActivationSettingValue (LoRa_ActivationSettingTypeDef *_hSettings);
+LoRa_StatusTypeDef AT_ActivationSettingValue(
+		LoRa_ActivationSettingTypeDef *_hSettings);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -463,7 +457,7 @@ LoRa_StatusTypeDef AT_ActivationSettingValue (LoRa_ActivationSettingTypeDef *_hS
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_DataUplinkText (LoRa_Value _Port, LoRa_Data _Data[5]);
+LoRa_StatusTypeDef AT_DataUplinkText(LoRa_Value _Port, LoRa_Data _Data[5]);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -478,7 +472,8 @@ LoRa_StatusTypeDef AT_DataUplinkText (LoRa_Value _Port, LoRa_Data _Data[5]);
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_DataUplinkHexadecimal (LoRa_Value _Port, LoRa_Data _Data[5]);
+LoRa_StatusTypeDef AT_DataUplinkHexadecimal(LoRa_Value _Port,
+		LoRa_Data _Data[5]);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -493,7 +488,8 @@ LoRa_StatusTypeDef AT_DataUplinkHexadecimal (LoRa_Value _Port, LoRa_Data _Data[5
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_ConfirmDownlinkDataText (LoRa_Value *_Port, LoRa_Data _Data[5]);
+LoRa_StatusTypeDef AT_ConfirmDownlinkDataText(LoRa_Value *_Port,
+		LoRa_Data _Data[5]);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -508,7 +504,8 @@ LoRa_StatusTypeDef AT_ConfirmDownlinkDataText (LoRa_Value *_Port, LoRa_Data _Dat
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_ConfirmDownlinkDataHexadecimal(LoRa_Value *_Port, LoRa_Data _Data[5]);
+LoRa_StatusTypeDef AT_ConfirmDownlinkDataHexadecimal(LoRa_Value *_Port,
+		LoRa_Data _Data[5]);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -551,7 +548,8 @@ LoRa_StatusTypeDef AT_ReturnsSNR(LoRa_Value *_Value);
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_LoRaMacRegion (LoRa_OperationTypeDef _Operacao, LoRa_LoraMacRegionTypeDef *_Region);
+LoRa_StatusTypeDef AT_LoRaMacRegion(LoRa_OperationTypeDef _Operacao,
+		LoRa_LoraMacRegionTypeDef *_Region);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -566,7 +564,8 @@ LoRa_StatusTypeDef AT_LoRaMacRegion (LoRa_OperationTypeDef _Operacao, LoRa_LoraM
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_AutoDateRate (LoRa_OperationTypeDef _Operacao, LoRa_AutoDataRateTypeDef *_Status);
+LoRa_StatusTypeDef AT_AutoDateRate(LoRa_OperationTypeDef _Operacao,
+		LoRa_AutoDataRateTypeDef *_Status);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -581,7 +580,8 @@ LoRa_StatusTypeDef AT_AutoDateRate (LoRa_OperationTypeDef _Operacao, LoRa_AutoDa
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_DataRateCommand (LoRa_OperationTypeDef _Operacao, LoRa_DataRateTypeDef *_DateRate);
+LoRa_StatusTypeDef AT_DataRateCommand(LoRa_OperationTypeDef _Operacao,
+		LoRa_DataRateTypeDef *_DateRate);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -596,7 +596,8 @@ LoRa_StatusTypeDef AT_DataRateCommand (LoRa_OperationTypeDef _Operacao, LoRa_Dat
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_RxWindow2Frequency  (LoRa_OperationTypeDef _Operacao, LoRa_Rate *_Rate);
+LoRa_StatusTypeDef AT_RxWindow2Frequency(LoRa_OperationTypeDef _Operacao,
+		LoRa_Rate *_Rate);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -611,7 +612,8 @@ LoRa_StatusTypeDef AT_RxWindow2Frequency  (LoRa_OperationTypeDef _Operacao, LoRa
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_RxWindow2DataRate (LoRa_OperationTypeDef _Operacao, LoRa_Value *_Value);
+LoRa_StatusTypeDef AT_RxWindow2DataRate(LoRa_OperationTypeDef _Operacao,
+		LoRa_Value *_Value);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -626,7 +628,8 @@ LoRa_StatusTypeDef AT_RxWindow2DataRate (LoRa_OperationTypeDef _Operacao, LoRa_V
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_TxRxWindow1Delay (LoRa_OperationTypeDef _Operacao, LoRa_Value *_Value);
+LoRa_StatusTypeDef AT_TxRxWindow1Delay(LoRa_OperationTypeDef _Operacao,
+		LoRa_Value *_Value);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -641,7 +644,8 @@ LoRa_StatusTypeDef AT_TxRxWindow1Delay (LoRa_OperationTypeDef _Operacao, LoRa_Va
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_TxRxWindow2Delay (LoRa_OperationTypeDef _Operacao, LoRa_Value *_Value);
+LoRa_StatusTypeDef AT_TxRxWindow2Delay(LoRa_OperationTypeDef _Operacao,
+		LoRa_Value *_Value);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -656,7 +660,8 @@ LoRa_StatusTypeDef AT_TxRxWindow2Delay (LoRa_OperationTypeDef _Operacao, LoRa_Va
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_TxRxWindow1JoinDelay (LoRa_OperationTypeDef _Operacao, LoRa_Value *_Value);
+LoRa_StatusTypeDef AT_TxRxWindow1JoinDelay(LoRa_OperationTypeDef _Operacao,
+		LoRa_Value *_Value);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -671,7 +676,8 @@ LoRa_StatusTypeDef AT_TxRxWindow1JoinDelay (LoRa_OperationTypeDef _Operacao, LoR
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_TxRxWindow2JoinDelay (LoRa_OperationTypeDef _Operacao, LoRa_Value *_Value);
+LoRa_StatusTypeDef AT_TxRxWindow2JoinDelay(LoRa_OperationTypeDef _Operacao,
+		LoRa_Value *_Value);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -686,7 +692,8 @@ LoRa_StatusTypeDef AT_TxRxWindow2JoinDelay (LoRa_OperationTypeDef _Operacao, LoR
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_RepeatUnconfirmedUplink (LoRa_OperationTypeDef _Operacao, LoRa_Value *_Value);
+LoRa_StatusTypeDef AT_RepeatUnconfirmedUplink(LoRa_OperationTypeDef _Operacao,
+		LoRa_Value *_Value);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -701,7 +708,8 @@ LoRa_StatusTypeDef AT_RepeatUnconfirmedUplink (LoRa_OperationTypeDef _Operacao, 
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_ResendConfirmedUplink (LoRa_OperationTypeDef _Operacao, LoRa_Value *_Value);
+LoRa_StatusTypeDef AT_ResendConfirmedUplink(LoRa_OperationTypeDef _Operacao,
+		LoRa_Value *_Value);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -716,7 +724,8 @@ LoRa_StatusTypeDef AT_ResendConfirmedUplink (LoRa_OperationTypeDef _Operacao, Lo
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_TxPowerIndex (LoRa_OperationTypeDef _Operacao, LoRa_Value *_Value);
+LoRa_StatusTypeDef AT_TxPowerIndex(LoRa_OperationTypeDef _Operacao,
+		LoRa_Value *_Value);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -731,7 +740,8 @@ LoRa_StatusTypeDef AT_TxPowerIndex (LoRa_OperationTypeDef _Operacao, LoRa_Value 
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_UplinkCounter (LoRa_OperationTypeDef _Operacao, LoRa_Value *_Value);
+LoRa_StatusTypeDef AT_UplinkCounter(LoRa_OperationTypeDef _Operacao,
+		LoRa_Value *_Value);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -746,7 +756,8 @@ LoRa_StatusTypeDef AT_UplinkCounter (LoRa_OperationTypeDef _Operacao, LoRa_Value
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_DownlinkCounter (LoRa_OperationTypeDef _Operacao, LoRa_Value *_Value);
+LoRa_StatusTypeDef AT_DownlinkCounter(LoRa_OperationTypeDef _Operacao,
+		LoRa_Value *_Value);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -761,7 +772,8 @@ LoRa_StatusTypeDef AT_DownlinkCounter (LoRa_OperationTypeDef _Operacao, LoRa_Val
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_BatteryLevel (LoRa_OperationTypeDef _Operacao, LoRa_BateryLevelTypeDef *_Level);
+LoRa_StatusTypeDef AT_BatteryLevel(LoRa_OperationTypeDef _Operacao,
+		LoRa_BateryLevelTypeDef *_Level);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -774,7 +786,7 @@ LoRa_StatusTypeDef AT_BatteryLevel (LoRa_OperationTypeDef _Operacao, LoRa_Batery
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_MacLineCheckRequest  (void);
+LoRa_StatusTypeDef AT_MacLineCheckRequest(void);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -789,7 +801,7 @@ LoRa_StatusTypeDef AT_MacLineCheckRequest  (void);
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_EncryptionConfiguration (LoRa_OperationTypeDef _Operacao,
+LoRa_StatusTypeDef AT_EncryptionConfiguration(LoRa_OperationTypeDef _Operacao,
 		LoRa_ReadoutEncryptionTypeDef *_Encryption);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -806,8 +818,9 @@ LoRa_StatusTypeDef AT_EncryptionConfiguration (LoRa_OperationTypeDef _Operacao,
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_ChannelConfiguration  (LoRa_OperationTypeDef _Operacao,
-		LoRa_ChannelOperationTypeDef _ChOperation, LoRa_ChannelConfigurationTypeDef *_hConfiguration);
+LoRa_StatusTypeDef AT_ChannelConfiguration(LoRa_OperationTypeDef _Operacao,
+		LoRa_ChannelOperationTypeDef _ChOperation,
+		LoRa_ChannelConfigurationTypeDef *_hConfiguration);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -821,7 +834,7 @@ LoRa_StatusTypeDef AT_ChannelConfiguration  (LoRa_OperationTypeDef _Operacao,
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_SystemReboot  (LoRa_SystemRebootModeTypeDef _Mode);
+LoRa_StatusTypeDef AT_SystemReboot(LoRa_SystemRebootModeTypeDef _Mode);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -835,7 +848,7 @@ LoRa_StatusTypeDef AT_SystemReboot  (LoRa_SystemRebootModeTypeDef _Mode);
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_SystemInformation (LoRa_SystemInfoTypeDef *_hInfo);
+LoRa_StatusTypeDef AT_SystemInformation(LoRa_SystemInfoTypeDef *_hInfo);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -849,7 +862,7 @@ LoRa_StatusTypeDef AT_SystemInformation (LoRa_SystemInfoTypeDef *_hInfo);
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_FirmwareVersion (LoRa_Float *_Version);
+LoRa_StatusTypeDef AT_FirmwareVersion(LoRa_Float *_Version);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -864,7 +877,8 @@ LoRa_StatusTypeDef AT_FirmwareVersion (LoRa_Float *_Version);
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_AntennaGain (LoRa_OperationTypeDef _Operacao, LoRa_Float *_Gain);
+LoRa_StatusTypeDef AT_AntennaGain(LoRa_OperationTypeDef _Operacao,
+		LoRa_Float *_Gain);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -879,7 +893,8 @@ LoRa_StatusTypeDef AT_AntennaGain (LoRa_OperationTypeDef _Operacao, LoRa_Float *
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_UplinkPacketType (LoRa_OperationTypeDef _Operacao, LoRa_UplinkTypePacketTypeDef *_Type);
+LoRa_StatusTypeDef AT_UplinkPacketType(LoRa_OperationTypeDef _Operacao,
+		LoRa_UplinkTypePacketTypeDef *_Type);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -892,7 +907,7 @@ LoRa_StatusTypeDef AT_UplinkPacketType (LoRa_OperationTypeDef _Operacao, LoRa_Up
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_EntersLowPowerMode  (void);
+LoRa_StatusTypeDef AT_EntersLowPowerMode(void);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -907,7 +922,8 @@ LoRa_StatusTypeDef AT_EntersLowPowerMode  (void);
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_RTCWakeupTime (LoRa_OperationTypeDef _Operacao, LoRa_Value *_Time);
+LoRa_StatusTypeDef AT_RTCWakeupTime(LoRa_OperationTypeDef _Operacao,
+		LoRa_Value *_Time);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -922,7 +938,8 @@ LoRa_StatusTypeDef AT_RTCWakeupTime (LoRa_OperationTypeDef _Operacao, LoRa_Value
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_RTCTime (LoRa_OperationTypeDef _Operacao, LoRa_TimeTypeDef *_Time);
+LoRa_StatusTypeDef AT_RTCTime(LoRa_OperationTypeDef _Operacao,
+		LoRa_TimeTypeDef *_Time);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -937,7 +954,8 @@ LoRa_StatusTypeDef AT_RTCTime (LoRa_OperationTypeDef _Operacao, LoRa_TimeTypeDef
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_RTCDate (LoRa_OperationTypeDef _Operacao, LoRa_DateTypeDef *_Date);
+LoRa_StatusTypeDef AT_RTCDate(LoRa_OperationTypeDef _Operacao,
+		LoRa_DateTypeDef *_Date);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -952,7 +970,8 @@ LoRa_StatusTypeDef AT_RTCDate (LoRa_OperationTypeDef _Operacao, LoRa_DateTypeDef
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_ECHO (LoRa_OperationTypeDef _Operacao, LoRa_LoraEchoTypeDef *_Echo);
+LoRa_StatusTypeDef AT_ECHO(LoRa_OperationTypeDef _Operacao,
+		LoRa_LoraEchoTypeDef *_Echo);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -965,7 +984,7 @@ LoRa_StatusTypeDef AT_ECHO (LoRa_OperationTypeDef _Operacao, LoRa_LoraEchoTypeDe
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_ResetConfiguration (void);
+LoRa_StatusTypeDef AT_ResetConfiguration(void);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -980,7 +999,8 @@ LoRa_StatusTypeDef AT_ResetConfiguration (void);
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_DebugMessageStatus (LoRa_OperationTypeDef _Operacao, LoRa_DebugMessageTypeDef *_Status);
+LoRa_StatusTypeDef AT_DebugMessageStatus(LoRa_OperationTypeDef _Operacao,
+		LoRa_DebugMessageTypeDef *_Status);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -996,8 +1016,8 @@ LoRa_StatusTypeDef AT_DebugMessageStatus (LoRa_OperationTypeDef _Operacao, LoRa_
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_FSKTxContinuousWaveMode ( LoRa_Rate _Frequency,LoRa_Value _Power,
-		LoRa_Value _Timeout);
+LoRa_StatusTypeDef AT_FSKTxContinuousWaveMode(LoRa_Rate _Frequency,
+		LoRa_Value _Power, LoRa_Value _Timeout);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1013,8 +1033,8 @@ LoRa_StatusTypeDef AT_FSKTxContinuousWaveMode ( LoRa_Rate _Frequency,LoRa_Value 
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_LoRaRxSignalStrengthTest (LoRa_Rate _Frequency, LoRa_Value _DataRate,
-		LoRa_StrenghtTestBaundTypeDef _TBaund);
+LoRa_StatusTypeDef AT_LoRaRxSignalStrengthTest(LoRa_Rate _Frequency,
+		LoRa_Value _DataRate, LoRa_StrenghtTestBaundTypeDef _TBaund);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1033,9 +1053,10 @@ LoRa_StatusTypeDef AT_LoRaRxSignalStrengthTest (LoRa_Rate _Frequency, LoRa_Value
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_LoRaTxSignalStrengthTest (LoRa_Rate _Frequency, LoRa_Value _Power,
-		LoRa_Value _DataRate, LoRa_StrenghtTestBaundTypeDef _TBaund,
-			LoRa_Value _NumberBytes, LoRa_Value _Period);
+LoRa_StatusTypeDef AT_LoRaTxSignalStrengthTest(LoRa_Rate _Frequency,
+		LoRa_Value _Power, LoRa_Value _DataRate,
+		LoRa_StrenghtTestBaundTypeDef _TBaund, LoRa_Value _NumberBytes,
+		LoRa_Value _Period);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1048,7 +1069,7 @@ LoRa_StatusTypeDef AT_LoRaTxSignalStrengthTest (LoRa_Rate _Frequency, LoRa_Value
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_StopRFTest  (void);
+LoRa_StatusTypeDef AT_StopRFTest(void);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1064,7 +1085,7 @@ LoRa_StatusTypeDef AT_StopRFTest  (void);
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_GPIOPinInformation (LoRa_OperationTypeDef _Operacao,
+LoRa_StatusTypeDef AT_GPIOPinInformation(LoRa_OperationTypeDef _Operacao,
 		LoRa_PinTypeDef *_GPIO, LoRa_PinConfigurationTypeDef _Config);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1081,8 +1102,8 @@ LoRa_StatusTypeDef AT_GPIOPinInformation (LoRa_OperationTypeDef _Operacao,
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_RegionalChannelListP2P (LoRa_OperationTypeDef _Operacao, LoRa_Value _Channel,
-		LoRa_ChannelsTypeDef *_ChannelsList);
+LoRa_StatusTypeDef AT_RegionalChannelListP2P(LoRa_OperationTypeDef _Operacao,
+		LoRa_Value _Channel, LoRa_ChannelsTypeDef *_ChannelsList);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1097,7 +1118,8 @@ LoRa_StatusTypeDef AT_RegionalChannelListP2P (LoRa_OperationTypeDef _Operacao, L
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_DeviceAdressP2P (LoRa_OperationTypeDef _Operacao, LoRa_Adress *_Adress);
+LoRa_StatusTypeDef AT_DeviceAdressP2P(LoRa_OperationTypeDef _Operacao,
+		LoRa_Adress *_Adress);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1112,7 +1134,8 @@ LoRa_StatusTypeDef AT_DeviceAdressP2P (LoRa_OperationTypeDef _Operacao, LoRa_Adr
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_SyncWordP2P (LoRa_OperationTypeDef _Operacao, LoRa_Value *_Word);
+LoRa_StatusTypeDef AT_SyncWordP2P(LoRa_OperationTypeDef _Operacao,
+		LoRa_Value *_Word);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

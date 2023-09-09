@@ -50,14 +50,14 @@ LoRa_Float FLOAT = 12.5;
 char AT_comand[15] = "";
 extern uint8_t DMA_RX_Buffer_3[DMA_RX_BUFFER_SIZE];
 uint64_t id = 0x018fdea1;
-LoRa_PinConfigurationTypeDef Value = 3;
+LoRa_ChannelOperationTypeDef Value = 3;
 //LoRa_AutoNetworkJoinTypeDef status = LORA_AUTO_NETWORK_JOIN_ON;
 LoRa_AutoNetworkJoinTypeDef read_status = LORA_AUTO_NETWORK_JOIN_OFF;
 LoRa_Adress adress = 0xd3ad12;
 LoRa_LoraMacRegionTypeDef regiao = LORAMAC_REGION_US915;
 LoRa_TimeTypeDef horario;
 LoRa_DateTypeDef data;
-LoRa_ChannelConfigurationTypeDef chanel;
+LoRa_ChannelsTypeDef chanel;
 LoRa_PinTypeDef pino;
 /* USER CODE END PV */
 
@@ -107,19 +107,24 @@ int main(void) {
 	MX_USART3_UART_Init();
 	/* USER CODE BEGIN 2 */
 	USART_Init();
-	pino.LoRa_PinChar = 'C';
-	pino.LoRa_PinNumber = 6;
+//	pino.LoRa_PinChar = 'C';
+//	pino.LoRa_PinNumber = 6;
 	/* USER CODE END 2 */
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
-	AT_StopRFTest();
+//	AT_StopRFTest();
 //	AT_LoRaTxSignalStrengthTest(922500000, 12, 5, 1, 3, 2);
+//	AT_RegionalChannelListP2P(AT_OPERATION_WRITE, 1, &list);
+	AT_LoRaMacRegion(AT_OPERATION_READ, &regiao);
+	AT_LoRaMacRegion(AT_OPERATION_WRITE, &regiao);
+
+	AT_RegionalChannelListP2P(AT_OPERATION_READ, 0, &chanel);
 //	AT_SystemReboot(AT_REBOOT_SYSTEM);
-	AT_GPIOPinInformation(AT_OPERATION_READ, &pino, AT_GPIO_DEFAULT);
+//	AT_GPIOPinInformation(AT_OPERATION_READ, &pino, AT_GPIO_DEFAULT);
 //	pino.LoRa_PinMode = !pino.LoRa_PinMode;
-	AT_GPIOPinInformation(AT_OPERATION_WRITE, &pino, Value);
+//	AT_GPIOPinInformation(AT_OPERATION_WRITE, &pino, Value);
 //	pino.LoRa_PinMode = !pino.LoRa_PinMode;
-	AT_GPIOPinInformation(AT_OPERATION_READ, &pino, AT_GPIO_MODE_OUTPUT);
+//	AT_GPIOPinInformation(AT_OPERATION_READ, &pino, AT_GPIO_MODE_OUTPUT);
 	while (1) {
 
 		/* USER CODE END WHILE */
