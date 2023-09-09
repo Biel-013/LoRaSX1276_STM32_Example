@@ -108,7 +108,6 @@ int main(void) {
 	USART_Init();
 
 	/* USER CODE END 2 */
-	chanel.LoRa_Channel = 1;
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
 //	AT_ResetConfiguration();
