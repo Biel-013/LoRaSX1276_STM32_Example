@@ -1892,7 +1892,8 @@ LoRa_StatusTypeDef AT_RegionalChannelListP2P(LoRa_OperationTypeDef _Operacao,
 		for (int i = 0; i < 16; i++) {
 			_ChannelsList->LoRa_Channels[i].LoRa_Channel = i;
 			AT_ChannelConfiguration(AT_OPERATION_READ,
-					AT_CHANNEL_OPERATION_CHANNEL, &_ChannelsList->LoRa_Channels[i]);
+					AT_CHANNEL_OPERATION_CHANNEL,
+					&_ChannelsList->LoRa_Channels[i]);
 		}
 		break;
 	case AT_OPERATION_WRITE:
@@ -1914,14 +1915,33 @@ LoRa_StatusTypeDef AT_RegionalChannelListP2P(LoRa_OperationTypeDef _Operacao,
 
 /**
  * @brief  Defina o endereço do dispositivo P2P (4 bytes) para comunicação
- * @tparam
+ * @tparam AT+P2PDA <Device Address> <ENTER>
  * @param _Operacao: Modo de operação do comando
  * @param _Adress: Endereço de comunicação P2P
  * @retval Status de execução do comando
  */
-
 LoRa_StatusTypeDef AT_DeviceAdressP2P(LoRa_OperationTypeDef _Operacao,
-		LoRa_Adress *_Adress);
+		LoRa_Adress *_Adress) {
+	switch (_Operacao) {
+	case AT_OPERATION_READ:
+		sprintf((char*) AT_RXcommand, "AT+P2PDA\r\n");
+		LORA_STATUS_RECEIVE = LORA_CLEAR;
+		if (LORA_ReceiveCommand(1000, 10) != LORA_OK)
+			return LORA_FAILED;
+		sscanf(LORA_UART_BUFFER, "%s\r%8lx\r\n", AT_RXcommand,
+				(uint32_t*) _Adress);
+		break;
+	case AT_OPERATION_WRITE:
+		sprintf((char*) AT_TXcommand, "AT+P2PDA %08lX\r\n",
+				((uint32_t*) _Adress)[0]);
+		if (LORA_TransmitCommand(100) != LORA_OK)
+			return LORA_FAILED;
+		break;
+	default:
+		break;
+	}
+	return LORA_OK;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

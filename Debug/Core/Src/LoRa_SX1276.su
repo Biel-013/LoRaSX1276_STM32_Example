@@ -57,3 +57,4 @@
 ../Core/Src/LoRa_SX1276.c:1806:20:AT_StopRFTest	8	static
 ../Core/Src/LoRa_SX1276.c:1827:20:AT_GPIOPinInformation	32	static
 ../Core/Src/LoRa_SX1276.c:1888:20:AT_RegionalChannelListP2P	24	static
+../Core/Src/LoRa_SX1276.c:1923:20:AT_DeviceAdressP2P	16	static

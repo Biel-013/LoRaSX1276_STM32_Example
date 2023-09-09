@@ -115,16 +115,16 @@ int main(void) {
 //	AT_StopRFTest();
 //	AT_LoRaTxSignalStrengthTest(922500000, 12, 5, 1, 3, 2);
 //	AT_RegionalChannelListP2P(AT_OPERATION_WRITE, 1, &list);
-	AT_LoRaMacRegion(AT_OPERATION_READ, &regiao);
-	AT_LoRaMacRegion(AT_OPERATION_WRITE, &regiao);
-
-	AT_RegionalChannelListP2P(AT_OPERATION_READ, 0, &chanel);
+//	AT_LoRaMacRegion(AT_OPERATION_READ, &regiao);
+//	AT_LoRaMacRegion(AT_OPERATION_WRITE, &regiao);
+//
+//	AT_RegionalChannelListP2P(AT_OPERATION_READ, 0, &chanel);
 //	AT_SystemReboot(AT_REBOOT_SYSTEM);
-//	AT_GPIOPinInformation(AT_OPERATION_READ, &pino, AT_GPIO_DEFAULT);
-//	pino.LoRa_PinMode = !pino.LoRa_PinMode;
-//	AT_GPIOPinInformation(AT_OPERATION_WRITE, &pino, Value);
-//	pino.LoRa_PinMode = !pino.LoRa_PinMode;
-//	AT_GPIOPinInformation(AT_OPERATION_READ, &pino, AT_GPIO_MODE_OUTPUT);
+	AT_DeviceAdressP2P(AT_OPERATION_READ, &adress);
+	adress = 1264891;
+	AT_DeviceAdressP2P(AT_OPERATION_WRITE, &adress);
+	adress = 91347;
+	AT_DeviceAdressP2P(AT_OPERATION_READ, &adress);
 	while (1) {
 
 		/* USER CODE END WHILE */
