@@ -1726,15 +1726,13 @@ LoRa_StatusTypeDef AT_DebugMessageStatus(LoRa_OperationTypeDef _Operacao,
 /**
  * @brief Modo de onda contínua FSK Tx (teste de força Tx)
  * @tparam AT+TXCW <frequency> <Power in dBm> <Timeout (Sec)> <ENTER>
- * @param _Operacao: Modo de operação do comando
  * @param _Frequency: Frequência de operação do teste
  * @param _Power: Potência de transmissão na operação do teste
  * @param _Timeout: Tempo total de teste (em segundos)
  * @retval Status de execução do comando
  */
-
-LoRa_StatusTypeDef AT_FSKTxContinuousWaveMode(LoRa_OperationTypeDef _Operacao,
-		LoRa_Rate _Frequency, LoRa_Value _Power, LoRa_Value _Timeout) {
+LoRa_StatusTypeDef AT_FSKTxContinuousWaveMode(LoRa_Rate _Frequency,
+		LoRa_Value _Power, LoRa_Value _Timeout) {
 	sprintf((char*) AT_TXcommand, "AT+TXCW %lu %hu %hu\r\n", _Frequency, _Power,
 			_Timeout);
 	if (LORA_TransmitCommand(300) != LORA_OK)

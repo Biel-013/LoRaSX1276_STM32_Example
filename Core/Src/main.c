@@ -110,13 +110,13 @@ int main(void) {
 	/* USER CODE END 2 */
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
-//	AT_ResetConfiguration();
+	AT_FSKTxContinuousWaveMode( 920000000, 12, 5);
 //	AT_SystemReboot(AT_REBOOT_SYSTEM);
-	AT_DebugMessageStatus(AT_OPERATION_READ, &Value);
-	Value = !Value;
-	AT_DebugMessageStatus(AT_OPERATION_WRITE, &Value);
-	Value = !Value;
-	AT_DebugMessageStatus(AT_OPERATION_READ, &Value);
+//	AT_DebugMessageStatus(AT_OPERATION_READ, &Value);
+//	Value = !Value;
+//	AT_DebugMessageStatus(AT_OPERATION_WRITE, &Value);
+//	Value = !Value;
+//	AT_DebugMessageStatus(AT_OPERATION_READ, &Value);
 	while (1) {
 //		if (id != id)
 //			AT_EndDeviceIdentifier(AT_OPERATION_WRITE, &adress);
