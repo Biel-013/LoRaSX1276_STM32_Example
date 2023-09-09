@@ -54,3 +54,5 @@
 ../Core/Src/LoRa_SX1276.c:1733:20:AT_FSKTxContinuousWaveMode	24	static
 ../Core/Src/LoRa_SX1276.c:1756:20:AT_LoRaRxSignalStrengthTest	24	static
 ../Core/Src/LoRa_SX1276.c:1783:20:AT_LoRaTxSignalStrengthTest	48	static
+../Core/Src/LoRa_SX1276.c:1806:20:AT_StopRFTest	8	static
+../Core/Src/LoRa_SX1276.c:1827:20:AT_GPIOPinInformation	32	static

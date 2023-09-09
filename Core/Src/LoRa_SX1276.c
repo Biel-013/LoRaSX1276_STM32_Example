@@ -1799,11 +1799,16 @@ LoRa_StatusTypeDef AT_LoRaTxSignalStrengthTest(LoRa_Rate _Frequency,
 
 /**
  * @brief Comando para finalização de teste de RF
- * @tparam
+ * @tparam AT+TSTP
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_StopRFTest(void);
+LoRa_StatusTypeDef AT_StopRFTest(void) {
+	sprintf((char*) AT_TXcommand, "AT+TSTP\r\n");
+	if (LORA_TransmitCommand(100) != LORA_OK)
+		return LORA_FAILED;
+	return LORA_OK;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1813,15 +1818,58 @@ LoRa_StatusTypeDef AT_StopRFTest(void);
 
 /**
  * @brief Comando para acesso a configuração de pinos GPIO MS500
- * @tparam
+ * @tparam AT+GPIO < Pin > <Input/Output> <ENTER>
  * @param _Operacao: Modo de operação do comando
  * @param _GPIO: Pino GPIO para acesso
  * @param _Config: Configuração do pino GPIO
  * @retval Status de execução do comando
  */
-
 LoRa_StatusTypeDef AT_GPIOPinInformation(LoRa_OperationTypeDef _Operacao,
-		LoRa_PinTypeDef _GPIO, LoRa_PinConfigurationTypeDef *_Config);
+		LoRa_PinTypeDef *_GPIO, LoRa_PinConfigurationTypeDef _Config) {
+	switch (_Operacao) {
+	case AT_OPERATION_READ:
+		sprintf((char*) AT_RXcommand, "AT+GPIO P%c%hu\r\n", _GPIO->LoRa_PinChar,
+				_GPIO->LoRa_PinNumber);
+		LORA_STATUS_RECEIVE = LORA_CLEAR;
+		if (LORA_ReceiveCommand(500, 10) != LORA_OK)
+			return LORA_FAILED;
+		char Mode[5] = "\0";
+		sscanf(LORA_UART_BUFFER, "%[^\r]\rPull-Down GPIO(%[^)]) %hu\r\n",
+				AT_RXcommand, Mode, (uint16_t*) &_GPIO->LoRa_PinState);
+		if (strcmp(Mode, "Out") == 0)
+			_GPIO->LoRa_PinMode = AT_GPIO_MODE_OUTPUT;
+		else
+			_GPIO->LoRa_PinMode = AT_GPIO_MODE_INPUT;
+		break;
+	case AT_OPERATION_WRITE:
+		switch (_Config) {
+		case AT_GPIO_MODE_INPUT:
+			sprintf((char*) AT_TXcommand, "AT+GPIO P%c%hu i\r\n",
+					_GPIO->LoRa_PinChar, _GPIO->LoRa_PinNumber);
+			break;
+		case AT_GPIO_MODE_OUTPUT:
+			sprintf((char*) AT_TXcommand, "AT+GPIO P%c%hu o\r\n",
+					_GPIO->LoRa_PinChar, _GPIO->LoRa_PinNumber);
+			break;
+		case AT_GPIO_SET_LOW:
+			sprintf((char*) AT_TXcommand, "AT+GPIO P%c%hu o 0\r\n",
+					_GPIO->LoRa_PinChar, _GPIO->LoRa_PinNumber);
+			break;
+		case AT_GPIO_SET_HIGH:
+			sprintf((char*) AT_TXcommand, "AT+GPIO P%c%hu o 1\r\n",
+					_GPIO->LoRa_PinChar, _GPIO->LoRa_PinNumber);
+			break;
+		default:
+			return LORA_FAILED_COMMAND;
+		}
+		if (LORA_TransmitCommand(100) != LORA_OK)
+			return LORA_FAILED;
+		break;
+	default:
+		break;
+	}
+	return LORA_OK;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

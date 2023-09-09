@@ -160,10 +160,11 @@ typedef enum {
 } LoRa_SystemRebootModeTypeDef;
 
 typedef enum {
-	AT_GPIO_MODE_INPUT      = 0x00U,
-	AT_GPIO_MODE_OUTPUT      = 0x01U,
-	AT_GPIO_SET_HIGH      = 0x02U,
-	AT_GPIO_SET_LOW      = 0x03U
+	AT_GPIO_MODE_INPUT      = 'i',
+	AT_GPIO_MODE_OUTPUT      = 'o',
+	AT_GPIO_SET_LOW      = 0x00U,
+	AT_GPIO_SET_HIGH      = 0x01U,
+	AT_GPIO_DEFAULT      = 0x02U
 } LoRa_PinConfigurationTypeDef;
 
 typedef struct {
@@ -204,6 +205,8 @@ typedef struct {
 typedef struct {
 	LoRa_Char LoRa_PinChar;
 	LoRa_Value LoRa_PinNumber;
+	LoRa_PinConfigurationTypeDef LoRa_PinMode;
+	LoRa_PinConfigurationTypeDef LoRa_PinState;
 } LoRa_PinTypeDef;
 
 typedef struct {
@@ -1061,8 +1064,8 @@ LoRa_StatusTypeDef AT_StopRFTest  (void);
  * @retval Status de execução do comando
  */
 
-LoRa_StatusTypeDef AT_GPIOPinInformation (LoRa_OperationTypeDef _Operacao, LoRa_PinTypeDef _GPIO,
-		LoRa_PinConfigurationTypeDef *_Config);
+LoRa_StatusTypeDef AT_GPIOPinInformation (LoRa_OperationTypeDef _Operacao,
+		LoRa_PinTypeDef *_GPIO, LoRa_PinConfigurationTypeDef _Config);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
