@@ -56,7 +56,7 @@ LoRa_AutoNetworkJoinTypeDef read_status = LORA_AUTO_NETWORK_JOIN_OFF;
 LoRa_Adress adress = 0xd3ad12;
 LoRa_LoraMacRegionTypeDef regiao = LORAMAC_REGION_US915;
 LoRa_TimeTypeDef horario;
-
+LoRa_DateTypeDef data;
 LoRa_ChannelConfigurationTypeDef chanel;
 /* USER CODE END PV */
 
@@ -113,15 +113,15 @@ int main(void) {
 	/* USER CODE BEGIN WHILE */
 //	AT_EntersLowPowerMode();
 //	AT_SystemReboot(AT_REBOOT_SYSTEM);
-	AT_RTCTime(AT_OPERATION_READ, &horario);
-	horario.LoRa_Horas = 12;
-	horario.LoRa_Minutos = 12;
-	horario.LoRa_Segundos = 12;
-	AT_RTCTime(AT_OPERATION_WRITE, &horario);
-	horario.LoRa_Horas = 15;
-	horario.LoRa_Minutos = 15;
-	horario.LoRa_Segundos = 15;
-	AT_RTCTime(AT_OPERATION_READ, &horario);
+	AT_RTCDate(AT_OPERATION_READ, &data);
+	data.LoRa_Ano = 12;
+	data.LoRa_Mes = 12;
+	data.LoRa_Dia = 12;
+	AT_RTCDate(AT_OPERATION_WRITE, &data);
+	data.LoRa_Ano = 15;
+	data.LoRa_Mes = 15;
+	data.LoRa_Mes = 15;
+	AT_RTCDate(AT_OPERATION_READ, &data);
 	while (1) {
 //		if (id != id)
 //			AT_EndDeviceIdentifier(AT_OPERATION_WRITE, &adress);
