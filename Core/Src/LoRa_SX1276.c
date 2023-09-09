@@ -1951,14 +1951,33 @@ LoRa_StatusTypeDef AT_DeviceAdressP2P(LoRa_OperationTypeDef _Operacao,
 
 /**
  * @brief Comando para definição de chave de sincronização
- * @tparam
+ * @tparam AT+P2PSW <Word> <ENTER>
  * @param _Operacao: Modo de operação do comando
  * @param _Word: Chave de sincronização (1 a 255)
  * @retval Status de execução do comando
  */
 
 LoRa_StatusTypeDef AT_SyncWordP2P(LoRa_OperationTypeDef _Operacao,
-		LoRa_Value *_Word);
+		LoRa_Value *_Word){
+	switch (_Operacao) {
+		case AT_OPERATION_READ:
+			sprintf((char*) AT_RXcommand, "AT+P2PSW\r\n");
+			LORA_STATUS_RECEIVE = LORA_CLEAR;
+			if (LORA_ReceiveCommand(1000, 10) != LORA_OK)
+				return LORA_FAILED;
+			sscanf(LORA_UART_BUFFER, "%s\r%hu\r\n", AT_RXcommand,
+					_Word);
+			break;
+		case AT_OPERATION_WRITE:
+			sprintf((char*) AT_TXcommand, "AT+P2PSW %hu\r\n", (*_Word));
+			if (LORA_TransmitCommand(100) != LORA_OK)
+				return LORA_FAILED;
+			break;
+		default:
+			break;
+		}
+		return LORA_OK;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

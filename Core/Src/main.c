@@ -50,7 +50,7 @@ LoRa_Float FLOAT = 12.5;
 char AT_comand[15] = "";
 extern uint8_t DMA_RX_Buffer_3[DMA_RX_BUFFER_SIZE];
 uint64_t id = 0x018fdea1;
-LoRa_ChannelOperationTypeDef Value = 3;
+LoRa_Value Value = 3;
 //LoRa_AutoNetworkJoinTypeDef status = LORA_AUTO_NETWORK_JOIN_ON;
 LoRa_AutoNetworkJoinTypeDef read_status = LORA_AUTO_NETWORK_JOIN_OFF;
 LoRa_Adress adress = 0xd3ad12;
@@ -120,11 +120,11 @@ int main(void) {
 //
 //	AT_RegionalChannelListP2P(AT_OPERATION_READ, 0, &chanel);
 //	AT_SystemReboot(AT_REBOOT_SYSTEM);
-	AT_DeviceAdressP2P(AT_OPERATION_READ, &adress);
-	adress = 1264891;
-	AT_DeviceAdressP2P(AT_OPERATION_WRITE, &adress);
-	adress = 91347;
-	AT_DeviceAdressP2P(AT_OPERATION_READ, &adress);
+	AT_SyncWordP2P(AT_OPERATION_READ, &Value);
+	Value = 23;
+	AT_SyncWordP2P(AT_OPERATION_WRITE, &Value);
+	Value = 52;
+	AT_SyncWordP2P(AT_OPERATION_READ, &Value);
 	while (1) {
 
 		/* USER CODE END WHILE */
